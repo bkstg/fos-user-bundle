@@ -5,6 +5,7 @@
     "require": {
         "php": "^7.0",
         "symfony/framework-bundle": "^3.3",
+        "bkstg/core-bundle": "^2.0@dev",
         "friendsofsymfony/user-bundle": "^2.0",
         "midnightluke/group-security-bundle": "^1.0@dev"
     },
@@ -21,6 +22,6 @@
         }
     },
     "autoload": {
-        "psr-4": { "Bkstg\\CoreBundle\\": "" }
+        "psr-4": { "Bkstg\\FOSUserBundle\\": "" }
     }
 }
