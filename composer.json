@@ -1,0 +1,26 @@
+{
+    "name": "bkstg/fos-user-bundle",
+    "description": "Provides users for the backstage using the FOS user bundle.",
+    "type": "symfony-bundle",
+    "require": {
+        "php": "^7.0",
+        "symfony/framework-bundle": "^3.3",
+        "friendsofsymfony/user-bundle": "^2.0",
+        "midnightluke/group-security-bundle": "^1.0@dev"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Luke Bainbridge",
+            "email": "luke.bainbridge@gmail.com"
+        }
+    ],
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.0.x-dev"
+        }
+    },
+    "autoload": {
+        "psr-4": { "Bkstg\\CoreBundle\\": "" }
+    }
+}
