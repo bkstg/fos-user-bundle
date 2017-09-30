@@ -9,4 +9,5 @@ fos_user_change_password:
 bkstg_membership:
     resource: '@BkstgFOSUserBundle/Resources/config/routing/membership.yml'
 bkstg_user:
-    resource: '@BkstgFOSUserBundle/Resources/config/routing/user.yml'
+    resource: '@BkstgFOSUserBundle/Resources/config/routing/user_admin.yml'
+    prefix: /admin/users
