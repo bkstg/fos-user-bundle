@@ -24,4 +24,3 @@ Bkstg\FOSUserBundle\Entity\ProductionMembership:
             inversedBy: memberships
         group:
             targetEntity: Bkstg\CoreBundle\Entity\Production
-            inversedBy: memberships

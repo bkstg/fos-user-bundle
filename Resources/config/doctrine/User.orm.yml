@@ -13,7 +13,4 @@ Bkstg\FOSUserBundle\Entity\User:
         memberships:
             targetEntity: Bkstg\FOSUserBundle\Entity\ProductionMembership
             mappedBy: member
-        profiles:
-            targetEntity: Bkstg\CoreBundle\Entity\Profile
-            mappedBy: author
 

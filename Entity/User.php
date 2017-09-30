@@ -12,7 +12,6 @@ class User extends BaseUser implements GroupMemberInterface
 
     protected $id;
     private $memberships;
-    private $profiles;
 
     /**
      * Create a new instance of User.
@@ -21,7 +20,6 @@ class User extends BaseUser implements GroupMemberInterface
     {
         parent::__construct();
         $this->memberships = new ArrayCollection();
-        $this->profiles = new ArrayCollection();
     }
 
     /**
@@ -78,39 +76,5 @@ class User extends BaseUser implements GroupMemberInterface
     public function __toString()
     {
         return $this->username ?: '';
-    }
-
-    /**
-     * Add profile
-     *
-     * @param Profile $profile
-     *
-     * @return User
-     */
-    public function addProfile(Profile $profile)
-    {
-        $this->profiles[] = $profile;
-
-        return $this;
-    }
-
-    /**
-     * Remove profile
-     *
-     * @param Profile $profile
-     */
-    public function removeProfile(Profile $profile)
-    {
-        $this->profiles->removeElement($profile);
-    }
-
-    /**
-     * Get profiles
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getProfiles()
-    {
-        return $this->profiles;
     }
 }
