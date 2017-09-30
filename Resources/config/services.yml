@@ -9,3 +9,6 @@ services:
     Bkstg\FOSUserBundle\EventListener\MembershipCreator:
         tags:
             - { name: doctrine.event_listener, event: prePersist, lazy: true }
+    Bkstg\FOSUserBundle\EventListener\MembershipDeletion:
+        tags:
+            - { name: doctrine.event_listener, event: preRemove, lazy: true }
