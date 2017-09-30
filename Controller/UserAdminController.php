@@ -3,13 +3,12 @@
 namespace Bkstg\FOSUserBundle\Controller;
 
 use Bkstg\CoreBundle\Controller\Controller;
-use Bkstg\CoreBundle\Form\ProfileType;
 use Bkstg\FOSUserBundle\Entity\User;
 use Bkstg\FOSUserBundle\Form\Type\UserType;
 use Doctrine\Common\Collections\ArrayCollection;
-use FOS\UserBundle\Mailer\MailerInterface;
 use FOS\UserBundle\Model\UserManagerInterface;
 use FOS\UserBundle\Util\TokenGeneratorInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -36,8 +35,7 @@ class UserAdminController extends Controller
     public function createAction(
         Request $request,
         UserManagerInterface $user_manager,
-        TokenGeneratorInterface $token_generator,
-        MailerInterface $mailer
+        TokenGeneratorInterface $token_generator
     ) {
         // Create a new user.
         $user = $user_manager->createUser();
@@ -54,7 +52,6 @@ class UserAdminController extends Controller
 
             // Persist the user
             $user_manager->updateUser($user);
-            $mailer->sendConfirmationEmailMessage($user);
 
             // Set success message and redirect.
             $this->session->getFlashBag()->add(
@@ -63,7 +60,7 @@ class UserAdminController extends Controller
                     '%user%' => $user->getUsername(),
                 ])
             );
-            return new RedirectResponse($this->url_generator->generate('bkstg_user_list'));
+            return new RedirectResponse($this->url_generator->generate('bkstg_user_admin_list'));
         }
 
         // Render the form.
@@ -72,9 +69,12 @@ class UserAdminController extends Controller
         ]));
     }
 
-    public function updateAction($id, Request $request)
-    {
-        if (null === $user = $this->em->getRepository(User::class)->findOneBy(['id' => $id])) {
+    public function updateAction(
+        $id,
+        Request $request,
+        UserManagerInterface $user_manager
+    ) {
+        if (null === $user = $user_manager->findUserBy(['id' => $id])) {
             throw new NotFoundHttpException();
         }
 
@@ -85,17 +85,16 @@ class UserAdminController extends Controller
         // Form is submitted and valid.
         if ($form->isSubmitted() && $form->isValid()) {
             // Persist the user
-            $this->em->persist($user);
-            $this->em->flush();
+            $user_manager->updateUser($user);
 
             // Set success message and redirect.
             $this->session->getFlashBag()->add(
                 'success',
-                $this->translator->trans('User "%user%" created.', [
-                    '%user%' => $user->getName(),
+                $this->translator->trans('User "%user%" updated.', [
+                    '%user%' => $user->getUsername(),
                 ])
             );
-            return new RedirectResponse($this->url_generator->generate('bkstg_user_list'));
+            return new RedirectResponse($this->url_generator->generate('bkstg_user_admin_list'));
         }
 
         // Render the form.
@@ -105,65 +104,37 @@ class UserAdminController extends Controller
         ]));
     }
 
-    public function deleteAction($user, Request $request)
-    {
-        // get entity manager
-        $em = $this->em;
-
-        // disable and persist the user
-        $user->setEnabled(false);
-        $em->persist($user);
-        $em->flush();
-
-        // add success message and redirect
-        $this->addFlash('warning', 'User deleted!');
-        return $this->redirectToRoute('bkstg_user_home');
-    }
-
-    public function viewAction($user, Request $request)
-    {
-        return $this->render('BkstgCoreBundle:User:user.html.twig', array('user' => $user));
-    }
-
-    public function editProfileAction($user, Request $request)
-    {
-        // get entity manager
-        $em = $this->em;
-        $app_user = $this->get('security.token_storage')->getToken()->getUser();
-
-        if ($app_user->getId() !== $user->getId()) {
-            throw new AccessDeniedException;
+    public function deleteAction(
+        $id,
+        Request $request,
+        UserManagerInterface $user_manager
+    ) {
+        if (null === $user = $user_manager->findUserBy(['id' => $id])) {
+            throw new NotFoundHttpException();
         }
 
-        // create the form for this
-        $form = $this->createForm(new ProfileType('Bkstg\FOSUserBundle\Entity\User'), $user);
-
-        // handle form request
+        // Create an empty form.
+        $form = $this->form->createBuilder()->getForm();
         $form->handleRequest($request);
-        if ($form->isValid()) {
-            // set user defaults
-            $user->setUsername($user->getEmail());
 
-            // persist the user
-            $em->persist($user);
-            $em->flush();
+        // Delete the user.
+        if ($form->isValid() && $form->isSubmitted()) {
+            $user_manager->deleteUser($user);
 
-            // add success message and redirect
-            $this->addFlash('success', 'User "' . $user . '" edited successfully!');
-            return $this->redirectToRoute('bkstg_user_home');
+            // Set success message and redirect.
+            $this->session->getFlashBag()->add(
+                'success',
+                $this->translator->trans('User "%user%" deleted.', [
+                    '%user%' => $user->getUsername(),
+                ])
+            );
+            return new RedirectResponse($this->url_generator->generate('bkstg_user_admin_list'));
         }
 
-        // get message manager
-        $message_manager = $this->get('message.manager');
-
-        return $this->render('BkstgCoreBundle:User:profile_form.html.twig', array(
+        // Render the form.
+        return new Response($this->templating->render('@BkstgFOSUser/User/delete.html.twig', [
+            'user' => $user,
             'form' => $form->createView(),
-            'message_manager' => $message_manager,
-        ));
-    }
-
-    public function redirectProfile() {
-        $app_user = $this->get('security.token_storage')->getToken()->getUser();
-        return $this->redirectToRoute('bkstg_user_view_user', array('user' => $app_user->getId()));
+        ]));
     }
 }

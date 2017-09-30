@@ -1,0 +1,15 @@
+{% extends '@BkstgCore/layout-admin.html.twig' %}
+{% set page_title = 'Delete user "%user%"'|trans({'%user%': user.username}) %}
+{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% block content %}
+  <p>{{ 'Are you sure you want to delete "%user%"?'|trans({'%user%': user.username}) }}</p>
+  <p>{{ 'All content associated with this user will be lost or orphaned.'|trans }}</p>
+  <p><strong>{{ ' This action cannot be undone.'|trans }}</strong></p>
+  {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="form-group">
+      <a href="{{ url('bkstg_user_admin_list') }}" class="btn btn-secondary">{{ 'Cancel'|trans }}</a>
+      <button type="submit" class="btn btn-danger">{{ 'Delete'|trans }}</button>
+    </div>
+  {{ form_end(form) }}
+{% endblock %}
