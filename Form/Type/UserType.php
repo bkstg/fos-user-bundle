@@ -3,8 +3,8 @@
 namespace Bkstg\FOSUserBundle\Form\Type;
 
 use Bkstg\FOSUserBundle\Entity\User;
-use Sonata\CoreBundle\Form\Type\BooleanType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -18,8 +18,8 @@ class UserType extends AbstractType
         $builder
             ->add('username', TextType::class)
             ->add('email', EmailType::class)
-            ->add('enabled', BooleanType::class, [
-                'data' => true,
+            ->add('enabled', CheckboxType::class, [
+                'required' => false,
             ])
             ->add('roles', ChoiceType::class, [
                 'multiple' => true,
