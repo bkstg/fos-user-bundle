@@ -2,6 +2,7 @@
 
 namespace Bkstg\FOSUserBundle\Entity;
 
+use Bkstg\CoreBundle\Entity\Production;
 use Bkstg\CoreBundle\Exception\UserHasNoRoleException;
 use Bkstg\CoreBundle\Exception\UserHasRoleException;
 use MidnightLuke\GroupSecurityBundle\Model\GroupInterface;

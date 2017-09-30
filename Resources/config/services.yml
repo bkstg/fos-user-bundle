@@ -6,3 +6,6 @@ services:
     Bkstg\FOSUserBundle\:
         resource: '../../*'
         exclude: '../../{Entity,Repository,Tests}'
+    Bkstg\FOSUserBundle\EventListener\MembershipCreator:
+        tags:
+            - { name: doctrine.event_listener, event: prePersist, lazy: true }
