@@ -18,9 +18,6 @@ class UserType extends AbstractType
         $builder
             ->add('username', TextType::class)
             ->add('email', EmailType::class)
-            ->add('enabled', CheckboxType::class, [
-                'required' => false,
-            ])
             ->add('roles', ChoiceType::class, [
                 'multiple' => true,
                 'required' => false,
@@ -28,6 +25,9 @@ class UserType extends AbstractType
                     'Editor' => 'ROLE_EDITOR',
                     'Admin' => 'ROLE_ADMIN',
                 ],
+            ])
+            ->add('enabled', CheckboxType::class, [
+                'required' => false,
             ])
         ;
     }
