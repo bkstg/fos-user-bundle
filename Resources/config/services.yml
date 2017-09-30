@@ -6,6 +6,15 @@ services:
     Bkstg\FOSUserBundle\:
         resource: '../../*'
         exclude: '../../{Entity,Repository,Tests}'
+
+    # Controller services.
+    Bkstg\FOSUserBundle\Controller\:
+        resource: '../../Controller'
+        public: true
+        tags:
+            - { name: controller.service_arguments }
+
+    # Doctrine event listeners.
     Bkstg\FOSUserBundle\EventListener\MembershipCreator:
         tags:
             - { name: doctrine.event_listener, event: prePersist, lazy: true }
