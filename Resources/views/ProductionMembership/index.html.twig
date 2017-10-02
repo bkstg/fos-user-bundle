@@ -1,25 +1,28 @@
 {% extends '@BkstgCore/layout.html.twig' %}
 {% set page_title = '%production% Members'|trans({'%production%': production.name}) %}
 {% block content %}
-  <ul class="nav nav-tabs mb-3">
+  <p><ul class="nav nav-tabs mb-3">
     <li class="nav-item">
       <a class="nav-link{% if app.request.query.get('status') != 'inactive' %} active{% endif %}" href="{{ url('bkstg_membership_list', {'production_slug': production.slug}) }}">{{ 'Active'|trans }}</a>
     </li>
     <li class="nav-item">
       <a class="nav-link{% if app.request.query.get('status') == 'inactive' %} active{% endif %}" href="{{ url('bkstg_membership_list', {'production_slug': production.slug}) }}?status=inactive">{{ 'Inactive'|trans }}</a>
     </li>
-  </ul>
-  {% for row in memberships|batch(3) %}
-    <div class="row">
-      {% for membership in row %}
-        <div class="col-md-4">
-          {% include '@BkstgCore/User/show-card.html.twig' with { 'user': membership.member } only %}
-        </div>
-      {% endfor %}
-    </div>
-  {% endfor %}
+  </ul></p>
+  {% if memberships is empty %}
+    <p>{{ 'No memberships found.'|trans }}</p>
+  {% else %}
+    {% for row in memberships|batch(3) %}
+      <div class="row">
+        {% for membership in row %}
+          <div class="col-md-4">
+            {% include '@BkstgFOSUser/User/show-card.html.twig' with { 'user': membership.member } only %}
+          </div>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  {% endif %}
 {% endblock %}
-
 
 {# Override header block to add create link #}
 {% block header %}

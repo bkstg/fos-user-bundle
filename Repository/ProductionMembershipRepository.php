@@ -46,4 +46,48 @@ class ProductionMembershipRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findAllActive(Production $production)
+    {
+        $qb = $this->createQueryBuilder('m');
+        return $qb
+            // Add conditions.
+            ->andWhere($qb->expr()->eq('m.status', ':membership_status'))
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->isNull('m.expiry'),
+                $qb->expr()->gt('m.expiry', ':now')
+            ))
+            ->andWhere($qb->expr()->eq('m.group', ':production'))
+
+            // Add parameters.
+            ->setParameter('membership_status', GroupMembershipInterface::STATUS_ACTIVE)
+            ->setParameter('production', $production)
+            ->setParameter('now', new \DateTime())
+
+            // Order by and get results.
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllInactive(Production $production)
+    {
+        $qb = $this->createQueryBuilder('m');
+        return $qb
+            // Add conditions.
+            ->andWhere($qb->expr()->eq('m.status', ':membership_status'))
+            ->orWhere($qb->expr()->andX(
+                $qb->expr()->isNotNull('m.expiry'),
+                $qb->expr()->lt('m.expiry', ':now')
+            ))
+            ->andWhere($qb->expr()->eq('m.group', ':production'))
+
+            // Add parameters.
+            ->setParameter('membership_status', GroupMembershipInterface::STATUS_BLOCKED)
+            ->setParameter('production', $production)
+            ->setParameter('now', new \DateTime())
+
+            // Order by and get results.
+            ->getQuery()
+            ->getResult();
+    }
 }

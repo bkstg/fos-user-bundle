@@ -1,0 +1,5 @@
+Bkstg\FOSUserBundle\Entity\ProductionMembership:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [ member, group ]
+            message: User is already a member of this production.
