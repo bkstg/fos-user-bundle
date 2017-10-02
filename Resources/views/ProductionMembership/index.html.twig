@@ -16,7 +16,7 @@
       <div class="row">
         {% for membership in row %}
           <div class="col-md-4">
-            {% include '@BkstgFOSUser/User/show-card.html.twig' with { 'user': membership.member } only %}
+            {% include '@BkstgFOSUser/ProductionMembership/show-card.html.twig' with { 'user': membership.member } only %}
           </div>
         {% endfor %}
       </div>
