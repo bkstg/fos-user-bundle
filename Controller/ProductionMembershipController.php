@@ -156,4 +156,50 @@ class ProductionMembershipController extends Controller
             'form' => $form->createView(),
         ]));
     }
+
+    public function deleteAction(
+        $production_slug,
+        $id,
+        Request $request
+    ) {
+        // Lookup the production by production_slug.
+        $production_repo = $this->em->getRepository(Production::class);
+        if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
+            throw new NotFoundHttpException();
+        }
+
+        // Lookup the membership by production and id.
+        $membership_repo = $this->em->getRepository(ProductionMembership::class);
+        if (null === $membership = $membership_repo->findOneBy(['group' => $production, 'id' => $id])) {
+            throw new NotFoundHttpException();
+        }
+
+        // Create an empty form.
+        $form = $this->form->createBuilder()->getForm();
+        $form->handleRequest($request);
+
+        // Delete the user.
+        if ($form->isValid() && $form->isSubmitted()) {
+            $this->em->remove($membership);
+            $this->em->flush();
+
+            // Set success message and redirect.
+            $this->session->getFlashBag()->add(
+                'success',
+                $this->translator->trans('Membership for "%user%" deleted.', [
+                    '%user%' => $membership->getMember()->getUsername(),
+                ])
+            );
+            return new RedirectResponse($this->url_generator->generate('bkstg_membership_list', [
+                'production_slug' => $production->getSlug(),
+            ]));
+        }
+
+        // Render the form.
+        return new Response($this->templating->render('@BkstgFOSUser/ProductionMembership/delete.html.twig', [
+            'production' => $production,
+            'membership' => $membership,
+            'form' => $form->createView(),
+        ]));
+    }
 }
