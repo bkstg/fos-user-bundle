@@ -27,7 +27,7 @@
         </thead>
         <tbody>
         {% for membership in memberships %}
-          <tr class="{{ membership.status ?: 'danger' }}">
+          <tr>
             <td>{{ membership.member.username }}</td>
             <td>
               <ul>
@@ -37,7 +37,7 @@
               </ul>
             </td>
             <td>{{ membership.expiry|date }}</td>
-            <td>{{ membership.status }}</td>
+            <td>{{ membership.status ? 'Active'|trans : 'Inactive'|trans }}</td>
             <td>
               {% if is_granted('GROUP_ROLE_ADMIN', production) %}
                 <a href="{{ url('bkstg_membership_edit', {'production_slug': production.slug, 'id': membership.id}) }}">Edit</a>
