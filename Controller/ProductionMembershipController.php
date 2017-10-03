@@ -28,7 +28,7 @@ class ProductionMembershipController extends Controller
         }
 
         // Check permissions for this action.
-        if (!$auth->isGranted('GROUP_ROLE_USER', $production)) {
+        if (!$auth->isGranted('GROUP_ROLE_ADMIN', $production)) {
             throw new AccessDeniedException();
         }
 
@@ -66,7 +66,7 @@ class ProductionMembershipController extends Controller
         }
 
         // Check permissions for this action.
-        if (!$auth->isGranted('GROUP_ROLE_EDITOR', $production)) {
+        if (!$auth->isGranted('GROUP_ROLE_ADMIN', $production)) {
             throw new AccessDeniedException();
         }
 
@@ -99,6 +99,59 @@ class ProductionMembershipController extends Controller
 
         // Render the form.
         return new Response($this->templating->render('@BkstgFOSUser/ProductionMembership/create.html.twig', [
+            'production' => $production,
+            'form' => $form->createView(),
+        ]));
+    }
+
+    public function updateAction(
+        $production_slug,
+        $id,
+        Request $request,
+        AuthorizationCheckerInterface $auth
+    ) {
+        // Lookup the production by production_slug.
+        $production_repo = $this->em->getRepository(Production::class);
+        if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
+            throw new NotFoundHttpException();
+        }
+
+        // Lookup the membership by production and id.
+        $membership_repo = $this->em->getRepository(ProductionMembership::class);
+        if (null === $membership = $membership_repo->findOneBy(['group' => $production, 'id' => $id])) {
+            throw new NotFoundHttpException();
+        }
+
+        // Check permissions for this action.
+        if (!$auth->isGranted('GROUP_ROLE_ADMIN', $production)) {
+            throw new AccessDeniedException();
+        }
+
+        // Create and handle the form.
+        $form = $this->form->create(ProductionMembershipType::class, $membership);
+        $form->handleRequest($request);
+
+        // Form is submitted and valid.
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Persist the production
+            $this->em->persist($membership);
+            $this->em->flush();
+
+            // Set success message and redirect.
+            $this->session->getFlashBag()->add(
+                'success',
+                $this->translator->trans('Membership for "%user%" edited.', [
+                    '%user%' => $membership->getMember()->getUsername(),
+                ])
+            );
+            return new RedirectResponse($this->url_generator->generate('bkstg_membership_list', [
+                'production_slug' => $production->getSlug(),
+            ]));
+        }
+
+        // Render the form.
+        return new Response($this->templating->render('@BkstgFOSUser/ProductionMembership/edit.html.twig', [
+            'membership' => $membership,
             'production' => $production,
             'form' => $form->createView(),
         ]));

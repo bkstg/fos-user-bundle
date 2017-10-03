@@ -28,8 +28,11 @@ class ProductionMembershipType extends AbstractType
                     'Admin' => 'GROUP_ROLE_ADMIN',
                 ],
             ])
-            ->add('status', CheckboxType::class, [
-                'required' => false,
+            ->add('status', ChoiceType::class, [
+                'choices' => [
+                    'Active' => ProductionMembership::STATUS_ACTIVE,
+                    'Inactive' => ProductionMembership::STATUS_BLOCKED,
+                ],
             ])
             ->add('expiry', DateTimeType::class, [
                 'date_widget' => 'single_text',

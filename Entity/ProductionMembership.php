@@ -61,15 +61,16 @@ class ProductionMembership implements GroupMembershipInterface
     {
         $roles = $this->roles;
         $roles[] = self::GROUP_ROLE_DEFAULT;
+
         return array_unique($roles);
     }
 
-    public function setRoles($roles)
+    public function setRoles(array $roles)
     {
+        $this->roles = array();
+
         foreach ($roles as $role) {
-            if (!$this->hasRole($role)) {
-                $this->addRole($role);
-            }
+            $this->addRole($role);
         }
 
         return $this;
@@ -77,29 +78,31 @@ class ProductionMembership implements GroupMembershipInterface
 
     public function addRole(string $role)
     {
-        if ($this->hasRole($role) || $role == self::GROUP_ROLE_DEFAULT) {
-            return;
+        $role = strtoupper($role);
+        if ($role === self::GROUP_ROLE_DEFAULT) {
+            return $this;
         }
-        $this->roles[] = $role;
+
+        if (!in_array($role, $this->roles, true)) {
+            $this->roles[] = $role;
+        }
+
         return $this;
     }
 
     public function removeRole(string $role)
     {
-        if (!$this->hasRole($role)) {
-            return;
+        if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
+            unset($this->roles[$key]);
+            $this->roles = array_values($this->roles);
         }
-        unset($this->roles[array_search($role, $this->roles)]);
+
         return $this;
     }
 
     public function hasRole(string $role)
     {
-        if ($role == self::GROUP_ROLE_DEFAULT) {
-            return true;
-        }
-
-        return in_array($role, $this->roles);
+        return in_array(strtoupper($role), $this->getRoles(), true);
     }
 
     public function getStatus()
