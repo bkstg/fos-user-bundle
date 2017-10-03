@@ -13,4 +13,6 @@ Bkstg\FOSUserBundle\Entity\User:
         memberships:
             targetEntity: Bkstg\FOSUserBundle\Entity\ProductionMembership
             mappedBy: member
+            cascade:
+                - remove
 
