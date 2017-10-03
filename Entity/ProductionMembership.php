@@ -11,6 +11,8 @@ use MidnightLuke\GroupSecurityBundle\Model\GroupMembershipInterface;
 
 class ProductionMembership implements GroupMembershipInterface
 {
+    const GROUP_ROLE_DEFAULT = 'GROUP_ROLE_USER';
+
     private $id;
     private $group;
     private $member;
@@ -57,16 +59,26 @@ class ProductionMembership implements GroupMembershipInterface
 
     public function getRoles()
     {
-        return $this->roles;
+        $roles = $this->roles;
+        $roles[] = self::GROUP_ROLE_DEFAULT;
+        return array_unique($roles);
+    }
+
+    public function setRoles($roles)
+    {
+        foreach ($roles as $role) {
+            if (!$this->hasRole($role)) {
+                $this->addRole($role);
+            }
+        }
+
+        return $this;
     }
 
     public function addRole(string $role)
     {
-        if (substr($role, 0, 11) != GroupMembershipInterface::GROUP_ROLE_PREFIX) {
-            throw new InvalidGroupRoleException();
-        }
-        if ($this->hasRole($role)) {
-            throw new UserHasRoleException();
+        if ($this->hasRole($role) || $role == self::GROUP_ROLE_DEFAULT) {
+            return;
         }
         $this->roles[] = $role;
         return $this;
@@ -75,7 +87,7 @@ class ProductionMembership implements GroupMembershipInterface
     public function removeRole(string $role)
     {
         if (!$this->hasRole($role)) {
-            throw new UserHasNoRoleException();
+            return;
         }
         unset($this->roles[array_search($role, $this->roles)]);
         return $this;
@@ -83,6 +95,10 @@ class ProductionMembership implements GroupMembershipInterface
 
     public function hasRole(string $role)
     {
+        if ($role == self::GROUP_ROLE_DEFAULT) {
+            return true;
+        }
+
         return in_array($role, $this->roles);
     }
 
@@ -131,19 +147,5 @@ class ProductionMembership implements GroupMembershipInterface
             return false;
         }
         return ($this->status == GroupMembershipInterface::STATUS_ACTIVE);
-    }
-
-    /**
-     * Set roles
-     *
-     * @param array $roles
-     *
-     * @return ProductionMembership
-     */
-    public function setRoles($roles)
-    {
-        $this->roles = $roles;
-
-        return $this;
     }
 }

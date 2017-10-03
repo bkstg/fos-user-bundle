@@ -12,15 +12,44 @@
   {% if memberships is empty %}
     <p>{{ 'No memberships found.'|trans }}</p>
   {% else %}
-    {% for row in memberships|batch(3) %}
-      <div class="row">
-        {% for membership in row %}
-          <div class="col-md-4">
-            {% include '@BkstgFOSUser/ProductionMembership/show-card.html.twig' with { 'user': membership.member } only %}
-          </div>
+    <p><div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>{{ 'User'|trans }}</th>
+            <th>{{ 'Roles'|trans }}</th>
+            <th>{{ 'Expiry'|trans }}</th>
+            <th>{{ 'Status'|trans }}</th>
+            {% if is_granted('GROUP_ROLE_ADMIN', production) %}
+              <th></th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody>
+        {% for membership in memberships %}
+          <tr class="{{ membership.status ?: 'danger' }}">
+            <td>{{ membership.member.username }}</td>
+            <td>
+              <ul>
+                {% for role in membership.roles %}
+                  <li>{{ role }}</li>
+                {% endfor %}
+              </ul>
+            </td>
+            <td>{{ membership.expiry|date }}</td>
+            <td>{{ membership.status }}</td>
+            <td>
+              {% if is_granted('GROUP_ROLE_ADMIN', production) %}
+                <a href="{{ url('bkstg_membership_edit', {'production_slug': production.slug, 'id': membership.id}) }}">Edit</a>
+                -
+                <a href="{{ url('bkstg_membership_delete', {'production_slug': production.slug, 'id': membership.id}) }}">Delete</a>
+              {% endif %}
+            </td>
+          </tr>
         {% endfor %}
-      </div>
-    {% endfor %}
+        </tbody>
+      </table>
+    </div></p>
   {% endif %}
 {% endblock %}
 
@@ -28,7 +57,7 @@
 {% block header %}
   <header>
     <h1>
-      {% if is_granted('GROUP_ROLE_EDITOR', production) %}
+      {% if is_granted('GROUP_ROLE_ADMIN', production) %}
         <a href="{{ url('bkstg_membership_create', {'production_slug': production.slug}) }}" class="btn btn-success">
           <span class="fa fa-plus" aria-hidden="true"></span>
           <span class="sr-only">{{ 'Create new production'|trans }}</span>
