@@ -19,7 +19,6 @@
             <th>{{ 'User'|trans }}</th>
             <th>{{ 'Roles'|trans }}</th>
             <th>{{ 'Expiry'|trans }}</th>
-            <th>{{ 'Status'|trans }}</th>
             {% if is_granted('GROUP_ROLE_ADMIN', production) %}
               <th></th>
             {% endif %}
@@ -37,7 +36,6 @@
               </ul>
             </td>
             <td>{{ membership.expiry|date }}</td>
-            <td>{{ membership.status ? 'Active'|trans : 'Inactive'|trans }}</td>
             <td>
               {% if is_granted('GROUP_ROLE_ADMIN', production) %}
                 <a href="{{ url('bkstg_membership_edit', {'production_slug': production.slug, 'id': membership.id}) }}">Edit</a>
