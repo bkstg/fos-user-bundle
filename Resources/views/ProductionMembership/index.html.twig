@@ -35,7 +35,7 @@
                 {% endfor %}
               </ul>
             </td>
-            <td>{{ membership.expiry|date }}</td>
+            <td>{{ membership.expiry ? membership.expiry|date : '' }}</td>
             <td>
               {% if is_granted('GROUP_ROLE_ADMIN', production) %}
                 <a href="{{ url('bkstg_membership_edit', {'production_slug': production.slug, 'id': membership.id}) }}">Edit</a>
