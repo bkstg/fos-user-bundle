@@ -7,6 +7,9 @@ fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
 
+bkstg_profile:
+    resource: '@BkstgFOSUserBundle/Resources/config/routing/profile.yml'
+    prefix: /profile
 bkstg_user:
     resource: '@BkstgFOSUserBundle/Resources/config/routing/user_admin.yml'
     prefix: /admin/users

@@ -2,16 +2,18 @@
 
 namespace Bkstg\FOSUserBundle\Entity;
 
-use MidnightLuke\GroupSecurityBundle\Model\GroupMemberInterface;
-use MidnightLuke\GroupSecurityBundle\Model\GroupMembershipInterface;
+use Bkstg\CoreBundle\User\UserInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
+use MidnightLuke\GroupSecurityBundle\Model\GroupMemberInterface;
+use MidnightLuke\GroupSecurityBundle\Model\GroupMembershipInterface;
 
-class User extends BaseUser implements GroupMemberInterface
+class User extends BaseUser implements GroupMemberInterface, UserInterface
 {
 
     protected $id;
     private $memberships;
+    private $profile;
 
     /**
      * Create a new instance of User.
@@ -76,5 +78,29 @@ class User extends BaseUser implements GroupMemberInterface
     public function __toString()
     {
         return $this->username ?: '';
+    }
+
+    /**
+     * Set profile
+     *
+     * @param Profile $profile
+     *
+     * @return User
+     */
+    public function setProfile(Profile $profile = null)
+    {
+        $this->profile = $profile;
+
+        return $this;
+    }
+
+    /**
+     * Get profile
+     *
+     * @return Profile
+     */
+    public function getProfile()
+    {
+        return $this->profile;
     }
 }

@@ -15,4 +15,9 @@ Bkstg\FOSUserBundle\Entity\User:
             mappedBy: member
             cascade:
                 - remove
-
+    oneToOne:
+        profile:
+            targetEntity: Bkstg\FOSUserBundle\Entity\Profile
+            mappedBy: user
+            cascade:
+                - remove
