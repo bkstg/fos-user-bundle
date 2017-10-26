@@ -2,7 +2,7 @@
 
 namespace Bkstg\FOSUserBundle\Repository;
 
-use Bkstg\CoreBundle\Entity\User;
+use Bkstg\FOSUserBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -38,11 +38,25 @@ class ProfileRepository extends EntityRepository
 
     public function findAllEnabled()
     {
-        return $this->findAll();
+        // Get a query builder and build a query.
+        $qb = $this->createQueryBuilder('p');
+        $query = $qb
+            ->join('p.user', 'u')
+            ->andWhere($qb->expr()->eq('u.enabled', 1))
+            ->getQuery();
+
+        return $query->getResult();
     }
 
     public function findAllBlocked()
     {
-        return $this->findAll();
+        // Get a query builder and build a query.
+        $qb = $this->createQueryBuilder('p');
+        $query = $qb
+            ->join('p.user', 'u')
+            ->andWhere($qb->expr()->eq('u.enabled', 0))
+            ->getQuery();
+
+        return $query->getResult();
     }
 }

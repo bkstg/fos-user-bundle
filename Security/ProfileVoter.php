@@ -50,7 +50,7 @@ class ProfileVoter extends Voter
 
         switch ($attribute) {
             case self::VIEW:
-                return true;
+                return $profile->getUser()->isEnabled();
             case self::EDIT:
                 return $user->getUsername() == $profile->getAuthor();
         }

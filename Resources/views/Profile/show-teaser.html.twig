@@ -1,0 +1,6 @@
+<a href="{{ url('bkstg_profile_show', {'profile_slug': profile.slug}) }}">
+{% media profile.image, 'big' with {'class': 'img-fluid'} %}
+  <p>
+    <h4 class="text-center">{{ profile.name }}</h4>
+  </p>
+</a>
