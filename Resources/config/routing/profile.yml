@@ -1,24 +1,20 @@
-bkstg_profile_redirect:
-    path: /profile
-    defaults:
-        _controller: Bkstg\FOSUserBundle\Controller\ProfileController:redirectAction
 bkstg_profile_list:
-    path: /directory
+    path: /
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\ProfileController:indexAction
 bkstg_profile_create:
-    path: /profile/create
+    path: /create
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\ProfileController:createAction
 bkstg_profile_show:
-    path: /profile/{profile_slug}
+    path: /{profile_slug}
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\ProfileController:readAction
 bkstg_profile_edit:
-    path: /profile/{id}/edit
+    path: /{id}/edit
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\ProfileController:updateAction
 bkstg_profile_delete:
-    path: /profile/{id}/delete
+    path: /{id}/delete
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\ProfileController:deleteAction

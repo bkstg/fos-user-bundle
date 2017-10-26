@@ -15,17 +15,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class ProfileRepository extends EntityRepository
 {
-    public function findGlobalProfile(UserInterface $user)
+    public function findProfile(UserInterface $user)
     {
         $profile = null;
 
         // Get a query builder and build a query.
         $qb = $this->createQueryBuilder('p');
         $query = $qb
-            ->leftJoin('p.group', 'g')
-            ->andWhere($qb->expr()->eq('p.author', ':author'))
-            ->andWhere($qb->expr()->isNull('g.id'))
-            ->setParameter('author', $user->getUsername())
+            ->join('p.user', 'u')
+            ->andWhere($qb->expr()->eq('u', ':user'))
+            ->setParameter('user', $user)
             ->getQuery();
 
         try {
@@ -37,7 +36,7 @@ class ProfileRepository extends EntityRepository
         return $profile;
     }
 
-    public function findAllOpen()
+    public function findAllEnabled()
     {
         return $this->findAll();
     }

@@ -16,44 +16,14 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ProfileController extends Controller
 {
-    /**
-     * Profile redirect action.
-     *
-     * Checks if the current user has a profile and redirects to their profile
-     * if they do.
-     *
-     * @param TokenStorageInterface $token_storage
-     *   The token storage for the current user.
-     *
-     * @return RedirectResponse
-     *   A redirect to the correct profile.
-     */
-    public function redirectAction(TokenStorageInterface $token_storage)
-    {
-        // Get the current user from the token storage.
-        $user = $token_storage->getToken()->getUser();
-
-        // Check if this user has a global profile.
-        $profile_repo = $this->em->getRepository(Profile::class);
-        if (null === $profile = $profile_repo->findGlobalProfile($user)) {
-            throw new NotFoundHttpException();
-        }
-
-        // Redirect to the profile.
-        return new RedirectResponse($this->url_generator->generate(
-            'bkstg_profile_show',
-            ['profile_slug' => $profile->getSlug()]
-        ));
-    }
-
     public function indexAction(Request $request)
     {
         $profile_repo = $this->em->getRepository(Profile::class);
         if ($request->query->has('status')
             && $request->query->get('status') == 'blocked') {
-            $profile_repo = $pm->findAllBlocked();
+            $profiles = $profile_repo->findAllBlocked();
         } else {
-            $profile_repo = $pm->findAllEnabled();
+            $profiles = $profile_repo->findAllEnabled();
         }
 
         return new Response($this->templating->render('@BkstgFOSUser/Profile/index.html.twig', [
@@ -80,7 +50,7 @@ class ProfileController extends Controller
         // Get the current user and check for a global profile.
         $user = $token_storage->getToken()->getUser();
         $profile_repo = $this->em->getRepository(Profile::class);
-        if (null !== $profile = $profile_repo->findGlobalProfile($user)) {
+        if (null !== $profile = $profile_repo->findProfile($user)) {
             throw new AccessDeniedException($this->translator->trans('You can only have one global profile.'));
         }
 
@@ -197,26 +167,6 @@ class ProfileController extends Controller
     }
 
     public function deleteAction($id)
-    {
-    }
-
-    public function productionRedirectAction($production_slug)
-    {
-    }
-
-    public function productionCreateAction($production_slug)
-    {
-    }
-
-    public function productionReadAction($production_slug, $profile_slug)
-    {
-    }
-
-    public function productionUpdateAction($production_slug, $id)
-    {
-    }
-
-    public function productionDeleteAction($production_slug, $id)
     {
     }
 }

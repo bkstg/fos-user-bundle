@@ -1,3 +1,4 @@
+# Contrib routes.
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 fos_user_resetting:
@@ -7,9 +8,10 @@ fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
 
+# User bundle routes.
 bkstg_profile:
     resource: '@BkstgFOSUserBundle/Resources/config/routing/profile.yml'
-    prefix: /profile
+    prefix: /directory
 bkstg_user:
     resource: '@BkstgFOSUserBundle/Resources/config/routing/user_admin.yml'
     prefix: /admin/users
