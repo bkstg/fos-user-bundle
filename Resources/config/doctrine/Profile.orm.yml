@@ -45,7 +45,7 @@ Bkstg\FOSUserBundle\Entity\Profile:
     oneToOne:
         user:
             targetEntity: Bkstg\FOSUserBundle\Entity\User
-            inversedBy: profile
+            mappedBy: profile
         image:
             targetEntity: Bkstg\MediaBundle\Entity\Media
             cascade:
