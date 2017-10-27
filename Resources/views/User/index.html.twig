@@ -16,12 +16,12 @@
       <table class="table table-striped">
         <thead>
           <tr>
-            <th>{{ 'Username'|trans }}</th>
-            <th>{{ 'Email'|trans }}</th>
+            <th>{{ knp_pagination_sortable(users, 'Username'|trans, 'u.username') }}</th>
+            <th>{{ knp_pagination_sortable(users, 'Email'|trans, 'u.email') }}</th>
             <th>{{ 'Roles'|trans }}</th>
-            <th>{{ 'Last login'|trans }}</th>
+            <th>{{ knp_pagination_sortable(users, 'Last login'|trans, 'u.lastLogin', {'direction': 'desc'}) }}</th>
             {% if is_granted('ROLE_ADMIN') %}
-              <th></th>
+              <th>{{ 'Operations'|trans }}</th>
             {% endif %}
           </tr>
         </thead>
@@ -50,6 +50,7 @@
         </tbody>
       </table>
     </div></p>
+    {{ knp_pagination_render(users) }}
   {% endif %}
 {% endblock %}
 

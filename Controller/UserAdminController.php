@@ -8,6 +8,7 @@ use Bkstg\FOSUserBundle\Form\Type\UserType;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\UserManagerInterface;
 use FOS\UserBundle\Util\TokenGeneratorInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,17 +17,18 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class UserAdminController extends Controller
 {
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, PaginatorInterface $paginator)
     {
         // Can show either enabled or blocked.
         if ($request->query->has('status')
             && $request->query->get('status') == 'blocked') {
-            $users = $this->em->getRepository(User::class)->findBy(['enabled' => false]);
+            $query = $this->em->getRepository(User::class)->getAllBlockedQuery();
         } else {
-            $users = $this->em->getRepository(User::class)->findBy(['enabled' => true]);
+            $query = $this->em->getRepository(User::class)->getAllActiveQuery();
         }
 
-        // Render the list of users.
+        // Paginate the user query and render.
+        $users = $paginator->paginate($query, $request->query->getInt('page', 1));
         return new Response($this->templating->render('@BkstgFOSUser/User/index.html.twig', [
             'users' => $users,
         ]));
