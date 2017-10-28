@@ -36,6 +36,27 @@ class ProfileRepository extends EntityRepository
         return $profile;
     }
 
+    public function findProfileByUsername(string $username)
+    {
+        $profile = null;
+
+        // Get a query builder and build a query.
+        $qb = $this->createQueryBuilder('p');
+        $query = $qb
+            ->join('p.user', 'u')
+            ->andWhere($qb->expr()->eq('u.username', ':username'))
+            ->setParameter('username', $username)
+            ->getQuery();
+
+        try {
+            $profile = $query->getSingleResult();
+        } catch (NoResultException $e) {
+            // Nothing to be concerned about.
+        }
+
+        return $profile;
+    }
+
     public function findAllEnabled()
     {
         // Get a query builder and build a query.
