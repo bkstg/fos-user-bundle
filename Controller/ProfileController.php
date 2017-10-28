@@ -153,7 +153,7 @@ class ProfileController extends Controller
 
             return new RedirectResponse($this->url_generator->generate(
                 'bkstg_profile_show',
-                ['id' => $profile->getId()]
+                ['profile_slug' => $profile->getSlug()]
             ));
         }
 
