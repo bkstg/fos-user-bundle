@@ -1,8 +1,6 @@
 Bkstg\FOSUserBundle\Entity\Profile:
     type: entity
     repositoryClass: Bkstg\FOSUserBundle\Repository\ProfileRepository
-    cache:
-        usage: NONSTRICT_READ_WRITE
 
     id:
         id:

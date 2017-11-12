@@ -46,8 +46,7 @@ class ProfileRepository extends EntityRepository
             ->join('p.user', 'u')
             ->andWhere($qb->expr()->eq('u.username', ':username'))
             ->setParameter('username', $username)
-            ->getQuery()
-            ->setCacheable(true);
+            ->getQuery();
 
         try {
             $profile = $query->getSingleResult();
