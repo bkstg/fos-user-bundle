@@ -90,4 +90,17 @@ class ProductionMembershipRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findMembershipsByGroup(Production $production)
+    {
+        $qb = $this->createQueryBuilder('m');
+        return $qb
+            ->addSelect('u')
+            ->join('m.group', 'g')
+            ->join('m.member', 'u')
+            ->andWhere($qb->expr()->eq('g', ':group'))
+            ->setParameter('group', $production)
+            ->getQuery()
+            ->getResult();
+    }
 }

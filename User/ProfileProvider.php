@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class ProfileProvider implements ProfileProviderInterface
 {
     private $em;
+    private $cache = [];
 
     public function __construct(EntityManagerInterface $em)
     {
@@ -17,7 +18,13 @@ class ProfileProvider implements ProfileProviderInterface
 
     public function loadProfileByUsername(string $username)
     {
+        if (isset($this->cache[$username])) {
+            return $this->cache[$username];
+        }
+
         $profile_repo = $this->em->getRepository(Profile::class);
-        return $profile_repo->findProfileByUsername($username);
+        $this->cache[$username] = $profile_repo->findProfileByUsername($username);
+
+        return $this->cache[$username];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Bkstg\FOSUserBundle\Repository;
 
+use Bkstg\CoreBundle\Entity\Production;
 use Bkstg\FOSUserBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 
@@ -39,5 +40,17 @@ class UserRepository extends EntityRepository
     public function findAllBlocked()
     {
         return $this->getAllBlockedQuery()->getResult();
+    }
+
+    public function findUsersByGroup(Production $production)
+    {
+        $qb = $this->createQueryBuilder('u');
+        return $qb
+            ->join('u.memberships', 'm')
+            ->join('m.group', 'g')
+            ->andWhere($qb->expr()->eq('g', ':group'))
+            ->setParameter('group', $production)
+            ->getQuery()
+            ->getResult();
     }
 }
