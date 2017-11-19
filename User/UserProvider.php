@@ -11,6 +11,7 @@ use MidnightLuke\GroupSecurityBundle\Model\GroupInterface;
 class UserProvider implements UserProviderInterface
 {
     private $em;
+    private $cache = [];
 
     public function __construct(EntityManagerInterface $em)
     {
@@ -19,7 +20,13 @@ class UserProvider implements UserProviderInterface
 
     public function loadUserByUsername(string $username)
     {
+        if (isset($this->cache[$username])) {
+            return $this->cache[$username];
+        }
+
         $user_repo = $this->em->getRepository(User::class);
-        return $user_repo->findOneBy(['username' => $username]);
+        $this->cache[$username] = $user_repo->findOneBy(['username' => $username]);
+
+        return $this->cache[$username];
     }
 }
