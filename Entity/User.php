@@ -75,9 +75,9 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
         return $this->memberships->contains($membership);
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return ($this->profile === null) ? $this->username : $this->getProfile()->__toString();
+        return (string) (($this->profile === null) ? $this->username : $this->getProfile()->__toString());
     }
 
     /**
