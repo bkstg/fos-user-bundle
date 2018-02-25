@@ -8,11 +8,6 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class BkstgFOSUserBundle extends Bundle
 {
-    public function getParent()
-    {
-        return 'FOSUserBundle';
-    }
-
     public function build(ContainerBuilder $container)
     {
         parent::build($container);

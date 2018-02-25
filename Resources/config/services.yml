@@ -21,3 +21,8 @@ services:
     Bkstg\FOSUserBundle\EventListener\MembershipDeletion:
         tags:
             - { name: doctrine.event_listener, event: preRemove, lazy: true }
+
+    # Service aliases.
+    Bkstg\CoreBundle\User\MembershipProviderInterface: '@Bkstg\FOSUserBundle\User\MembershipProvider'
+    Bkstg\CoreBundle\User\ProfileProviderInterface: '@Bkstg\FOSUserBundle\User\ProfileProvider'
+    Bkstg\CoreBundle\User\UserProviderInterface: '@Bkstg\FOSUserBundle\User\UserProvider'
