@@ -17,4 +17,4 @@ Bkstg\FOSUserBundle\Entity\ProductionRole:
     manyToOne:
         production_membership:
             targetEntity: Bkstg\FOSUserBundle\Entity\ProductionMembership
-            inversed_by: production_roles
+            inversedBy: production_roles
