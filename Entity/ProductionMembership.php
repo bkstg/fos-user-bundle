@@ -159,12 +159,13 @@ class ProductionMembership implements ProductionMembershipInterface
 
     public function addProductionRole(ProductionRole $production_role)
     {
+        $production_role->setProductionMembership($this);
         $this->production_roles->add($production_role);
     }
 
     public function removeProductionRole(ProductionRole $production_role)
     {
-        $this->production_roles->remove($production_role);
+        $this->production_roles->removeElement($production_role);
     }
 
     public function getProductionRoles()

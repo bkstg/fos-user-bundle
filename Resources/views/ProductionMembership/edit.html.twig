@@ -1,6 +1,6 @@
 {% extends '@BkstgCore/layout.html.twig' %}
 {% set page_title = 'Edit membership for "%user%"'|trans({'%user%': membership.member.username}) %}
-{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% form_theme form '@BkstgFOSUser/ProductionRole/form.html.twig' %}
 {% block content %}
   {{ form_start(form) }}
     {{ form_widget(form) }}

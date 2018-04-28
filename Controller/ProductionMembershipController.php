@@ -6,6 +6,7 @@ use Bkstg\CoreBundle\Controller\Controller;
 use Bkstg\CoreBundle\Entity\Production;
 use Bkstg\FOSUserBundle\Entity\ProductionMembership;
 use Bkstg\FOSUserBundle\Form\Type\ProductionMembershipType;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -126,12 +127,24 @@ class ProductionMembershipController extends Controller
             throw new AccessDeniedException();
         }
 
+        // Create an index of production roles for checking later.
+        $production_roles = new ArrayCollection();
+        foreach ($membership->getProductionRoles() as $production_role) {
+            $production_roles->add($production_role);
+        }
+
         // Create and handle the form.
         $form = $this->form->create(ProductionMembershipType::class, $membership);
         $form->handleRequest($request);
 
         // Form is submitted and valid.
         if ($form->isSubmitted() && $form->isValid()) {
+            // Remove unneeded production_roles.
+            foreach ($production_roles as $production_role) {
+                if (false === $membership->getProductionRoles()->contains($production_role)) {
+                    $this->em->remove($production_role);
+                }
+            }
             // Persist the production
             $this->em->persist($membership);
             $this->em->flush();

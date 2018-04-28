@@ -1,0 +1,13 @@
+{% block production_role_widget %}
+  <div class="form-row">
+    <div class="col-3">
+      {{ form_row(form.designation) }}
+    </div>
+    <div class="col">
+      {{ form_row(form.name) }}
+    </div>
+  </div>
+  <div class="btn-group">
+    <a href="#" class="collection-item-remove btn btn-danger"><i class="fa fa-times"></i> {{ 'Remove' }}</a>
+  </div>
+{% endblock %}
