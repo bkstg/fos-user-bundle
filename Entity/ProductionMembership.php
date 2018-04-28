@@ -5,11 +5,14 @@ namespace Bkstg\FOSUserBundle\Entity;
 use Bkstg\CoreBundle\Entity\Production;
 use Bkstg\CoreBundle\Exception\UserHasNoRoleException;
 use Bkstg\CoreBundle\Exception\UserHasRoleException;
+use Bkstg\CoreBundle\User\ProductionMembershipInterface;
+use Bkstg\FOSUserBundle\Entity\ProductionRole;
+use Doctrine\Common\Collections\ArrayCollection;
 use MidnightLuke\GroupSecurityBundle\Model\GroupInterface;
 use MidnightLuke\GroupSecurityBundle\Model\GroupMemberInterface;
 use MidnightLuke\GroupSecurityBundle\Model\GroupMembershipInterface;
 
-class ProductionMembership implements GroupMembershipInterface
+class ProductionMembership implements ProductionMembershipInterface
 {
     const GROUP_ROLE_DEFAULT = 'GROUP_ROLE_USER';
 
@@ -19,9 +22,11 @@ class ProductionMembership implements GroupMembershipInterface
     private $roles;
     private $status;
     private $expiry;
+    private $production_roles;
 
     public function __construct()
     {
+        $this->production_roles = new ArrayCollection();
         $this->roles = [];
     }
 
@@ -150,5 +155,20 @@ class ProductionMembership implements GroupMembershipInterface
             return false;
         }
         return ($this->status == GroupMembershipInterface::STATUS_ACTIVE);
+    }
+
+    public function addProductionRole(ProductionRole $production_role)
+    {
+        $this->production_roles->add($production_role);
+    }
+
+    public function removeProductionRole(ProductionRole $production_role)
+    {
+        $this->production_roles->remove($production_role);
+    }
+
+    public function getProductionRoles()
+    {
+        return $this->production_roles;
     }
 }

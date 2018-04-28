@@ -1,0 +1,20 @@
+Bkstg\FOSUserBundle\Entity\ProductionRole:
+    type: entity
+
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+
+    fields:
+        name:
+            type: string
+        designation:
+            type: string
+
+    manyToOne:
+        production_membership:
+            targetEntity: Bkstg\FOSUserBundle\Entity\ProductionRole
+            inversed_by: production_roles

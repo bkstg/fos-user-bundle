@@ -24,3 +24,7 @@ Bkstg\FOSUserBundle\Entity\ProductionMembership:
             inversedBy: memberships
         group:
             targetEntity: Bkstg\CoreBundle\Entity\Production
+    oneToMany:
+        production_roles:
+            targetEntity: Bkstg\FOSUserBundle\Entity\ProductionRole
+            mappedBy: production_membership
