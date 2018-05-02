@@ -17,7 +17,10 @@ Bkstg\FOSUserBundle\Entity\ProductionMembership:
         expiry:
             type: datetime
             nullable: true
-
+    oneToOne:
+        profile:
+            targetEntity: Bkstg\FOSUserBundle\Entity\Profile
+            mappedBy: membership
     manyToOne:
         member:
             targetEntity: Bkstg\FOSUserBundle\Entity\User

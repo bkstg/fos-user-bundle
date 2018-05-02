@@ -12,6 +12,9 @@ fos_user_change_password:
 bkstg_profile:
     resource: '@BkstgFOSUserBundle/Resources/config/routing/profile.yml'
     prefix: /directory
+bkstg_production_profile:
+    resource: '@BkstgFOSUserBundle/Resources/config/routing/production_profile.yml'
+    prefix: /{production_slug}/directory
 bkstg_user:
     resource: '@BkstgFOSUserBundle/Resources/config/routing/user_admin.yml'
     prefix: /admin/users

@@ -46,6 +46,9 @@ Bkstg\FOSUserBundle\Entity\Profile:
         user:
             targetEntity: Bkstg\FOSUserBundle\Entity\User
             mappedBy: profile
+        membership:
+            targetEntity: Bkstg\FOSUserBundle\Entity\ProductionMembership
+            inversedBy: profile
         image:
             targetEntity: Bkstg\MediaBundle\Entity\Media
             cascade:

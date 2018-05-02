@@ -4,6 +4,7 @@ namespace Bkstg\FOSUserBundle\Entity;
 
 use Bkstg\CoreBundle\Entity\Production;
 use Bkstg\CoreBundle\User\ProfileInterface;
+use Bkstg\FOSUserBundle\Entity\ProductionMembership;
 use Bkstg\MediaBundle\Entity\Media;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -24,6 +25,7 @@ class Profile implements ProfileInterface
     private $image;
     private $slug;
     private $user;
+    private $membership;
 
     /**
      * Get id
@@ -307,5 +309,24 @@ class Profile implements ProfileInterface
     public function __toString()
     {
         return $this->getName();
+    }
+
+    /**
+     * Get membership
+     * @return
+     */
+    public function getMembership()
+    {
+        return $this->membership;
+    }
+
+    /**
+     * Set membership
+     * @return $this
+     */
+    public function setMembership(ProductionMembership $membership)
+    {
+        $this->membership = $membership;
+        return $this;
     }
 }

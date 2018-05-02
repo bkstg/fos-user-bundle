@@ -2,9 +2,13 @@
 
 namespace Bkstg\FOSUserBundle\Repository;
 
+use Bkstg\CoreBundle\Entity\Production;
+use Bkstg\FOSUserBundle\Entity\ProductionMembership;
 use Bkstg\FOSUserBundle\Entity\User;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
+use Doctrine\ORM\Query\Expr\Join;
+use MidnightLuke\GroupSecurityBundle\Model\GroupMembershipInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -57,7 +61,36 @@ class ProfileRepository extends EntityRepository
         return $profile;
     }
 
-    public function findAllEnabled()
+    public function findAllEnabled(Production $production = null)
+    {
+        // Forward to the correct helper for the query.
+        if ($production === null) {
+            return $this->findAllGlobalEnabled();
+        }
+
+        return $this->findAllProductionEnabled($production);
+    }
+
+    public function findAllProductionEnabled(Production $production)
+    {
+        $qb = $this->createQueryBuilder('p');
+        $query = $qb
+            ->join('p.membership', 'm')
+            ->andWhere($qb->expr()->eq('m.group', ':production'))
+            ->andWhere($qb->expr()->eq('m.status', ':membership_status'))
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->isNull('m.expiry'),
+                $qb->expr()->gt('m.expiry', ':now')
+            ))
+            ->setParameter('membership_status', GroupMembershipInterface::STATUS_ACTIVE)
+            ->setParameter('now', new \DateTime())
+            ->setParameter('production', $production)
+            ->getQuery();
+
+        return $query->getResult();
+    }
+
+    public function findAllGlobalEnabled()
     {
         // Get a query builder and build a query.
         $qb = $this->createQueryBuilder('p');
