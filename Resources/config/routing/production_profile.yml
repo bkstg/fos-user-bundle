@@ -2,19 +2,3 @@ bkstg_production_profile_list:
     path: /
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\ProductionProfileController:indexAction
-bkstg_production_profile_create:
-    path: /create
-    defaults:
-        _controller: Bkstg\FOSUserBundle\Controller\ProductionProfileController:createAction
-bkstg_production_profile_show:
-    path: /{profile_slug}
-    defaults:
-        _controller: Bkstg\FOSUserBundle\Controller\ProductionProfileController:readAction
-bkstg_production_profile_edit:
-    path: /{id}/edit
-    defaults:
-        _controller: Bkstg\FOSUserBundle\Controller\ProductionProfileController:updateAction
-bkstg_production_profile_delete:
-    path: /{id}/delete
-    defaults:
-        _controller: Bkstg\FOSUserBundle\Controller\ProductionProfileController:deleteAction

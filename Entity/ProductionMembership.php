@@ -24,7 +24,6 @@ class ProductionMembership implements ProductionMembershipInterface
     private $status;
     private $expiry;
     private $production_roles;
-    private $profile;
 
     public function __construct()
     {
@@ -173,24 +172,5 @@ class ProductionMembership implements ProductionMembershipInterface
     public function getProductionRoles()
     {
         return $this->production_roles;
-    }
-
-    /**
-     * Get profile
-     * @return
-     */
-    public function getProfile()
-    {
-        return $this->profile;
-    }
-
-    /**
-     * Set profile
-     * @return $this
-     */
-    public function setProfile(Profile $profile)
-    {
-        $this->profile = $profile;
-        return $this;
     }
 }

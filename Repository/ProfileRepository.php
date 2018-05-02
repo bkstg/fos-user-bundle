@@ -75,7 +75,8 @@ class ProfileRepository extends EntityRepository
     {
         $qb = $this->createQueryBuilder('p');
         $query = $qb
-            ->join('p.membership', 'm')
+            ->join('p.user', 'u')
+            ->join('u.memberships', 'm')
             ->andWhere($qb->expr()->eq('m.group', ':production'))
             ->andWhere($qb->expr()->eq('m.status', ':membership_status'))
             ->andWhere($qb->expr()->orX(
