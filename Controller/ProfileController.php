@@ -56,7 +56,7 @@ class ProfileController extends Controller
 
         // Create a new profile with this user as the author.
         $profile = new Profile();
-        $profile->setAuthor($user->getUsername());
+        $profile->setUser($user);
 
         // Create and handle the form.
         $form = $this->form->create(ProfileType::class, $profile);

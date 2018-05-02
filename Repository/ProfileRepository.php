@@ -98,7 +98,6 @@ class ProfileRepository extends EntityRepository
             ->join('p.user', 'u')
             ->andWhere($qb->expr()->eq('u.enabled', 1))
             ->getQuery();
-
         return $query->getResult();
     }
 

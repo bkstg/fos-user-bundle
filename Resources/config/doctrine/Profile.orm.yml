@@ -45,7 +45,7 @@ Bkstg\FOSUserBundle\Entity\Profile:
     oneToOne:
         user:
             targetEntity: Bkstg\FOSUserBundle\Entity\User
-            mappedBy: profile
+            inversedBy: profile
         membership:
             targetEntity: Bkstg\FOSUserBundle\Entity\ProductionMembership
             inversedBy: profile

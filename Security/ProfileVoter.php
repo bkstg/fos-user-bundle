@@ -52,7 +52,7 @@ class ProfileVoter extends Voter
             case self::VIEW:
                 return $profile->getUser()->isEnabled();
             case self::EDIT:
-                return $user->getUsername() == $profile->getAuthor();
+                return $user === $profile->getUser();
         }
 
         return false;

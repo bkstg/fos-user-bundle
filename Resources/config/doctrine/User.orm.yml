@@ -18,6 +18,6 @@ Bkstg\FOSUserBundle\Entity\User:
     oneToOne:
         profile:
             targetEntity: Bkstg\FOSUserBundle\Entity\Profile
-            inversedBy: user
+            mappedBy: user
             cascade:
                 - remove
