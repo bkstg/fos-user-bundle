@@ -27,8 +27,12 @@ class ProfileType extends AbstractType
             ->add('last_name')
             ->add('email', EmailType::class)
             ->add('phone')
-            ->add('height', LengthType::class)
-            ->add('weight', MassType::class)
+            ->add('height', LengthType::class, [
+                'required' => false,
+            ])
+            ->add('weight', MassType::class, [
+                'required' => false,
+            ])
             ->add('facebook', UrlType::class, [
                 'required' => false,
             ])

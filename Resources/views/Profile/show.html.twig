@@ -25,13 +25,17 @@
         <dt class="col-sm-3">{{ 'Email'|trans }}</dt>
         <dd class="col-sm-9">{{ profile.email }}</dd>
 
-        <dt class="col-sm-3">{{ 'Height'|trans }}</dt>
-        <dd class="col-sm-9">
-          {{ profile.height.toUnit('m')|round(0, 'floor') }} {{ 'm'|trans }}
-        </dd>
+        {% if profile.height is not null %}
+          <dt class="col-sm-3">{{ 'Height'|trans }}</dt>
+          <dd class="col-sm-9">
+            {{ profile.height.toUnit('m')|round(0, 'floor') }} {{ 'm'|trans }}
+          </dd>
+        {% endif %}
 
-        <dt class="col-sm-3">{{ 'Weight'|trans }}</dt>
-        <dd class="col-sm-9">{{ profile.weight.toUnit('kg')|round }} {{ 'kg'|trans }}</dd>
+        {% if profile.weight is not null %}
+          <dt class="col-sm-3">{{ 'Weight'|trans }}</dt>
+          <dd class="col-sm-9">{{ profile.weight.toUnit('kg')|round }} {{ 'kg'|trans }}</dd>
+        {% endif %}
 
         <dt class="col-sm-3">{{ 'Phone'|trans }}</dt>
         <dd class="col-sm-9">{{ profile.phone }}</dd>
