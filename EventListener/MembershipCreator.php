@@ -33,11 +33,16 @@ class MembershipCreator
     public function prePersist(LifecycleEventArgs $args)
     {
         $object = $args->getObject();
-        $user = $this->token_storage->getToken()->getUser();
+        $token = $this->token_storage->getToken();
 
         // Only act on "Production" entities.
         if (!$object instanceof Production
-          || !$user instanceof User) {
+          || $token === null) {
+            return;
+        }
+
+        $user = $token->getUser();
+        if (!$user instanceof User) {
             return;
         }
 
