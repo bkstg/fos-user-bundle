@@ -74,7 +74,7 @@ class ProfileRepository extends EntityRepository
     public function findAllProductionEnabled(Production $production)
     {
         $qb = $this->createQueryBuilder('p');
-        $query = $qb
+        return $qb
             ->join('p.user', 'u')
             ->join('u.memberships', 'm')
             ->andWhere($qb->expr()->eq('m.group', ':production'))
@@ -87,19 +87,16 @@ class ProfileRepository extends EntityRepository
             ->setParameter('now', new \DateTime())
             ->setParameter('production', $production)
             ->getQuery();
-
-        return $query->getResult();
     }
 
     public function findAllGlobalEnabled()
     {
         // Get a query builder and build a query.
         $qb = $this->createQueryBuilder('p');
-        $query = $qb
+        return $qb
             ->join('p.user', 'u')
             ->andWhere($qb->expr()->eq('u.enabled', 1))
             ->getQuery();
-        return $query->getResult();
     }
 
     public function findAllBlocked()

@@ -7,6 +7,7 @@ use Bkstg\CoreBundle\Entity\Production;
 use Bkstg\CoreBundle\Util\ProfileManagerInterface;
 use Bkstg\FOSUserBundle\Entity\Profile;
 use Bkstg\FOSUserBundle\Form\Type\ProfileType;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,6 +32,7 @@ class ProductionProfileController extends Controller
     public function indexAction(
         string $production_slug,
         AuthorizationCheckerInterface $auth,
+        PaginatorInterface $paginator,
         Request $request
     ) {
         // Lookup the production by production_slug.
@@ -46,9 +48,10 @@ class ProductionProfileController extends Controller
 
         // Get profiles for active memberships.
         $profile_repo = $this->em->getRepository(Profile::class);
-        $profiles = $profile_repo->findAllEnabled($production);
+        $query = $profile_repo->findAllEnabled($production);
 
         // Render the response.
+        $profiles = $paginator->paginate($query, $request->query->getInt('page', 1));
         return new Response($this->templating->render('@BkstgFOSUser/Profile/index.html.twig', [
             'profiles' => $profiles,
         ]));

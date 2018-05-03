@@ -1,13 +1,31 @@
 {% extends '@BkstgCore/layout.html.twig' %}
 {% set page_title = "Directory"|trans %}
 {% block content %}
-  {% for row in profiles|batch(3) %}
-    <div class="row">
-      {% for profile in row %}
-        <div class="col-md-4">
-          {% include '@BkstgFOSUser/Profile/show-teaser.html.twig' with { 'profile': profile } only %}
-        </div>
+  <p><div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th></th>
+          <th>{{ knp_pagination_sortable(profiles, 'Name'|trans, 'p.first_name') }}</th>
+          <th>{{ knp_pagination_sortable(profiles, 'Email'|trans, 'p.email') }}</th>
+          <th>{{ knp_pagination_sortable(profiles, 'Phone'|trans, 'p.phone') }}</th>
+          <th>{{ 'Facebook'|trans }}</th>
+          <th>{{ 'Twitter'|trans }}</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for profile in profiles %}
+        <tr>
+          <td style="width: 4em;">{% include '@BkstgCore/Partials/profile-picture.html.twig' with {'user': profile.user} only %}</td>
+          <td><a href="{{ url('bkstg_profile_show', {'profile_slug': profile.slug}) }}">{{ profile }}</td>
+          <td>{% if profile.email %}<a href="mailto:{{ profile.email }}">{{ profile.email }}</a>{% endif %}</td>
+          <td>{% if profile.phone %}<a href="tel:{{ profile.phone }}">{{ profile.phone }}</a>{% endif %}</td>
+          <td>{{ profile.facebook }}</td>
+          <td>{{ profile.twitter }}</td>
+        </tr>
       {% endfor %}
-    </div>
-  {% endfor %}
+      </tbody>
+    </table>
+  </div></p>
+  {{ knp_pagination_render(profiles) }}
 {% endblock %}

@@ -3,9 +3,10 @@
 namespace Bkstg\FOSUserBundle\Controller;
 
 use Bkstg\CoreBundle\Controller\Controller;
+use Bkstg\CoreBundle\Util\ProfileManagerInterface;
 use Bkstg\FOSUserBundle\Entity\Profile;
 use Bkstg\FOSUserBundle\Form\Type\ProfileType;
-use Bkstg\CoreBundle\Util\ProfileManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,16 +17,17 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ProfileController extends Controller
 {
-    public function indexAction(Request $request)
+    public function indexAction(Request $request, PaginatorInterface $paginator)
     {
         $profile_repo = $this->em->getRepository(Profile::class);
         if ($request->query->has('status')
             && $request->query->get('status') == 'blocked') {
-            $profiles = $profile_repo->findAllBlocked();
+            $query = $profile_repo->findAllBlocked();
         } else {
-            $profiles = $profile_repo->findAllEnabled();
+            $query = $profile_repo->findAllEnabled();
         }
 
+        $profiles = $paginator->paginate($query, $request->query->getInt('page', 1));
         return new Response($this->templating->render('@BkstgFOSUser/Profile/index.html.twig', [
             'profiles' => $profiles,
         ]));
