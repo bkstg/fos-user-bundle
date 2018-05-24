@@ -8,7 +8,8 @@
         "symfony/swiftmailer-bundle": "^3.2",
         "bkstg/core-bundle": "2.0.x-dev",
         "friendsofsymfony/user-bundle": "^2.0",
-        "midnightluke/group-security-bundle": "^1.0@dev"
+        "midnightluke/group-security-bundle": "^1.0@dev",
+        "midnightluke/php-units-of-measure-bundle": "^1.0.0-alpha4"
     },
     "license": "MIT",
     "authors": [
