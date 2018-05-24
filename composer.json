@@ -5,6 +5,7 @@
     "require": {
         "php": "^7.0",
         "symfony/framework-bundle": "^3.3||^4.0",
+        "symfony/swiftmailer-bundle": "^3.2",
         "bkstg/core-bundle": "2.0.x-dev",
         "friendsofsymfony/user-bundle": "^2.0",
         "midnightluke/group-security-bundle": "^1.0@dev"
