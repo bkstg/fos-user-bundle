@@ -60,7 +60,7 @@ class ProductionMenuSubscriber implements EventSubscriberInterface
 
         if ($this->auth->isGranted('GROUP_ROLE_ADMIN', $group)) {
             // Create settings menu item.
-            $settings = $menu->getChild('Settings');
+            $settings = $menu->getChild('settings');
             $members = $this->factory->createItem('Members', [
                 'uri' => $this->url_generator->generate(
                     'bkstg_membership_list',
