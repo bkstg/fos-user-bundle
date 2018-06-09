@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Bkstg\FOSUserBundle\Entity;
 
@@ -17,7 +17,7 @@ class ProductionRole implements ProductionRoleInterface
      *
      * @return integer The id for this role.
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -27,7 +27,7 @@ class ProductionRole implements ProductionRoleInterface
      *
      * @return string The name of the role.
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
@@ -38,7 +38,7 @@ class ProductionRole implements ProductionRoleInterface
      * @param string $name The name of the role.
      * @return ProductionRole
      */
-    public function setName(string $name)
+    public function setName(string $name): self
     {
         $this->name = $name;
         return $this;
@@ -49,7 +49,7 @@ class ProductionRole implements ProductionRoleInterface
      *
      * @return string The designation for this role.
      */
-    public function getDesignation()
+    public function getDesignation(): ?string
     {
         return $this->designation;
     }
@@ -60,7 +60,7 @@ class ProductionRole implements ProductionRoleInterface
      * @param string $designation The designation for this role.
      * @return ProductionRole
      */
-    public function setDesignation(string $designation)
+    public function setDesignation(string $designation): self
     {
         $this->designation = $designation;
         return $this;
@@ -70,7 +70,7 @@ class ProductionRole implements ProductionRoleInterface
     * Get production_membership
     * @return
     */
-    public function getProductionMembership()
+    public function getProductionMembership(): ?ProductionMembership
     {
         return $this->production_membership;
     }
@@ -79,7 +79,7 @@ class ProductionRole implements ProductionRoleInterface
     * Set production_membership
     * @return $this
     */
-    public function setProductionMembership(ProductionMembership $production_membership)
+    public function setProductionMembership(ProductionMembership $production_membership): self
     {
         $this->production_membership = $production_membership;
         return $this;

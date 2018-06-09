@@ -3,6 +3,7 @@
 namespace Bkstg\FOSUserBundle\User;
 
 use Bkstg\CoreBundle\Entity\Production;
+use Bkstg\CoreBundle\User\UserInterface;
 use Bkstg\CoreBundle\User\UserProviderInterface;
 use Bkstg\FOSUserBundle\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
@@ -18,7 +19,7 @@ class UserProvider implements UserProviderInterface
         $this->em = $em;
     }
 
-    public function loadUserByUsername(string $username)
+    public function loadUserByUsername(string $username): UserInterface
     {
         if (isset($this->cache[$username])) {
             return $this->cache[$username];

@@ -8,6 +8,35 @@ Bkstg\FOSUserBundle\Entity\User:
             id: true
             generator:
                 strategy: AUTO
+    fields:
+        first_name:
+            type: string
+            nullable: true
+        last_name:
+            type: string
+            nullable: true
+        height:
+            type: length
+            nullable: true
+        weight:
+            type: mass
+            nullable: true
+        phone:
+            type: string
+            nullable: true
+        facebook:
+            type: string
+            nullable: true
+        twitter:
+            type: string
+            nullable: true
+        slug:
+            type: string
+            gedmo:
+                slug:
+                    fields:
+                        - first_name
+                        - last_name
 
     oneToMany:
         memberships:
@@ -16,8 +45,8 @@ Bkstg\FOSUserBundle\Entity\User:
             cascade:
                 - remove
     oneToOne:
-        profile:
-            targetEntity: Bkstg\FOSUserBundle\Entity\Profile
-            mappedBy: user
+        image:
+            targetEntity: Bkstg\MediaBundle\Entity\Media
             cascade:
+                - persist
                 - remove

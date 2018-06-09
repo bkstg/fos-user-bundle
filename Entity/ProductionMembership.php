@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace Bkstg\FOSUserBundle\Entity;
 
@@ -15,6 +15,7 @@ use MidnightLuke\GroupSecurityBundle\Model\GroupMembershipInterface;
 
 class ProductionMembership implements ProductionMembershipInterface
 {
+    const GROUP_ROLE_PREFIX = 'GROUP_ROLE_';
     const GROUP_ROLE_DEFAULT = 'GROUP_ROLE_USER';
 
     private $id;
@@ -31,17 +32,17 @@ class ProductionMembership implements ProductionMembershipInterface
         $this->roles = [];
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getGroup()
+    public function getGroup(): ?GroupInterface
     {
         return $this->group;
     }
 
-    public function setGroup(GroupInterface $group)
+    public function setGroup(GroupInterface $group): self
     {
         if (!$group instanceof Production) {
             throw new GroupTypeNotSupportedException();
@@ -50,12 +51,12 @@ class ProductionMembership implements ProductionMembershipInterface
         return $this;
     }
 
-    public function getMember()
+    public function getMember(): ?GroupMemberInterface
     {
         return $this->member;
     }
 
-    public function setMember(GroupMemberInterface $member)
+    public function setMember(GroupMemberInterface $member): self
     {
         if (!$member instanceof User) {
             throw new MemberTypeNotSupportedException();
@@ -63,7 +64,7 @@ class ProductionMembership implements ProductionMembershipInterface
         $this->member = $member;
     }
 
-    public function getRoles()
+    public function getRoles(): array
     {
         $roles = $this->roles;
         $roles[] = self::GROUP_ROLE_DEFAULT;
@@ -71,7 +72,7 @@ class ProductionMembership implements ProductionMembershipInterface
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles)
+    public function setRoles(array $roles): self
     {
         $this->roles = array();
 
@@ -82,7 +83,7 @@ class ProductionMembership implements ProductionMembershipInterface
         return $this;
     }
 
-    public function addRole(string $role)
+    public function addRole(string $role): self
     {
         $role = strtoupper($role);
         if ($role === self::GROUP_ROLE_DEFAULT) {
@@ -96,7 +97,7 @@ class ProductionMembership implements ProductionMembershipInterface
         return $this;
     }
 
-    public function removeRole(string $role)
+    public function removeRole(string $role): self
     {
         if (false !== $key = array_search(strtoupper($role), $this->roles, true)) {
             unset($this->roles[$key]);
@@ -106,40 +107,34 @@ class ProductionMembership implements ProductionMembershipInterface
         return $this;
     }
 
-    public function hasRole(string $role)
+    public function hasRole(string $role): bool
     {
         return in_array(strtoupper($role), $this->getRoles(), true);
     }
 
-    public function getStatus()
+    public function getStatus(): ?bool
     {
         return $this->status;
     }
 
-    public function setStatus(int $status)
+    public function setStatus(bool $status): self
     {
-        if (!in_array($status, [
-            GroupMembershipInterface::STATUS_ACTIVE,
-            GroupMembershipInterface::STATUS_BLOCKED,
-        ])) {
-            throw new InvalidStatusException();
-        }
         $this->status = $status;
         return $this;
     }
 
-    public function getExpiry()
+    public function getExpiry(): ?\DateTimeInterface
     {
         return $this->expiry;
     }
 
-    public function setExpiry(\DateTime $expiry = null)
+    public function setExpiry(?\DateTimeInterface $expiry): self
     {
         $this->expiry = $expiry;
         return $this;
     }
 
-    public function isExpired()
+    public function isExpired(): bool
     {
         // No expiry on this membership.
         if ($this->expiry === null) {
@@ -150,23 +145,17 @@ class ProductionMembership implements ProductionMembershipInterface
         return ($now < $this->expiry);
     }
 
-    public function isActive()
-    {
-        if ($this->isExpired()) {
-            return false;
-        }
-        return ($this->status == GroupMembershipInterface::STATUS_ACTIVE);
-    }
-
-    public function addProductionRole(ProductionRole $production_role)
+    public function addProductionRole(ProductionRole $production_role): self
     {
         $production_role->setProductionMembership($this);
         $this->production_roles->add($production_role);
+        return $this;
     }
 
-    public function removeProductionRole(ProductionRole $production_role)
+    public function removeProductionRole(ProductionRole $production_role): self
     {
         $this->production_roles->removeElement($production_role);
+        return $this;
     }
 
     public function getProductionRoles()

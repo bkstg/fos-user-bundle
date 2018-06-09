@@ -11,7 +11,7 @@ Bkstg\FOSUserBundle\Entity\ProductionMembership:
 
     fields:
         status:
-            type: smallint
+            type: boolean
         roles:
             type: array
         expiry:
