@@ -15,7 +15,6 @@ use MidnightLuke\GroupSecurityBundle\Model\GroupMembershipInterface;
 
 class ProductionMembership implements ProductionMembershipInterface
 {
-    const GROUP_ROLE_PREFIX = 'GROUP_ROLE_';
     const GROUP_ROLE_DEFAULT = 'GROUP_ROLE_USER';
 
     private $id;
