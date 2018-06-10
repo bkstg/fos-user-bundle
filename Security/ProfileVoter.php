@@ -2,7 +2,7 @@
 
 namespace Bkstg\FOSUserBundle\Security;
 
-use Bkstg\FOSUserBundle\Entity\Profile;
+use Bkstg\FOSUserBundle\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -27,7 +27,7 @@ class ProfileVoter extends Voter
             return false;
         }
 
-        if (!$subject instanceof Profile) {
+        if (!$subject instanceof User) {
             return false;
         }
 
@@ -36,9 +36,9 @@ class ProfileVoter extends Voter
 
     protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
     {
-        $user = $token->getUser();
+        $security_user = $token->getUser();
 
-        if (!$user instanceof UserInterface) {
+        if (!$security_user instanceof UserInterface) {
             return false;
         }
 
@@ -46,13 +46,13 @@ class ProfileVoter extends Voter
             return true;
         }
 
-        $profile = $subject;
+        $user = $subject;
 
         switch ($attribute) {
             case self::VIEW:
-                return $profile->getUser()->isEnabled();
+                return $user->isEnabled();
             case self::EDIT:
-                return $user === $profile->getUser();
+                return $user === $security_user;
         }
 
         return false;

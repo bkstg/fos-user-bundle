@@ -4,7 +4,7 @@ namespace Bkstg\FOSUserBundle\Controller;
 
 use Bkstg\CoreBundle\Controller\Controller;
 use Bkstg\CoreBundle\Util\ProfileManagerInterface;
-use Bkstg\FOSUserBundle\Entity\Profile;
+use Bkstg\FOSUserBundle\Entity\User;
 use Bkstg\FOSUserBundle\Form\Type\ProfileType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -17,19 +17,27 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ProfileController extends Controller
 {
+    /**
+     * Show a directory listing of users with profile information.
+     *
+     * @param  Request            $request   The request.
+     * @param  PaginatorInterface $paginator The paginator service.
+     * @return Response                      The rendered response.
+     */
     public function indexAction(Request $request, PaginatorInterface $paginator)
     {
-        $profile_repo = $this->em->getRepository(Profile::class);
+        // Get the user repo and find all active or blocked users.
+        $user_repo = $this->em->getRepository(User::class);
         if ($request->query->has('status')
             && $request->query->get('status') == 'blocked') {
-            $query = $profile_repo->findAllBlocked();
+            $query = $user_repo->findAllBlocked(true);
         } else {
-            $query = $profile_repo->findAllEnabled();
+            $query = $user_repo->findAllActive(true);
         }
 
-        $profiles = $paginator->paginate($query, $request->query->getInt('page', 1));
+        $users = $paginator->paginate($query, $request->query->getInt('page', 1));
         return new Response($this->templating->render('@BkstgFOSUser/Profile/index.html.twig', [
-            'profiles' => $profiles,
+            'users' => $users,
         ]));
     }
 
@@ -98,15 +106,15 @@ class ProfileController extends Controller
     public function readAction($profile_slug)
     {
         // Lookup the profile.
-        $profile_repo = $this->em->getRepository(Profile::class);
-        if (null === $profile = $profile_repo->findOneBy(['slug' => $profile_slug])) {
+        $user_repo = $this->em->getRepository(User::class);
+        if (null === $user = $user_repo->findOneBy(['slug' => $profile_slug])) {
             throw new NotFoundHttpException();
         }
 
         // Render the response.
         return new Response($this->templating->render(
             '@BkstgFOSUser/Profile/show.html.twig',
-            ['profile' => $profile]
+            ['user' => $user]
         ));
     }
 
@@ -130,21 +138,21 @@ class ProfileController extends Controller
         Request $request,
         AuthorizationCheckerInterface $auth
     ) {
-        $profile_repo = $this->em->getRepository(Profile::class);
-        if (null === $profile = $profile_repo->findOneBy(['id' => $id])) {
+        $user_repo = $this->em->getRepository(User::class);
+        if (null === $user = $user_repo->findOneBy(['id' => $id])) {
             throw new NotFoundHttpException();
         }
 
-        if (!$auth->isGranted('edit', $profile)) {
+        if (!$auth->isGranted('edit', $user)) {
             throw new AccessDeniedException();
         }
 
-        $form = $this->form->create(ProfileType::class, $profile);
+        $form = $this->form->create(ProfileType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Persist the profile and flush.
-            $this->em->persist($profile);
+            $this->em->persist($user);
             $this->em->flush();
 
             // Set success message and redirect.
@@ -155,7 +163,7 @@ class ProfileController extends Controller
 
             return new RedirectResponse($this->url_generator->generate(
                 'bkstg_profile_show',
-                ['profile_slug' => $profile->getSlug()]
+                ['profile_slug' => $user->getSlug()]
             ));
         }
 
@@ -163,7 +171,7 @@ class ProfileController extends Controller
             '@BkstgFOSUser/Profile/edit.html.twig',
             [
                 'form' => $form->createView(),
-                'profile' => $profile,
+                'profile' => $user,
             ]
         ));
     }

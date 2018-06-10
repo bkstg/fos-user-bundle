@@ -48,7 +48,7 @@ class ProfileType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Bkstg\FOSUserBundle\Entity\Profile'
+            'data_class' => 'Bkstg\FOSUserBundle\Entity\User'
         ));
     }
 

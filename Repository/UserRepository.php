@@ -14,32 +14,47 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
-    public function getAllActiveQuery()
+    public function getAllActiveQuery(bool $with_profile = false)
     {
         $qb = $this->createQueryBuilder('u');
-        return $qb
+        $qb
             ->andWhere($qb->expr()->eq('u.enabled', ':enabled'))
             ->setParameter('enabled', true)
-            ->getQuery();
+        ;
+        if ($with_profile) {
+            $qb->andWhere($qb->expr()->orX(
+                $qb->expr()->isNotNull('u.first_name'),
+                $qb->expr()->isNotNull('u.last_name')
+            ));
+        }
+        return $qb->getQuery();
+
     }
 
-    public function getAllBlockedQuery()
+    public function getAllBlockedQuery(bool $with_profile = false)
     {
         $qb = $this->createQueryBuilder('u');
-        return $qb
+        $qb
             ->andWhere($qb->expr()->eq('u.enabled', ':enabled'))
             ->setParameter('enabled', false)
-            ->getQuery();
+        ;
+        if ($with_profile) {
+            $qb->andWhere($qb->expr()->orX(
+                $qb->expr()->isNotNull('u.first_name'),
+                $qb->expr()->isNotNull('u.last_name')
+            ));
+        }
+        return $qb->getQuery();
     }
 
-    public function findAllActive()
+    public function findAllActive(bool $with_profile = false)
     {
-        return $this->getAllActiveQuery()->getResult();
+        return $this->getAllActiveQuery($with_profile)->getResult();
     }
 
-    public function findAllBlocked()
+    public function findAllBlocked(bool $with_profile = false)
     {
-        return $this->getAllBlockedQuery()->getResult();
+        return $this->getAllBlockedQuery($with_profile)->getResult();
     }
 
     public function findUsersByGroup(Production $production)
