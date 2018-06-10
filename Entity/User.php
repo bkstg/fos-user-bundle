@@ -15,6 +15,7 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
 {
 
     protected $id;
+    private $has_profile;
     private $memberships;
     private $first_name;
     private $last_name;
@@ -305,6 +306,25 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     public function getSlug(): ?string
     {
         return $this->slug;
+    }
+
+    /**
+     * Get has_profile
+     * @return bool
+     */
+    public function hasProfile(): bool
+    {
+        return ($this->has_profile === true);
+    }
+
+    /**
+     * Set has_profile
+     * @return $this
+     */
+    public function setHasProfile(bool $has_profile): self
+    {
+        $this->has_profile = $has_profile;
+        return $this;
     }
 
     public function __toString()

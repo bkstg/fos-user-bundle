@@ -14,47 +14,40 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
-    public function getAllActiveQuery(bool $with_profile = false)
+    public function getAllActiveQuery(bool $only_profile = false)
     {
         $qb = $this->createQueryBuilder('u');
-        $qb
-            ->andWhere($qb->expr()->eq('u.enabled', ':enabled'))
-            ->setParameter('enabled', true)
-        ;
-        if ($with_profile) {
-            $qb->andWhere($qb->expr()->orX(
-                $qb->expr()->isNotNull('u.first_name'),
-                $qb->expr()->isNotNull('u.last_name')
-            ));
-        }
-        return $qb->getQuery();
+        $qb->andWhere($qb->expr()->eq('u.enabled', ':enabled'))
+            ->setParameter('enabled', true);
 
-    }
-
-    public function getAllBlockedQuery(bool $with_profile = false)
-    {
-        $qb = $this->createQueryBuilder('u');
-        $qb
-            ->andWhere($qb->expr()->eq('u.enabled', ':enabled'))
-            ->setParameter('enabled', false)
-        ;
-        if ($with_profile) {
-            $qb->andWhere($qb->expr()->orX(
-                $qb->expr()->isNotNull('u.first_name'),
-                $qb->expr()->isNotNull('u.last_name')
-            ));
+        if ($only_profile) {
+            $qb->andWhere($qb->expr()->eq('u.has_profile', ':has_profile'))
+                ->setParameter('has_profile', true);
         }
         return $qb->getQuery();
     }
 
-    public function findAllActive(bool $with_profile = false)
+    public function getAllBlockedQuery(bool $only_profile = false)
     {
-        return $this->getAllActiveQuery($with_profile)->getResult();
+        $qb = $this->createQueryBuilder('u');
+        $qb->andWhere($qb->expr()->eq('u.enabled', ':enabled'))
+            ->setParameter('enabled', false);
+
+        if ($only_profile) {
+            $qb->andWhere($qb->expr()->eq('u.has_profile', ':has_profile'))
+                ->setParameter('has_profile', true);
+        }
+        return $qb->getQuery();
     }
 
-    public function findAllBlocked(bool $with_profile = false)
+    public function findAllActive(bool $only_profile = false)
     {
-        return $this->getAllBlockedQuery($with_profile)->getResult();
+        return $this->getAllActiveQuery($only_profile)->getResult();
+    }
+
+    public function findAllBlocked(bool $only_profile = false)
+    {
+        return $this->getAllBlockedQuery($only_profile)->getResult();
     }
 
     public function findUsersByGroup(Production $production)

@@ -67,6 +67,7 @@ class UserAdminController extends Controller
         // Create a new enabled user.
         $user = $user_manager->createUser();
         $user->setEnabled(true);
+        $user->setHasProfile(false);
 
         // Create and handle the form.
         $form = $this->form->create(UserType::class, $user);

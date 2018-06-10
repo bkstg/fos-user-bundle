@@ -9,6 +9,8 @@ Bkstg\FOSUserBundle\Entity\User:
             generator:
                 strategy: AUTO
     fields:
+        has_profile:
+            type: boolean
         first_name:
             type: string
             nullable: true
