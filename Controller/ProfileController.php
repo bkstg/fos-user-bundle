@@ -24,15 +24,25 @@ class ProfileController extends Controller
      * @param  PaginatorInterface $paginator The paginator service.
      * @return Response                      The rendered response.
      */
-    public function indexAction(Request $request, PaginatorInterface $paginator)
-    {
-        // Get the user repo and find all active or blocked users.
+    public function indexAction(
+        Request $request,
+        PaginatorInterface $paginator,
+        TokenStorageInterface $token_storage
+    ) {
+        // Get the user repo and find all active users with profiles.
         $user_repo = $this->em->getRepository(User::class);
-        if ($request->query->has('status')
-            && $request->query->get('status') == 'blocked') {
-            $query = $user_repo->findAllBlocked(true);
-        } else {
-            $query = $user_repo->findAllActive(true);
+        $query = $user_repo->findAllActive(true);
+
+        // If the current user has no profile set a message.
+        $user = $token_storage->getToken()->getUser();
+        if (!$user->hasProfile()) {
+            $this->session->getFlashBag()->add(
+                'warning',
+                $this->translator->trans(
+                    'You have not created a profile yet, <a href="%url%">click here</a> to create one now.',
+                    ['%url%' => $this->url_generator->generate('bkstg_profile_create')]
+                )
+            );
         }
 
         $users = $paginator->paginate($query, $request->query->getInt('page', 1));
