@@ -61,6 +61,7 @@ class ProductionMembership implements ProductionMembershipInterface
             throw new MemberTypeNotSupportedException();
         }
         $this->member = $member;
+        return $this;
     }
 
     public function getRoles(): array

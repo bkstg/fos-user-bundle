@@ -39,8 +39,8 @@ class ProductionMembershipType extends AbstractType
             ])
             ->add('status', ChoiceType::class, [
                 'choices' => [
-                    'Active' => ProductionMembership::STATUS_ACTIVE,
-                    'Inactive' => ProductionMembership::STATUS_BLOCKED,
+                    'Active' => true,
+                    'Inactive' => false,
                 ],
             ])
             ->add('expiry', DateTimeType::class, [

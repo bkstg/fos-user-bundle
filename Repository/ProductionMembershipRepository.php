@@ -37,8 +37,8 @@ class ProductionMembershipRepository extends EntityRepository
 
             // Add parameters.
             ->setParameter('member', $user)
-            ->setParameter('membership_status', GroupMembershipInterface::STATUS_ACTIVE)
-            ->setParameter('production_status', Production::STATUS_ACTIVE)
+            ->setParameter('membership_status', true)
+            ->setParameter('production_status', true)
             ->setParameter('now', new \DateTime())
 
             // Order by and get results.
@@ -60,7 +60,7 @@ class ProductionMembershipRepository extends EntityRepository
             ->andWhere($qb->expr()->eq('m.group', ':production'))
 
             // Add parameters.
-            ->setParameter('membership_status', GroupMembershipInterface::STATUS_ACTIVE)
+            ->setParameter('membership_status', true)
             ->setParameter('production', $production)
             ->setParameter('now', new \DateTime())
 
@@ -82,7 +82,7 @@ class ProductionMembershipRepository extends EntityRepository
             ->andWhere($qb->expr()->eq('m.group', ':production'))
 
             // Add parameters.
-            ->setParameter('membership_status', GroupMembershipInterface::STATUS_BLOCKED)
+            ->setParameter('membership_status', false)
             ->setParameter('production', $production)
             ->setParameter('now', new \DateTime())
 

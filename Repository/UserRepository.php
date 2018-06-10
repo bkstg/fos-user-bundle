@@ -40,6 +40,32 @@ class UserRepository extends EntityRepository
         return $qb->getQuery();
     }
 
+    public function findUsersByGroupQuery(Production $production, bool $only_profile = false)
+    {
+        $qb = $this->createQueryBuilder('u');
+        $qb
+            ->join('u.memberships', 'm')
+            ->join('m.group', 'g')
+            ->andWhere($qb->expr()->eq('g', ':group'))
+            ->andWhere($qb->expr()->eq('u.enabled', ':enabled'))
+            ->andWhere($qb->expr()->eq('m.status', ':enabled'))
+            ->andWhere($qb->expr()->orX(
+                $qb->expr()->isNull('m.expiry'),
+                $qb->expr()->gt('m.expiry', ':now')
+            ))
+            ->setParameter('group', $production)
+            ->setParameter('enabled', true)
+            ->setParameter('now', new \DateTime())
+        ;
+
+        if ($only_profile) {
+            $qb->andWhere($qb->expr()->eq('u.has_profile', ':has_profile'))
+                ->setParameter('has_profile', true);
+        }
+
+        return $qb->getQuery();
+    }
+
     public function findAllActive(bool $only_profile = false)
     {
         return $this->getAllActiveQuery($only_profile)->getResult();
@@ -50,15 +76,8 @@ class UserRepository extends EntityRepository
         return $this->getAllBlockedQuery($only_profile)->getResult();
     }
 
-    public function findUsersByGroup(Production $production)
+    public function findUsersByGroup(Production $production, bool $only_profile = false)
     {
-        $qb = $this->createQueryBuilder('u');
-        return $qb
-            ->join('u.memberships', 'm')
-            ->join('m.group', 'g')
-            ->andWhere($qb->expr()->eq('g', ':group'))
-            ->setParameter('group', $production)
-            ->getQuery()
-            ->getResult();
+        return $this->findUsersByGroupQuery($production, $only_profile)->getResult();
     }
 }

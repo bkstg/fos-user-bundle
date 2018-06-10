@@ -5,7 +5,7 @@ namespace Bkstg\FOSUserBundle\Controller;
 use Bkstg\CoreBundle\Controller\Controller;
 use Bkstg\CoreBundle\Entity\Production;
 use Bkstg\CoreBundle\Util\ProfileManagerInterface;
-use Bkstg\FOSUserBundle\Entity\Profile;
+use Bkstg\FOSUserBundle\Entity\User;
 use Bkstg\FOSUserBundle\Form\Type\ProfileType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -46,14 +46,14 @@ class ProductionProfileController extends Controller
             throw new AccessDeniedException();
         }
 
-        // Get profiles for active memberships.
-        $profile_repo = $this->em->getRepository(Profile::class);
-        $query = $profile_repo->findAllEnabled($production);
+        // Get users for active memberships.
+        $user_repo = $this->em->getRepository(User::class);
+        $query = $user_repo->findUsersByGroupQuery($production, true);
 
         // Render the response.
-        $profiles = $paginator->paginate($query, $request->query->getInt('page', 1));
+        $users = $paginator->paginate($query, $request->query->getInt('page', 1));
         return new Response($this->templating->render('@BkstgFOSUser/Profile/index.html.twig', [
-            'profiles' => $profiles,
+            'users' => $users,
         ]));
     }
 }
