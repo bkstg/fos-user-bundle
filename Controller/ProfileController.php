@@ -40,7 +40,7 @@ class ProfileController extends Controller
                 'warning',
                 $this->translator->trans(
                     'You have not created a profile yet, <a href="%url%">click here</a> to create one now.',
-                    ['%url%' => $this->url_generator->generate('bkstg_profile_create')]
+                    ['%url%' => $this->url_generator->generate('bkstg_profile_edit', ['id' => $user->getId()])]
                 )
             );
         }
@@ -49,59 +49,6 @@ class ProfileController extends Controller
         return new Response($this->templating->render('@BkstgFOSUser/Profile/index.html.twig', [
             'users' => $users,
         ]));
-    }
-
-    /**
-     * Creates a new global profile.
-     *
-     * To create a global profile the user must not already have a global
-     * profile.
-     *
-     * @param  Request $request
-     *   The request for form processing.
-     * @param  TokenStorageInterface $token_storage
-     *   The token storage for getting the current user.
-     *
-     * @return Response
-     *   A rendered form.
-     */
-    public function createAction(Request $request, TokenStorageInterface $token_storage)
-    {
-        // Get the current user and check for a global profile.
-        $user = $token_storage->getToken()->getUser();
-        $profile_repo = $this->em->getRepository(Profile::class);
-        if (null !== $profile = $profile_repo->findProfile($user)) {
-            throw new AccessDeniedException($this->translator->trans('You can only have one global profile.'));
-        }
-
-        // Create a new profile with this user as the author.
-        $profile = new Profile();
-        $profile->setUser($user);
-
-        // Create and handle the form.
-        $form = $this->form->create(ProfileType::class, $profile);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Persist the profile and flush.
-            $this->em->persist($profile);
-            $this->em->flush();
-
-            // Set success message and redirect.
-            $this->session->getFlashBag()->add(
-                'success',
-                $this->translator->trans('Your global profile has been created.')
-            );
-            return new RedirectResponse($this->url_generator->generate(
-                'bkstg_profile_show',
-                ['profile_slug' => $profile->getSlug()]
-            ));
-        }
-
-        // Render the profile form.
-        return new Response($this->templating->render(
-            '@BkstgFOSUser/Profile/create.html.twig',
-            ['form' => $form->createView()]
-        ));
     }
 
     /**
@@ -157,11 +104,13 @@ class ProfileController extends Controller
             throw new AccessDeniedException();
         }
 
+
         $form = $this->form->create(ProfileType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             // Persist the profile and flush.
+            $user->setHasProfile(true);
             $this->em->persist($user);
             $this->em->flush();
 
@@ -184,9 +133,5 @@ class ProfileController extends Controller
                 'profile' => $user,
             ]
         ));
-    }
-
-    public function deleteAction($id)
-    {
     }
 }

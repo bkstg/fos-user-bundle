@@ -2,10 +2,6 @@ bkstg_profile_list:
     path: /
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\ProfileController:indexAction
-bkstg_profile_create:
-    path: /create
-    defaults:
-        _controller: Bkstg\FOSUserBundle\Controller\ProfileController:createAction
 bkstg_profile_show:
     path: /{profile_slug}
     defaults:
@@ -14,7 +10,3 @@ bkstg_profile_edit:
     path: /{id}/edit
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\ProfileController:updateAction
-bkstg_profile_delete:
-    path: /{id}/delete
-    defaults:
-        _controller: Bkstg\FOSUserBundle\Controller\ProfileController:deleteAction
