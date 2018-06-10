@@ -1,0 +1,64 @@
+{% extends '@BkstgCore/layout.html.twig' %}
+{% set page_title = "%name%'s Profile"|trans({ '%name%': user.firstName }) %}
+{% block content %}
+  {% if is_granted('edit', user) %}
+    <p>
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active" href="{{ url('bkstg_profile_show', {'profile_slug': user.slug}) }}">View</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url('bkstg_profile_edit', {'id': user.id}) }}">Edit</a>
+        </li>
+      </ul>
+    </p>
+  {% endif %}
+  <div class="row">
+    <div class="col-lg-3">
+      {% media user.image, 'big' with {'class': 'img-fluid'} %}
+    </div>
+    <div class="col-lg-9">
+      <dl class="row">
+        <dt class="col-sm-3">{{ 'Name'|trans }}</dt>
+        <dd class="col-sm-9">{{ user.firstName }} {{ user.lastName }}</dd>
+
+        <dt class="col-sm-3">{{ 'Email'|trans }}</dt>
+        <dd class="col-sm-9">{{ user.email }}</dd>
+
+        {% if user.height is not null %}
+          <dt class="col-sm-3">{{ 'Height'|trans }}</dt>
+          <dd class="col-sm-9">
+            {{ user.height.toUnit('m')|round(0, 'floor') }} {{ 'm'|trans }}
+          </dd>
+        {% endif %}
+
+        {% if user.weight is not null %}
+          <dt class="col-sm-3">{{ 'Weight'|trans }}</dt>
+          <dd class="col-sm-9">{{ user.weight.toUnit('kg')|round }} {{ 'kg'|trans }}</dd>
+        {% endif %}
+
+        <dt class="col-sm-3">{{ 'Phone'|trans }}</dt>
+        <dd class="col-sm-9">{{ user.phone }}</dd>
+
+        <dt class="col-sm-3">{{ 'Websites'|trans }}</dt>
+        <dd class="col-sm-9">
+          <ul>
+            <li><a href="{{ user.facebook }}">{{ 'Facebook'|trans }}</a></li>
+            <li><a href="{{ user.twitter }}">{{ 'Twitter'|trans }}</a></li>
+          </ul>
+        </dd>
+
+        <dt class="col-sm-3">{{ 'Roles'|trans }}</dt>
+        <dd class="col-sm-9">
+          <ul>
+            {% for role in membership.productionRoles %}
+              <li><strong>{{ role.designation }}:</strong> {{ role.name }}</li>
+            {% else %}
+                <li>{{ 'No roles found'|trans }}</li>
+            {% endfor %}
+          </ul>
+        </dd>
+      </dl>
+    </div>
+  </div>
+{% endblock %}
