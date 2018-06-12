@@ -136,13 +136,7 @@ class ProductionMembership implements ProductionMembershipInterface
 
     public function isExpired(): bool
     {
-        // No expiry on this membership.
-        if ($this->expiry === null) {
-            return false;
-        }
-
-        $now = new \DateTime();
-        return ($now < $this->expiry);
+        return ($this->expiry !== null && $this->expiry < new \DateTime('now'));
     }
 
     public function addProductionRole(ProductionRole $production_role): self
