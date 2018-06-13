@@ -1,31 +1,34 @@
 {% extends '@BkstgCore/layout.html.twig' %}
 {% set page_title = "Directory"|trans %}
-{% block content %}
-  <p><div class="table-responsive">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th></th>
-          <th>{{ knp_pagination_sortable(users, 'Name'|trans, 'u.first_name') }}</th>
-          <th>{{ knp_pagination_sortable(users, 'Email'|trans, 'u.email') }}</th>
-          <th>{{ knp_pagination_sortable(users, 'Phone'|trans, 'u.phone') }}</th>
-          <th>{{ 'Facebook'|trans }}</th>
-          <th>{{ 'Twitter'|trans }}</th>
-        </tr>
-      </thead>
-      <tbody>
-      {% for profile in users %}
-        <tr>
-          <td style="width: 4em;">{% include '@BkstgCore/Partials/profile-picture.html.twig' with {'user': profile} only %}</td>
-          <td><a href="{{ url('bkstg_profile_show', {'profile_slug': profile.slug}) }}">{{ profile }}</td>
-          <td>{% if profile.email %}<a href="mailto:{{ profile.email }}">{{ profile.email }}</a>{% endif %}</td>
-          <td>{% if profile.phone %}<a href="tel:{{ profile.phone }}">{{ profile.phone }}</a>{% endif %}</td>
-          <td>{{ profile.facebook }}</td>
-          <td>{{ profile.twitter }}</td>
-        </tr>
-      {% endfor %}
-      </tbody>
-    </table>
-  </div></p>
-  {{ knp_pagination_render(users) }}
+{% block main %}
+  <div class="container-fluid">
+    <p><div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th></th>
+            <th>{{ knp_pagination_sortable(users, 'Name'|trans, 'u.first_name') }}</th>
+            <th>{{ knp_pagination_sortable(users, 'Email'|trans, 'u.email') }}</th>
+            <th>{{ knp_pagination_sortable(users, 'Phone'|trans, 'u.phone') }}</th>
+            <th>{{ 'Facebook'|trans }}</th>
+            <th>{{ 'Twitter'|trans }}</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for profile in users %}
+          <tr>
+            <td style="width: 4em;">{% include '@BkstgCore/Partials/profile-picture.html.twig' with {'user': profile} only %}</td>
+            <td><a href="{{ url('bkstg_profile_show', {'profile_slug': profile.slug}) }}">{{ profile }}</td>
+            <td>{% if profile.email %}<a href="mailto:{{ profile.email }}">{{ profile.email }}</a>{% endif %}</td>
+            <td>{% if profile.phone %}<a href="tel:{{ profile.phone }}">{{ profile.phone }}</a>{% endif %}</td>
+            <td>{{ profile.facebook }}</td>
+            <td>{{ profile.twitter }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div></p>
+    {{ knp_pagination_render(users) }}
+    {% include '@BkstgCore/partials/footer.html.twig' %}
+  </div>
 {% endblock %}
