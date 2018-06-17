@@ -4,22 +4,16 @@ namespace Bkstg\FOSUserBundle\EventSubscriber;
 
 use Bkstg\CoreBundle\Event\MainMenuCollectionEvent;
 use Bkstg\CoreBundle\Event\MenuCollectionEvent;
+use Bkstg\FOSUserBundle\BkstgFOSUserBundle;
 use Knp\Menu\FactoryInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class MainMenuSubscriber implements EventSubscriberInterface
 {
-
     private $factory;
-    private $url_generator;
 
-    public function __construct(
-        FactoryInterface $factory,
-        UrlGeneratorInterface $url_generator
-    ) {
+    public function __construct(FactoryInterface $factory) {
         $this->factory = $factory;
-        $this->url_generator = $url_generator;
     }
 
     public static function getSubscribedEvents()
@@ -36,9 +30,12 @@ class MainMenuSubscriber implements EventSubscriberInterface
     {
         $menu = $event->getMenu();
 
-        $directory = $this->factory->createItem('Directory', [
-            'uri' => $this->url_generator->generate('bkstg_profile_list'),
-            'extras' => ['icon' => 'user'],
+        $directory = $this->factory->createItem('menu_item.directory', [
+            'route' => 'bkstg_profile_list',
+            'extras' => [
+                'icon' => 'user',
+                'translation_domain' => BkstgFOSUserBundle::TRANSLATION_DOMAIN,
+            ],
         ]);
         $menu->addChild($directory);
     }
