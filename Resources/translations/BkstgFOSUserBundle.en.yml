@@ -2,5 +2,5 @@ menu_item:
     users: Users
     directory: Directory
     members: Members
-    profile_show: 'My profile'
+    profile_show: 'My Profile'
     profile_create: 'Create profile'
