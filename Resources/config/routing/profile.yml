@@ -1,12 +1,8 @@
-bkstg_profile_list:
+bkstg_profile_read:
     path: /
     defaults:
-        _controller: Bkstg\FOSUserBundle\Controller\ProfileController:indexAction
-bkstg_profile_show:
-    path: /{profile_slug}
-    defaults:
         _controller: Bkstg\FOSUserBundle\Controller\ProfileController:readAction
-bkstg_profile_edit:
-    path: /{id}/edit
+bkstg_profile_update:
+    path: /edit
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\ProfileController:updateAction

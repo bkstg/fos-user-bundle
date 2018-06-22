@@ -17,7 +17,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-class ProductionProfileController extends Controller
+class ProductionDirectoryController extends Controller
 {
     /**
      * Show a list of production profiles for a production.

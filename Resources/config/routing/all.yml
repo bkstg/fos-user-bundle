@@ -1,19 +1,9 @@
-# Contrib routes.
-fos_user_security:
-    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
-fos_user_resetting:
-    resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
-    prefix: /resetting
-fos_user_change_password:
-    resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
-    prefix: /profile
-
 # User bundle routes.
-bkstg_profile:
-    resource: '@BkstgFOSUserBundle/Resources/config/routing/profile.yml'
+bkstg_directory:
+    resource: '@BkstgFOSUserBundle/Resources/config/routing/directory.yml'
     prefix: /directory
-bkstg_production_profile:
-    resource: '@BkstgFOSUserBundle/Resources/config/routing/production_profile.yml'
+bkstg_production_directory:
+    resource: '@BkstgFOSUserBundle/Resources/config/routing/production_directory.yml'
     prefix: /{production_slug}/directory
 bkstg_user:
     resource: '@BkstgFOSUserBundle/Resources/config/routing/user_admin.yml'
@@ -21,3 +11,6 @@ bkstg_user:
 bkstg_membership:
     resource: '@BkstgFOSUserBundle/Resources/config/routing/membership.yml'
     prefix: /{production_slug}/settings/members
+bkstg_profile:
+    resource: '@BkstgFOSUserBundle/Resources/config/routing/profile.yml'
+    prefix: /profile

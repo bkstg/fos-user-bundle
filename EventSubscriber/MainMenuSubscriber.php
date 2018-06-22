@@ -31,7 +31,7 @@ class MainMenuSubscriber implements EventSubscriberInterface
         $menu = $event->getMenu();
 
         $directory = $this->factory->createItem('menu_item.directory', [
-            'route' => 'bkstg_profile_list',
+            'route' => 'bkstg_directory_list',
             'extras' => [
                 'icon' => 'user',
                 'translation_domain' => BkstgFOSUserBundle::TRANSLATION_DOMAIN,

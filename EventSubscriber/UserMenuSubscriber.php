@@ -39,8 +39,7 @@ class UserMenuSubscriber implements EventSubscriberInterface
 
         if ($user->hasProfile()) {
             $directory = $this->factory->createItem('menu_item.profile_show', [
-                'route' => 'bkstg_profile_show',
-                'routeParameters' => ['profile_slug' => $user->getSlug()],
+                'route' => 'bkstg_profile_read',
                 'extras' => [
                     'icon' => 'user',
                     'translation_domain' => BkstgFOSUserBundle::TRANSLATION_DOMAIN,
@@ -49,7 +48,6 @@ class UserMenuSubscriber implements EventSubscriberInterface
         } else {
             $directory = $this->factory->createItem('menu_item.profile_create', [
                 'route' => 'bkstg_profile_edit',
-                'routeParameters' => ['id' => $user->getId()],
                 'extras' => [
                     'icon' => 'user-plus',
                     'translation_domain' => BkstgFOSUserBundle::TRANSLATION_DOMAIN,
