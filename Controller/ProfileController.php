@@ -24,7 +24,7 @@ class ProfileController extends Controller
     {
         // Render the response.
         return new Response($this->templating->render(
-            '@BkstgFOSUser/Profile/show.html.twig',
+            '@BkstgFOSUser/Profile/read.html.twig',
             ['user' => $token_storage->getToken()->getUser()]
         ));
     }
@@ -72,7 +72,7 @@ class ProfileController extends Controller
         }
 
         return new Response($this->templating->render(
-            '@BkstgFOSUser/Profile/edit.html.twig',
+            '@BkstgFOSUser/Profile/update.html.twig',
             [
                 'form' => $form->createView(),
                 'profile' => $user,
