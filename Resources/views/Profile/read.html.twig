@@ -2,7 +2,7 @@
 {% set page_title = "%name%'s Profile"|trans({ '%name%': user.firstName }) %}
 {% block main %}
   <div class="container-fluid">
-    {% include '@BkstgCore/Partials/header.html.twig' with { 'title': page_title } only %}
+    {% include '@BkstgCore/_header.html.twig' with { 'title': page_title } only %}
     {% include '@BkstgFOSUser/Profile/_actions.html.twig' %}
     <div class="row">
       <div class="col-lg-3">
@@ -41,6 +41,6 @@
         </dl>
       </div>
     </div>
-    {% include '@BkstgCore/partials/footer.html.twig' %}
+    {% include '@BkstgCore/_footer.html.twig' %}
   </div>
 {% endblock %}
