@@ -14,7 +14,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class UserRepository extends EntityRepository
 {
-    public function getAllActiveQuery(bool $only_profile = false)
+    public function findAllActiveQuery(bool $only_profile = false)
     {
         $qb = $this->createQueryBuilder('u');
         $qb->andWhere($qb->expr()->eq('u.enabled', ':enabled'))
@@ -27,7 +27,7 @@ class UserRepository extends EntityRepository
         return $qb->getQuery();
     }
 
-    public function getAllBlockedQuery(bool $only_profile = false)
+    public function findAllBlockedQuery(bool $only_profile = false)
     {
         $qb = $this->createQueryBuilder('u');
         $qb->andWhere($qb->expr()->eq('u.enabled', ':enabled'))
@@ -68,12 +68,12 @@ class UserRepository extends EntityRepository
 
     public function findAllActive(bool $only_profile = false)
     {
-        return $this->getAllActiveQuery($only_profile)->getResult();
+        return $this->findAllActiveQuery($only_profile)->getResult();
     }
 
     public function findAllBlocked(bool $only_profile = false)
     {
-        return $this->getAllBlockedQuery($only_profile)->getResult();
+        return $this->findAllBlockedQuery($only_profile)->getResult();
     }
 
     public function findUsersByGroup(Production $production, bool $only_profile = false)

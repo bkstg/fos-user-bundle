@@ -1,12 +1,14 @@
 {% set route = app.request.attributes.get('_route') %}
-<ul class="nav nav-tabs mb-3">
-  <li class="nav-item">
-    <a class="nav-link{% if route == 'bkstg_profile_read' %} active{% endif %}" href="{{ url('bkstg_profile_read') }}">View</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link{% if route == 'bkstg_profile_update' %} active{% endif %}" href="{{ url('bkstg_profile_update') }}">Edit</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link{% if route == 'fos_user_change_password' %} active{% endif %}" href="{{ url('fos_user_change_password') }}">Change password</a>
-  </li>
-</ul>
+{% if route != 'bkstg_directory_show' %}
+  <ul class="nav nav-tabs mb-3">
+    <li class="nav-item">
+      <a class="nav-link{% if route == 'bkstg_profile_read' %} active{% endif %}" href="{{ url('bkstg_profile_read') }}">View</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link{% if route == 'bkstg_profile_update' %} active{% endif %}" href="{{ url('bkstg_profile_update') }}">Edit</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link{% if route == 'fos_user_change_password' %} active{% endif %}" href="{{ url('fos_user_change_password') }}">Change password</a>
+    </li>
+  </ul>
+{% endif %}

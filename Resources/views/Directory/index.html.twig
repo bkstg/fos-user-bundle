@@ -1,0 +1,42 @@
+{% extends '@BkstgCore/layout.html.twig' %}
+{% trans_default_domain 'BkstgFOSUserBundle' %}
+{% set page_title = 'directory.title'|trans %}
+
+{% block main %}
+  <div class="container-fluid">
+    {% include '@BkstgCore/_header.html.twig' with { 'title': page_title } only %}
+    {% include '@BkstgCore/_alerts.html.twig' %}
+    <p><div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th></th>
+            <th>{{ knp_pagination_sortable(users, 'profile.label.name'|trans, 'u.first_name') }}</th>
+            <th>{{ knp_pagination_sortable(users, 'profile.label.email'|trans, 'u.email') }}</th>
+            <th>{{ knp_pagination_sortable(users, 'profile.label.phone'|trans, 'u.phone') }}</th>
+            <th>{{ 'profile.label.facebook'|trans }}</th>
+            <th>{{ 'profile.label.twitter'|trans }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
+            <tr>
+              <td style="width: 4em;">{% include '@BkstgCore/_profile_picture.html.twig' with { 'user': user } only %}</td>
+              <td><a href="{{ url('bkstg_directory_show', {'profile_slug': user.slug}) }}">{{ user }}</td>
+              <td>{% if user.email %}<a href="mailto:{{ user.email }}">{{ user.email }}</a>{% endif %}</td>
+              <td>{% if user.phone %}<a href="tel:{{ user.phone }}">{{ user.phone }}</a>{% endif %}</td>
+              <td>{{ user.facebook }}</td>
+              <td>{{ user.twitter }}</td>
+            </tr>
+          {% else %}
+            <tr>
+              <td colspan="6">{{ 'profile.no_profiles'|trans }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div></p>
+    {{ knp_pagination_render(users) }}
+    {% include '@BkstgCore/_footer.html.twig' %}
+  </div>
+{% endblock %}

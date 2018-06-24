@@ -1,8 +1,11 @@
 {% extends '@BkstgCore/layout.html.twig' %}
+{% trans_default_domain 'BkstgFOSUserBundle' %}
 {% set page_title = "%name%'s Profile"|trans({ '%name%': user.firstName }) %}
+
 {% block main %}
   <div class="container-fluid">
     {% include '@BkstgCore/_header.html.twig' with { 'title': page_title } only %}
+    {% include '@BkstgCore/_alerts.html.twig' %}
     {% include '@BkstgFOSUser/Profile/_actions.html.twig' %}
     <div class="row">
       <div class="col-lg-3">

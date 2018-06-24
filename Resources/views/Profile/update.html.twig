@@ -4,6 +4,7 @@
 {% block main %}
   <div class="container-fluid">
     {% include '@BkstgCore/_header.html.twig' with { 'title': page_title } only %}
+    {% include '@BkstgCore/_alerts.html.twig' %}
     {% include '@BkstgFOSUser/Profile/_actions.html.twig' %}
     {{ form_start(form) }}
       {{ form_widget(form) }}

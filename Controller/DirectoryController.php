@@ -3,35 +3,32 @@
 namespace Bkstg\FOSUserBundle\Controller;
 
 use Bkstg\CoreBundle\Controller\Controller;
-use Bkstg\CoreBundle\Util\ProfileManagerInterface;
 use Bkstg\FOSUserBundle\Entity\User;
-use Bkstg\FOSUserBundle\Form\Type\ProfileType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class DirectoryController extends Controller
 {
     /**
      * Show a directory listing of users with profile information.
      *
-     * @param  Request            $request   The request.
-     * @param  PaginatorInterface $paginator The paginator service.
-     * @return Response                      The rendered response.
+     * @param  Request               $request       The request.
+     * @param  PaginatorInterface    $paginator     The paginator service.
+     * @param  TokenStorageInterface $token_storage The token storage service.
+     * @return Response
      */
     public function indexAction(
         Request $request,
         PaginatorInterface $paginator,
         TokenStorageInterface $token_storage
-    ) {
+    ): Response {
         // Get the user repo and find all active users with profiles.
         $user_repo = $this->em->getRepository(User::class);
-        $query = $user_repo->findAllActive(true);
+        $query = $user_repo->findAllActiveQuery(true);
 
         // If the current user has no profile set a message.
         $user = $token_storage->getToken()->getUser();
@@ -39,38 +36,45 @@ class DirectoryController extends Controller
             $this->session->getFlashBag()->add(
                 'warning',
                 $this->translator->trans(
-                    'You have not created a profile yet, <a href="%url%">click here</a> to create one now.',
-                    ['%url%' => $this->url_generator->generate('bkstg_profile_edit', ['id' => $user->getId()])]
+                    'profile.not_created',
+                    ['%url%' => $this->url_generator->generate('bkstg_profile_update', ['id' => $user->getId()])]
                 )
             );
         }
 
+        // Paginate and return the output.
         $users = $paginator->paginate($query, $request->query->getInt('page', 1));
-        return new Response($this->templating->render('@BkstgFOSUser/Profile/index.html.twig', [
+        return new Response($this->templating->render('@BkstgFOSUser/Directory/index.html.twig', [
             'users' => $users,
         ]));
     }
 
     /**
-     * Render a global profile.
+     * Show a single profile.
      *
-     * @param int $id
-     *   The profile id to render.
-     *
+     * @param  string                $profile_slug  The profile slug to look for.
+     * @param  TokenStorageInterface $token_storage The token storage service.
+     * @throws NotFoundHttpException When the user is not found.
      * @return Response
-     *   The rendered profile.
      */
-    public function readAction($profile_slug)
-    {
+    public function readAction(
+        string $profile_slug,
+        TokenStorageInterface $token_storage
+    ): Response {
         // Lookup the profile.
         $user_repo = $this->em->getRepository(User::class);
         if (null === $user = $user_repo->findOneBy(['slug' => $profile_slug])) {
             throw new NotFoundHttpException();
         }
 
+        // If this is the current user redirect to the profile handler.
+        if ($token_storage->getToken()->getUser() === $user) {
+            return new RedirectResponse($this->url_generator->generate('bkstg_profile_read'));
+        }
+
         // Render the response.
         return new Response($this->templating->render(
-            '@BkstgFOSUser/Profile/show.html.twig',
+            '@BkstgFOSUser/Profile/read.html.twig',
             ['user' => $user]
         ));
     }

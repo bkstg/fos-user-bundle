@@ -4,3 +4,14 @@ menu_item:
     members: Members
     profile_show: 'My Profile'
     profile_create: 'Create profile'
+profile:
+    no_profiles: 'No profiles created yet.'
+    not_created: 'You have not created a profile yet, <a href="%url%">click here</a> to create one now.'
+    label:
+        name: 'Name'
+        email: 'Email'
+        phone: 'Phone'
+        facebook: 'Facebook'
+        twitter: 'Twitter'
+directory:
+    title: 'Directory'
