@@ -1,5 +1,7 @@
 {% extends '@BkstgCore/layout.html.twig' %}
-{% set page_title = "%name%'s Profile"|trans({ '%name%': user.firstName }) %}
+{% trans_default_domain 'BkstgFOSUserBundle' %}
+{% set page_title = 'profile.profile_for'|trans({ '%name%': user }) %}
+
 {% block content %}
   <div class="row">
     <div class="col-lg-3">
@@ -7,42 +9,42 @@
     </div>
     <div class="col-lg-9">
       <dl class="row">
-        <dt class="col-sm-3">{{ 'Name'|trans }}</dt>
-        <dd class="col-sm-9">{{ user.firstName }} {{ user.lastName }}</dd>
+        <dt class="col-sm-3">{{ 'profile.label.name'|trans }}</dt>
+        <dd class="col-sm-9">{{ user }}</dd>
 
-        <dt class="col-sm-3">{{ 'Email'|trans }}</dt>
+        <dt class="col-sm-3">{{ 'profile.label.email'|trans }}</dt>
         <dd class="col-sm-9">{{ user.email }}</dd>
 
         {% if user.height is not null %}
-          <dt class="col-sm-3">{{ 'Height'|trans }}</dt>
+          <dt class="col-sm-3">{{ 'profile.label.height'|trans }}</dt>
           <dd class="col-sm-9">
-            {{ user.height.toUnit('m')|round(0, 'floor') }} {{ 'm'|trans }}
+            {{ user.height.toUnit('m')|round(0, 'floor') }} {{ 'unit.meters.abbr'|trans }}
           </dd>
         {% endif %}
 
         {% if user.weight is not null %}
-          <dt class="col-sm-3">{{ 'Weight'|trans }}</dt>
-          <dd class="col-sm-9">{{ user.weight.toUnit('kg')|round }} {{ 'kg'|trans }}</dd>
+          <dt class="col-sm-3">{{ 'profile.label.weight'|trans }}</dt>
+          <dd class="col-sm-9">{{ user.weight.toUnit('kg')|round }} {{ 'unit.kilograms.abbr'|trans }}</dd>
         {% endif %}
 
-        <dt class="col-sm-3">{{ 'Phone'|trans }}</dt>
+        <dt class="col-sm-3">{{ 'profile.label.phone'|trans }}</dt>
         <dd class="col-sm-9">{{ user.phone }}</dd>
 
-        <dt class="col-sm-3">{{ 'Websites'|trans }}</dt>
+        <dt class="col-sm-3">{{ 'profile.label.websites'|trans }}</dt>
         <dd class="col-sm-9">
           <ul>
-            <li><a href="{{ user.facebook }}">{{ 'Facebook'|trans }}</a></li>
-            <li><a href="{{ user.twitter }}">{{ 'Twitter'|trans }}</a></li>
+            <li><a href="{{ user.facebook }}">{{ 'profile.label.facebook'|trans }}</a></li>
+            <li><a href="{{ user.twitter }}">{{ 'profile.label.twitter'|trans }}</a></li>
           </ul>
         </dd>
 
-        <dt class="col-sm-3">{{ 'Roles'|trans }}</dt>
+        <dt class="col-sm-3">{{ 'profile.label.roles'|trans }}</dt>
         <dd class="col-sm-9">
           <ul>
             {% for role in membership.productionRoles %}
-              <li><strong>{{ role.designation }}:</strong> {{ role.name }}</li>
+              <li><strong>{{ role.designation }}</strong>: {{ role.name }}</li>
             {% else %}
-                <li>{{ 'No roles found'|trans }}</li>
+              <li>{{ 'profile.no_roles'|trans }}</li>
             {% endfor %}
           </ul>
         </dd>

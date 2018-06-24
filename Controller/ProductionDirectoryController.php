@@ -55,7 +55,6 @@ class ProductionDirectoryController extends Controller
         ]));
     }
 
-
     /**
      * Show a profile in the context of a production.
      *
