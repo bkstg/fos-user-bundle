@@ -74,7 +74,7 @@ class DirectoryController extends Controller
 
         // Render the response.
         return new Response($this->templating->render(
-            '@BkstgFOSUser/Profile/read.html.twig',
+            '@BkstgFOSUser/Directory/read.html.twig',
             ['user' => $user]
         ));
     }

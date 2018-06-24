@@ -22,7 +22,7 @@
           {% for user in users %}
             <tr>
               <td style="width: 4em;">{% include '@BkstgCore/_profile_picture.html.twig' with { 'user': user } only %}</td>
-              <td><a href="{{ url('bkstg_directory_show', {'profile_slug': user.slug}) }}">{{ user }}</td>
+              <td><a href="{{ url('bkstg_directory_show', { 'profile_slug': user.slug }) }}">{{ user }}</td>
               <td>{% if user.email %}<a href="mailto:{{ user.email }}">{{ user.email }}</a>{% endif %}</td>
               <td>{% if user.phone %}<a href="tel:{{ user.phone }}">{{ user.phone }}</a>{% endif %}</td>
               <td>{{ user.facebook }}</td>

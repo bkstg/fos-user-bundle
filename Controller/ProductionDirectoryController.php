@@ -4,16 +4,12 @@ namespace Bkstg\FOSUserBundle\Controller;
 
 use Bkstg\CoreBundle\Controller\Controller;
 use Bkstg\CoreBundle\Entity\Production;
-use Bkstg\CoreBundle\Util\ProfileManagerInterface;
 use Bkstg\FOSUserBundle\Entity\ProductionMembership;
 use Bkstg\FOSUserBundle\Entity\User;
-use Bkstg\FOSUserBundle\Form\Type\ProfileType;
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -22,20 +18,20 @@ class ProductionDirectoryController extends Controller
     /**
      * Show a list of production profiles for a production.
      *
-     * @throws NotFoundHttpException    If the production does not exist.
-     * @throws AccessDeniedException    If the current user is not a member.
-     *
-     * @param  string  $production_slug The production slug for this membership.
-     * @param  Request $request         The request.
-     *
-     * @return Response                 The response.
+     * @param string                        $production_slug The production slug for this membership.
+     * @param AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param PaginatorInterface            $paginator       The paginator service.
+     * @param Request                       $request         The request.
+     * @throws NotFoundHttpException If the production does not exist.
+     * @throws AccessDeniedException If the current user is not a member.
+     * @return Response
      */
     public function indexAction(
         string $production_slug,
         AuthorizationCheckerInterface $auth,
         PaginatorInterface $paginator,
         Request $request
-    ) {
+    ): Response {
         // Lookup the production by production_slug.
         $production_repo = $this->em->getRepository(Production::class);
         if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
@@ -53,7 +49,7 @@ class ProductionDirectoryController extends Controller
 
         // Render the response.
         $users = $paginator->paginate($query, $request->query->getInt('page', 1));
-        return new Response($this->templating->render('@BkstgFOSUser/ProductionProfile/index.html.twig', [
+        return new Response($this->templating->render('@BkstgFOSUser/ProductionDirectory/index.html.twig', [
             'production' => $production,
             'users' => $users,
         ]));
@@ -61,15 +57,14 @@ class ProductionDirectoryController extends Controller
 
 
     /**
-     * Render a profile.
+     * Show a profile in the context of a production.
      *
-     * @param int $id
-     *   The profile id to render.
-     *
+     * @param string $production_slug The production slug.
+     * @param string $profile_slug    The profile slug.
+     * @throws NotFoundHttpException If the production or profile is not found.
      * @return Response
-     *   The rendered profile.
      */
-    public function readAction($production_slug, $profile_slug)
+    public function readAction(string $production_slug, string $profile_slug): Response
     {
         // Lookup the profile.
         $user_repo = $this->em->getRepository(User::class);
@@ -91,7 +86,7 @@ class ProductionDirectoryController extends Controller
 
         // Render the response.
         return new Response($this->templating->render(
-            '@BkstgFOSUser/ProductionProfile/show.html.twig',
+            '@BkstgFOSUser/ProductionDirectory/read.html.twig',
             [
                 'user' => $user,
                 'production' => $production,
