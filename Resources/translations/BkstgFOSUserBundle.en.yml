@@ -28,6 +28,21 @@ profile:
         weight: 'Weight'
 directory:
     title: 'Directory'
+users: 'Users'
 user:
+    no_users: 'No users found.'
+    archive_no_users: 'No users in the archive right now.'
+    archive_info: 'These users are blocked, you can edit them here.'
+    edit: 'Edit user'
+    delete: 'Delete user'
+    create: 'Create new user'
     created: 'User "%user%" created.'
     updated: 'User "%user%" updated.'
+    active: 'Active'
+    blocked: 'Blocked'
+    label:
+        username: 'Username'
+        email: 'Email'
+        roles: 'Roles'
+        status: 'Status'
+        last_login: 'Last login'

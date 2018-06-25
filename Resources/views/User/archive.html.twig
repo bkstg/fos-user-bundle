@@ -3,10 +3,10 @@
 {% set page_title = 'users'|trans %}
 
 {% block content %}
-  {# Link to create a new user. #}
-  <a href="{{ url('bkstg_user_admin_create') }}" class="btn btn-success">
-    <i class="fa fa-plus" aria-hidden="true"></i> {{ 'user.create'|trans }}
-  </a>
+  {# Archive information #}
+  <div class="alert alert-info">
+    {{ 'user.archive_info'|trans }}
+  </div>
 
   {# Table of existing users. #}
   <p><div class="table-responsive">
@@ -44,7 +44,7 @@
         </tr>
       {% else %}
         <tr>
-          <td colspan="6">{{ 'user.no_users'|trans }}</td>
+          <td colspan="6">{{ 'user.archive_no_users'|trans }}</td>
         </tr>
       {% endfor %}
       </tbody>

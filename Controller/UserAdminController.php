@@ -44,7 +44,7 @@ class UserAdminController extends Controller
         // Paginate the user query and render.
         $query = $this->em->getRepository(User::class)->findAllBlockedQuery();
         $users = $paginator->paginate($query, $request->query->getInt('page', 1));
-        return new Response($this->templating->render('@BkstgFOSUser/User/index.html.twig', [
+        return new Response($this->templating->render('@BkstgFOSUser/User/archive.html.twig', [
             'users' => $users,
         ]));
     }
