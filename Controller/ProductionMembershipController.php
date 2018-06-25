@@ -16,11 +16,21 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class ProductionMembershipController extends Controller
 {
+    /**
+     * Show a list of active memberships.
+     *
+     * @param  string                        $production_slug The production slug.
+     * @param  Request                       $request         The incoming request.
+     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @throws NotFoundHttpException                          If the production is not found.
+     * @throws AccessDeniedException                          If the user is not an admin in the group.
+     * @return Response
+     */
     public function indexAction(
-        $production_slug,
+        string $production_slug,
         Request $request,
         AuthorizationCheckerInterface $auth
-    ) {
+    ): Response {
         // Lookup the production by production_slug.
         $production_repo = $this->em->getRepository(Production::class);
         if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
@@ -45,11 +55,21 @@ class ProductionMembershipController extends Controller
         ));
     }
 
+    /**
+     * Show a list of archived memberships.
+     *
+     * @param  string                        $production_slug The production slug.
+     * @param  Request                       $request         The incoming request.
+     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @throws NotFoundHttpException                          If the production is not found.
+     * @throws AccessDeniedException                          If the user is not an admin in the group.
+     * @return Response
+     */
     public function archiveAction(
-        $production_slug,
+        string $production_slug,
         Request $request,
         AuthorizationCheckerInterface $auth
-    ) {
+    ): Response {
         // Lookup the production by production_slug.
         $production_repo = $this->em->getRepository(Production::class);
         if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
@@ -74,11 +94,21 @@ class ProductionMembershipController extends Controller
         ));
     }
 
+    /**
+     * Create a new membership in this group.
+     *
+     * @param  string                        $production_slug The production slug.
+     * @param  Request                       $request         The incoming request.
+     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @throws NotFoundHttpException                          If the production is not found.
+     * @throws AccessDeniedException                          If the user is not an admin in the group.
+     * @return Response
+     */
     public function createAction(
-        $production_slug,
+        string $production_slug,
         Request $request,
         AuthorizationCheckerInterface $auth
-    ) {
+    ): Response {
         // Lookup the production by production_slug.
         $production_repo = $this->em->getRepository(Production::class);
         if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
@@ -107,7 +137,7 @@ class ProductionMembershipController extends Controller
             // Set success message and redirect.
             $this->session->getFlashBag()->add(
                 'success',
-                $this->translator->trans('"%user%" added to "%production%".', [
+                $this->translator->trans('membership.created', [
                     '%user%' => $membership->getMember()->getUsername(),
                     '%production%' => $production->getName(),
                 ])
@@ -124,12 +154,23 @@ class ProductionMembershipController extends Controller
         ]));
     }
 
+    /**
+     * Update an existing group membership.
+     *
+     * @param  string                        $production_slug The production slug.
+     * @param  integer                       $id              The membership id.
+     * @param  Request                       $request         The incoming request.
+     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @throws NotFoundHttpException                          If the production is not found.
+     * @throws AccessDeniedException                          If the user is not an admin in the group.
+     * @return Response
+     */
     public function updateAction(
-        $production_slug,
-        $id,
+        string $production_slug,
+        int $id,
         Request $request,
         AuthorizationCheckerInterface $auth
-    ) {
+    ): Response {
         // Lookup the production by production_slug.
         $production_repo = $this->em->getRepository(Production::class);
         if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
@@ -139,6 +180,11 @@ class ProductionMembershipController extends Controller
         // Lookup the membership by production and id.
         $membership_repo = $this->em->getRepository(ProductionMembership::class);
         if (null === $membership = $membership_repo->findOneBy(['group' => $production, 'id' => $id])) {
+            throw new NotFoundHttpException();
+        }
+
+        // Ensure this membership is for this group.
+        if ($membership->getGroup() !== $production) {
             throw new NotFoundHttpException();
         }
 
@@ -165,6 +211,7 @@ class ProductionMembershipController extends Controller
                     $this->em->remove($production_role);
                 }
             }
+
             // Persist the production
             $this->em->persist($membership);
             $this->em->flush();
@@ -172,7 +219,7 @@ class ProductionMembershipController extends Controller
             // Set success message and redirect.
             $this->session->getFlashBag()->add(
                 'success',
-                $this->translator->trans('Membership for "%user%" edited.', [
+                $this->translator->trans('membership.updated', [
                     '%user%' => $membership->getMember()->getUsername(),
                 ])
             );
@@ -189,11 +236,23 @@ class ProductionMembershipController extends Controller
         ]));
     }
 
+    /**
+     * Delete an existing group membership.
+     *
+     * @param  string                        $production_slug The production slug.
+     * @param  integer                       $id              The membership id.
+     * @param  Request                       $request         The incoming request.
+     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @throws NotFoundHttpException                          If the production is not found.
+     * @throws AccessDeniedException                          If the user is not an admin in the group.
+     * @return Response
+     */
     public function deleteAction(
-        $production_slug,
-        $id,
-        Request $request
-    ) {
+        string $production_slug,
+        int $id,
+        Request $request,
+        AuthorizationCheckerInterface $auth
+    ): Response {
         // Lookup the production by production_slug.
         $production_repo = $this->em->getRepository(Production::class);
         if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
@@ -204,6 +263,16 @@ class ProductionMembershipController extends Controller
         $membership_repo = $this->em->getRepository(ProductionMembership::class);
         if (null === $membership = $membership_repo->findOneBy(['group' => $production, 'id' => $id])) {
             throw new NotFoundHttpException();
+        }
+
+        // Ensure this membership is for this group.
+        if ($membership->getGroup() !== $production) {
+            throw new NotFoundHttpException();
+        }
+
+        // Check permissions for this action.
+        if (!$auth->isGranted('GROUP_ROLE_ADMIN', $production)) {
+            throw new AccessDeniedException();
         }
 
         // Create an empty form.
@@ -218,7 +287,7 @@ class ProductionMembershipController extends Controller
             // Set success message and redirect.
             $this->session->getFlashBag()->add(
                 'success',
-                $this->translator->trans('Membership for "%user%" deleted.', [
+                $this->translator->trans('membership.deleted', [
                     '%user%' => $membership->getMember()->getUsername(),
                 ])
             );

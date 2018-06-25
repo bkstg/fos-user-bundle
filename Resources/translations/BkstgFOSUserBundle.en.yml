@@ -7,6 +7,10 @@ unit:
         abbr: 'kg'
     meters:
         abbr: 'm'
+membershp:
+    created: '"%user%" added to "%production%".'
+    updated: 'Membership for "%user%" edited.'
+    deleted: 'Membership for "%user%" deleted.'
 menu_item:
     users: 'Users'
     directory: 'Directory'
