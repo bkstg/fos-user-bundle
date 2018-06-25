@@ -13,15 +13,12 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 class ProfileController extends Controller
 {
     /**
-     * Render a global profile.
+     * Render the current user's profile.
      *
-     * @param int $id
-     *   The profile id to render.
-     *
+     * @param  TokenStorageInterface $token_storage The token storage service.
      * @return Response
-     *   The rendered profile.
      */
-    public function readAction(TokenStorageInterface $token_storage)
+    public function readAction(TokenStorageInterface $token_storage): Response
     {
         // Render the response.
         return new Response($this->templating->render(
@@ -31,29 +28,24 @@ class ProfileController extends Controller
     }
 
     /**
-     * Edit an existing global profile.
+     * Edit the current user's profile.
      *
-     * To edit an existing global profile the user must be either:
-     * - The author of the profile, OR
-     * - Have the global ROLE_ADMIN role.
-     *
-     * @param int $id
-     *   The id of the profile to edit.
-     * @param Request $request
-     *   The Request for form processing.
-     *
+     * @param  Request               $request       The incoming request.
+     * @param  TokenStorageInterface $token_storage The token storage service.
      * @return Response
-     *   The rendered form or a redirect.
      */
     public function updateAction(
         Request $request,
         TokenStorageInterface $token_storage
-    ) {
+    ): Response {
+        // Get the current user.
         $user = $token_storage->getToken()->getUser();
 
+        // Create a form for the current user.
         $form = $this->form->create(ProfileType::class, $user);
         $form->handleRequest($request);
 
+        // Process the form if it is good.
         if ($form->isSubmitted() && $form->isValid()) {
             // Persist the profile and flush.
             $user->setHasProfile(true);
@@ -63,7 +55,7 @@ class ProfileController extends Controller
             // Set success message and redirect.
             $this->session->getFlashBag()->add(
                 'success',
-                $this->translator->trans('Your global profile has been edited.')
+                $this->translator->trans('profile.edited')
             );
 
             return new RedirectResponse($this->url_generator->generate(
@@ -71,7 +63,6 @@ class ProfileController extends Controller
                 ['profile_slug' => $user->getSlug()]
             ));
         }
-
         return new Response($this->templating->render(
             '@BkstgFOSUser/Profile/update.html.twig',
             [

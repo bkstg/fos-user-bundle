@@ -1,12 +1,16 @@
-bkstg_user_admin_list:
+bkstg_user_admin_index:
     path: /
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\UserAdminController:indexAction
+bkstg_user_admin_archive:
+    path: /archive
+    defaults:
+        _controller: Bkstg\FOSUserBundle\Controller\UserAdminController:archiveAction
 bkstg_user_admin_create:
     path: /create
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\UserAdminController:createAction
-bkstg_user_admin_edit:
+bkstg_user_admin_update:
     path: /{id}/edit
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\UserAdminController:updateAction

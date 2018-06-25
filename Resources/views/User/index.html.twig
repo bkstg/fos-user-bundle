@@ -3,10 +3,10 @@
 {% block content %}
   <p><ul class="nav nav-tabs">
     <li class="nav-item">
-      <a class="nav-link{% if app.request.query.get('status') != 'blocked' %} active{% endif %}" href="{{ url('bkstg_user_admin_list') }}">{{ 'Enabled'|trans }}</a>
+      <a class="nav-link{% if app.request.query.get('status') != 'blocked' %} active{% endif %}" href="{{ url('bkstg_user_admin_index') }}">{{ 'Enabled'|trans }}</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link{% if app.request.query.get('status') == 'blocked' %} active{% endif %}" href="{{ url('bkstg_user_admin_list') }}?status=blocked">{{ 'Blocked'|trans }}</a>
+      <a class="nav-link{% if app.request.query.get('status') == 'blocked' %} active{% endif %}" href="{{ url('bkstg_user_admin_index') }}?status=blocked">{{ 'Blocked'|trans }}</a>
     </li>
   </ul></p>
   {% if users is empty %}
@@ -40,7 +40,7 @@
             <td>{{ user.lastLogin ? user.lastLogin|date : '' }}</td>
             <td>
               {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ url('bkstg_user_admin_edit', {'id': user.id}) }}">Edit</a>
+                <a href="{{ url('bkstg_user_admin_update', {'id': user.id}) }}">Edit</a>
                 -
                 <a href="{{ url('bkstg_user_admin_delete', {'id': user.id}) }}">Delete</a>
               {% endif %}

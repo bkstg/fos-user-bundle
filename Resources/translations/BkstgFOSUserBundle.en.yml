@@ -9,7 +9,9 @@ menu_item:
     members: 'Members'
     profile_show: 'My Profile'
     profile_create: 'Create profile'
+    archive: 'Archive'
 profile:
+    edited: 'Your profile has been saved.'
     profile_for: '%name%''s profile'
     no_roles: 'No roles.'
     no_profiles: 'No profiles created yet.'
@@ -26,3 +28,6 @@ profile:
         weight: 'Weight'
 directory:
     title: 'Directory'
+user:
+    created: 'User "%user%" created.'
+    updated: 'User "%user%" updated.'

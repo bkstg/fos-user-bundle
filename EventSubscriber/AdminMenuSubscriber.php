@@ -32,12 +32,26 @@ class AdminMenuSubscriber implements EventSubscriberInterface
 
         // Create users menu item.
         $users = $this->factory->createItem('menu_item.users', [
-            'route' => 'bkstg_user_admin_list',
+            'route' => 'bkstg_user_admin_index',
             'extras' => [
                 'icon' => 'users',
                 'translation_domain' => BkstgFOSUserBundle::TRANSLATION_DOMAIN,
             ],
         ]);
         $menu->addChild($users);
+
+        // Create users menu item.
+        $users_list = $this->factory->createItem('menu_item.users', [
+            'route' => 'bkstg_user_admin_index',
+            'extras' => ['translation_domain' => BkstgFOSUserBundle::TRANSLATION_DOMAIN],
+        ]);
+        $users->addChild($users_list);
+
+        // Create users menu item.
+        $users_archive = $this->factory->createItem('menu_item.archive', [
+            'route' => 'bkstg_user_admin_archive',
+            'extras' => ['translation_domain' => BkstgFOSUserBundle::TRANSLATION_DOMAIN],
+        ]);
+        $users->addChild($users_archive);
     }
 }
