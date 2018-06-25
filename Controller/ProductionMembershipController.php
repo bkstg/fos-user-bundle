@@ -32,21 +32,41 @@ class ProductionMembershipController extends Controller
             throw new AccessDeniedException();
         }
 
-        // Can show active or inactive.
-        if ($request->query->has('status')
-            && $request->query->get('status') == 'inactive') {
-            $memberships = $this->em
-                ->getRepository(ProductionMembership::class)
-                ->findAllInactive($production);
-        } else {
-            $memberships = $this->em
-                ->getRepository(ProductionMembership::class)
-                ->findAllActive($production);
-        }
+        // Get active memberships.
+        $memberships = $this->em->getRepository(ProductionMembership::class)->findAllActive($production);
 
         // Return the membership index.
         return new Response($this->templating->render(
             '@BkstgFOSUser/ProductionMembership/index.html.twig',
+            [
+                'production' => $production,
+                'memberships' => $memberships,
+            ]
+        ));
+    }
+
+    public function archiveAction(
+        $production_slug,
+        Request $request,
+        AuthorizationCheckerInterface $auth
+    ) {
+        // Lookup the production by production_slug.
+        $production_repo = $this->em->getRepository(Production::class);
+        if (null === $production = $production_repo->findOneBy(['slug' => $production_slug])) {
+            throw new NotFoundHttpException();
+        }
+
+        // Check permissions for this action.
+        if (!$auth->isGranted('GROUP_ROLE_ADMIN', $production)) {
+            throw new AccessDeniedException();
+        }
+
+        // Get archived memberships.
+        $memberships = $this->em->getRepository(ProductionMembership::class)->findAllInactive($production);
+
+        // Return the membership archive.
+        return new Response($this->templating->render(
+            '@BkstgFOSUser/ProductionMembership/archive.html.twig',
             [
                 'production' => $production,
                 'memberships' => $memberships,
@@ -92,7 +112,7 @@ class ProductionMembershipController extends Controller
                     '%production%' => $production->getName(),
                 ])
             );
-            return new RedirectResponse($this->url_generator->generate('bkstg_membership_list', [
+            return new RedirectResponse($this->url_generator->generate('bkstg_production_membership_index', [
                 'production_slug' => $production->getSlug(),
             ]));
         }
@@ -156,7 +176,7 @@ class ProductionMembershipController extends Controller
                     '%user%' => $membership->getMember()->getUsername(),
                 ])
             );
-            return new RedirectResponse($this->url_generator->generate('bkstg_membership_list', [
+            return new RedirectResponse($this->url_generator->generate('bkstg_production_membership_index', [
                 'production_slug' => $production->getSlug(),
             ]));
         }
@@ -202,7 +222,7 @@ class ProductionMembershipController extends Controller
                     '%user%' => $membership->getMember()->getUsername(),
                 ])
             );
-            return new RedirectResponse($this->url_generator->generate('bkstg_membership_list', [
+            return new RedirectResponse($this->url_generator->generate('bkstg_production_membership_index', [
                 'production_slug' => $production->getSlug(),
             ]));
         }

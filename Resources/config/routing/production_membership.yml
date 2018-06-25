@@ -1,16 +1,20 @@
-bkstg_membership_list:
+bkstg_production_membership_index:
     path: /
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\ProductionMembershipController:indexAction
-bkstg_membership_create:
-    path: /add
+bkstg_production_membership_archive:
+    path: /archive
+    defaults:
+        _controller: Bkstg\FOSUserBundle\Controller\ProductionMembershipController:archiveAction
+bkstg_production_membership_create:
+    path: /create
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\ProductionMembershipController:createAction
-bkstg_membership_edit:
+bkstg_production_membership_update:
     path: /{id}/edit
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\ProductionMembershipController:updateAction
-bkstg_membership_delete:
+bkstg_production_membership_delete:
     path: /{id}/delete
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\ProductionMembershipController:deleteAction

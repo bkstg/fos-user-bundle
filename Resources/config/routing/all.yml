@@ -5,11 +5,11 @@ bkstg_directory:
 bkstg_production_directory:
     resource: '@BkstgFOSUserBundle/Resources/config/routing/production_directory.yml'
     prefix: /{production_slug}/directory
-bkstg_user:
+bkstg_user_admin:
     resource: '@BkstgFOSUserBundle/Resources/config/routing/user_admin.yml'
     prefix: /admin/users
-bkstg_membership:
-    resource: '@BkstgFOSUserBundle/Resources/config/routing/membership.yml'
+bkstg_production_membership:
+    resource: '@BkstgFOSUserBundle/Resources/config/routing/production_membership.yml'
     prefix: /{production_slug}/settings/members
 bkstg_profile:
     resource: '@BkstgFOSUserBundle/Resources/config/routing/profile.yml'

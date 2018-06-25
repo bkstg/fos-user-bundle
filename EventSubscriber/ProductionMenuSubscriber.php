@@ -59,7 +59,7 @@ class ProductionMenuSubscriber implements EventSubscriberInterface
             // Create settings menu item.
             $settings = $menu->getChild('menu_item.settings');
             $members = $this->factory->createItem('menu_item.members', [
-                'route' => 'bkstg_membership_list',
+                'route' => 'bkstg_production_membership_index',
                 'routeParameters' => ['production_slug' => $group->getSlug()],
                 'extras' => ['translation_domain' => BkstgFOSUserBundle::TRANSLATION_DOMAIN],
             ]);
