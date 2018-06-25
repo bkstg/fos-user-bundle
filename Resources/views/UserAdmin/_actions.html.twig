@@ -1,0 +1,11 @@
+{% trans_default_domain 'BkstgFOSUserBundle' %}
+
+{% set route = app.request.attributes.get('_route') %}
+<ul class="nav nav-tabs mb-3">
+  <li class="nav-item">
+    <a class="nav-link{% if route == 'bkstg_user_admin_update' %} active{% endif %}" href="{{ url('bkstg_user_admin_update', { 'id': user.id }) }}">{{ 'edit'|trans }}</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link{% if route == 'bkstg_user_admin_delete' %} active{% endif %} text-danger" href="{{ url('bkstg_user_admin_delete', { 'id': user.id }) }}">{{ 'delete'|trans }}</a>
+  </li>
+</ul>

@@ -1,0 +1,8 @@
+{% extends '@BkstgCore/layout-admin.html.twig' %}
+{% trans_default_domain 'BkstgFOSUserBundle' %}
+{% set page_title = 'user.edit_user'|trans({ '%user%': user.username }) %}
+
+{% block content %}
+  {% include '@BkstgFOSUser/UserAdmin/_actions.html.twig' with { 'user': user } only %}
+  {% include '@BkstgFOSUser/UserAdmin/_form.html.twig' with { 'form': form } only %}
+{% endblock %}

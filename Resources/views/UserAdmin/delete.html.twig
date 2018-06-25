@@ -1,0 +1,17 @@
+{% extends '@BkstgCore/layout-admin.html.twig' %}
+{% trans_default_domain 'BkstgFOSUserBundle' %}
+{% set page_title = 'user.delete_user'|trans({ '%user%': user.username }) %}
+
+{% block content %}
+  {% include '@BkstgFOSUser/UserAdmin/_actions.html.twig' with { 'user': user } only %}
+  <p>{{ 'user.delete_confirm'|trans({ '%user%': user.username }) }}</p>
+  <p>{{ 'user.delete_consequences'|trans }}</p>
+  <p><strong>{{ 'user.delete_no_undo'|trans }}</strong></p>
+  {{ form_start(form) }}
+    {{ form_widget(form) }}
+    <div class="form-group">
+      <a href="{{ url('bkstg_user_admin_index') }}" class="btn btn-secondary">{{ 'cancel'|trans }}</a>
+      <button type="submit" class="btn btn-danger">{{ 'delete'|trans }}</button>
+    </div>
+  {{ form_end(form) }}
+{% endblock %}

@@ -27,7 +27,7 @@ class UserAdminController extends Controller
         // Paginate the user query and render.
         $query = $this->em->getRepository(User::class)->findAllActiveQuery();
         $users = $paginator->paginate($query, $request->query->getInt('page', 1));
-        return new Response($this->templating->render('@BkstgFOSUser/User/index.html.twig', [
+        return new Response($this->templating->render('@BkstgFOSUser/UserAdmin/index.html.twig', [
             'users' => $users,
         ]));
     }
@@ -44,7 +44,7 @@ class UserAdminController extends Controller
         // Paginate the user query and render.
         $query = $this->em->getRepository(User::class)->findAllBlockedQuery();
         $users = $paginator->paginate($query, $request->query->getInt('page', 1));
-        return new Response($this->templating->render('@BkstgFOSUser/User/archive.html.twig', [
+        return new Response($this->templating->render('@BkstgFOSUser/UserAdmin/archive.html.twig', [
             'users' => $users,
         ]));
     }
@@ -92,7 +92,7 @@ class UserAdminController extends Controller
         }
 
         // Render the form.
-        return new Response($this->templating->render('@BkstgFOSUser/User/create.html.twig', [
+        return new Response($this->templating->render('@BkstgFOSUser/UserAdmin/create.html.twig', [
             'form' => $form->createView(),
         ]));
     }
@@ -136,7 +136,7 @@ class UserAdminController extends Controller
         }
 
         // Render the form.
-        return new Response($this->templating->render('@BkstgFOSUser/User/edit.html.twig', [
+        return new Response($this->templating->render('@BkstgFOSUser/UserAdmin/update.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]));
@@ -180,7 +180,7 @@ class UserAdminController extends Controller
         }
 
         // Render the form.
-        return new Response($this->templating->render('@BkstgFOSUser/User/delete.html.twig', [
+        return new Response($this->templating->render('@BkstgFOSUser/UserAdmin/delete.html.twig', [
             'user' => $user,
             'form' => $form->createView(),
         ]));

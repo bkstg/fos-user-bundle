@@ -1,0 +1,7 @@
+{% extends '@BkstgCore/layout-admin.html.twig' %}
+{% trans_default_domain 'BkstgFOSUserBundle' %}
+{% set page_title = 'user.create'|trans %}
+
+{% block content %}
+  {% include '@BkstgFOSUser/UserAdmin/_form.html.twig' with { 'form': form } only %}
+{% endblock %}

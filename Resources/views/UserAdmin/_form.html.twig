@@ -1,0 +1,9 @@
+{% trans_default_domain 'BkstgFOSUserBundle' %}
+
+{{ form_start(form) }}
+  {{ form_widget(form) }}
+  <div class="form-group">
+    <a href="{{ url('bkstg_user_admin_index') }}" class="btn btn-secondary">{{ 'cancel'|trans }}</a>
+    <button type="submit" class="btn btn-primary">{{ 'Save'|trans }}</button>
+  </div>
+{{ form_end(form) }}

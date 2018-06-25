@@ -1,3 +1,7 @@
+edit: 'Edit'
+delete: 'Delete'
+save: 'Save'
+cancel: 'Cancel'
 unit:
     kilograms:
         abbr: 'kg'
@@ -30,6 +34,11 @@ directory:
     title: 'Directory'
 users: 'Users'
 user:
+    delete_confirm: 'Are you sure you want to delete "%user%"?'
+    delete_consequences: 'All content associated with this user will be lost or orphaned.'
+    delete_no_undo: 'This action cannot be undone.'
+    edit_user: 'Edit user "%user%"'
+    delete_user: 'Delete user "%user%"'
     no_users: 'No users found.'
     archive_no_users: 'No users in the archive right now.'
     archive_info: 'These users are blocked, you can edit them here.'
