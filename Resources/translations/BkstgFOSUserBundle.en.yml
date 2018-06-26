@@ -89,5 +89,14 @@ user:
         roles: 'Roles'
         status: 'Status'
         last_login: 'Last login'
+
+    form:
+        username: 'Username'
+        email: 'Email'
+        roles: 'Roles'
+        roles_choices:
+            admin: 'Admin'
+            editor: 'Editor'
+        enabled: 'Enabled?'
 widget_label_binary_content: 'File'
 widget_label_unlink: 'Remove'
