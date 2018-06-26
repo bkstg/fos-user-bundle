@@ -17,6 +17,13 @@ class MembershipCreator
     private $session;
     private $translator;
 
+    /**
+     * Create a new membership creator.
+     *
+     * @param TokenStorageInterface $token_storage The token storage service.
+     * @param SessionInterface      $session       The session service.
+     * @param TranslatorInterface   $translator    The translator service.
+     */
     public function __construct(
         TokenStorageInterface $token_storage,
         SessionInterface $session,
@@ -29,23 +36,27 @@ class MembershipCreator
 
     /**
      * When a user creates a production make them an admin in the production.
+     *
+     * @param  LifecycleEventArgs $args The event arguments.
+     * @return void
      */
-    public function prePersist(LifecycleEventArgs $args)
+    public function prePersist(LifecycleEventArgs $args): void
     {
+        // Ensure we only act on productions and that we have a user.
         $object = $args->getObject();
         $token = $this->token_storage->getToken();
-
-        // Only act on "Production" entities.
         if (!$object instanceof Production
           || $token === null) {
             return;
         }
 
+        // Ensure the user is one of our users.
         $user = $token->getUser();
         if (!$user instanceof User) {
             return;
         }
 
+        // Get the object manager for this event.
         $om = $args->getObjectManager();
 
         // Create and persist new membership.
@@ -59,7 +70,7 @@ class MembershipCreator
         // Set message.
         $this->session->getFlashBag()->add(
             'success',
-            $this->translator->trans('You have been made a member of "%production%".', [
+            $this->translator->trans('membership.user_added', [
                 '%production%' => $object->getName(),
             ])
         );

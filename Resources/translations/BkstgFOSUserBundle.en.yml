@@ -11,6 +11,7 @@ membershp:
     created: '"%user%" added to "%production%".'
     updated: 'Membership for "%user%" edited.'
     deleted: 'Membership for "%user%" deleted.'
+    user_added: 'You have been made a member of "%production%".'
 menu_item:
     users: 'Users'
     directory: 'Directory'

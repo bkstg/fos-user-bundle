@@ -9,12 +9,12 @@ use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 class MembershipDeletion
 {
     /**
-     * Removes memberships when parent production is removed.
+     * Remove memberships when parent production is removed.
      *
-     * Since productions are not aware of their memberships this  is the
-     * responsibility of the user bundle.
+     * @param  LifecycleEventArgs $args The arguments for this event.
+     * @return void
      */
-    public function preRemove(LifecycleEventArgs $args)
+    public function preRemove(LifecycleEventArgs $args): void
     {
         $object = $args->getObject();
 
@@ -23,6 +23,7 @@ class MembershipDeletion
             return;
         }
 
+        // Find and remove all memberships for this group.
         $om = $args->getObjectManager();
         foreach ($om->getRepository(ProductionMembership::class)->findBy(['group' => $object]) as $membership) {
             $om->remove($membership);
