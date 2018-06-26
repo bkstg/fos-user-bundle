@@ -36,7 +36,7 @@ class ProductionRole implements ProductionRoleInterface
      * Set name.
      *
      * @param string $name The name of the role.
-     * @return ProductionRole
+     * @return self
      */
     public function setName(string $name): self
     {
@@ -58,7 +58,7 @@ class ProductionRole implements ProductionRoleInterface
      * Set designation.
      *
      * @param string $designation The designation for this role.
-     * @return ProductionRole
+     * @return self
      */
     public function setDesignation(string $designation): self
     {
@@ -67,18 +67,21 @@ class ProductionRole implements ProductionRoleInterface
     }
 
     /**
-    * Get production_membership
-    * @return
-    */
+     * Get production membership for this role.
+     *
+     * @return ?ProductionMembership
+     */
     public function getProductionMembership(): ?ProductionMembership
     {
         return $this->production_membership;
     }
 
     /**
-    * Set production_membership
-    * @return $this
-    */
+     * Set production membership for this role.
+     *
+     * @param  ProductionMembership $production_membership The membership to set.
+     * @return self
+     */
     public function setProductionMembership(ProductionMembership $production_membership): self
     {
         $this->production_membership = $production_membership;

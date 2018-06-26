@@ -13,7 +13,6 @@ use PhpUnitsOfMeasure\PhysicalQuantity\Mass;
 
 class User extends BaseUser implements GroupMemberInterface, UserInterface
 {
-
     protected $id;
     private $has_profile;
     private $memberships;
@@ -37,14 +36,20 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     }
 
     /**
-     * Get id
-     * @return
+     * Get id.
+     *
+     * @return ?integer
      */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * Get email.
+     *
+     * @return ?string
+     */
     public function getEmail(): ?string
     {
         return $this->email;
@@ -52,19 +57,25 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return ArrayCollection
      */
-    public function getMemberships()
+    public function getMemberships(): ArrayCollection
     {
         return $this->memberships;
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @param  GroupMembershipInterface $membership The membership to set.
+     * @throws \Exception If the membership is not a production membership.
+     * @return self
      */
     public function addMembership(GroupMembershipInterface $membership): self
     {
         if (!$membership instanceof ProductionMembership) {
-            throw new MembershipTypeNotSupportedException();
+            throw new \Exception(sprintf('The membership type "%s" is not supported.', get_class($membership)));
         }
 
         if (!$this->memberships->contains($membership)) {
@@ -75,6 +86,9 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param  GroupMembershipInterface $membership The membership to remove.
+     * @return self
      */
     public function removeMembership(GroupMembershipInterface $membership): self
     {
@@ -86,6 +100,9 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param  GroupMembershipInterface $membership The membership to check for.
+     * @return boolean
      */
     public function hasMembership(GroupMembershipInterface $membership): bool
     {
@@ -93,13 +110,12 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     }
 
     /**
-     * Set height
+     * Set height.
      *
-     * @param length $height
-     *
-     * @return Profile
+     * @param  ?Length $height The height to set.
+     * @return self
      */
-    public function setHeight(Length $height): self
+    public function setHeight(?Length $height): self
     {
         $this->height = $height;
 
@@ -107,9 +123,9 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     }
 
     /**
-     * Get height
+     * Get height.
      *
-     * @return length
+     * @return ?Length
      */
     public function getHeight(): ?Length
     {
@@ -117,13 +133,12 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     }
 
     /**
-     * Set weight
+     * Set weight.
      *
-     * @param mass $weight
-     *
-     * @return Profile
+     * @param  ?Mass $weight The weight to set.
+     * @return self
      */
-    public function setWeight(Mass $weight): self
+    public function setWeight(?Mass $weight): self
     {
         $this->weight = $weight;
 
@@ -131,9 +146,9 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     }
 
     /**
-     * Get weight
+     * Get weight.
      *
-     * @return mass
+     * @return ?Mass
      */
     public function getWeight(): ?Mass
     {
@@ -141,13 +156,12 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     }
 
     /**
-     * Set phone
+     * Set phone.
      *
-     * @param string $phone
-     *
-     * @return Profile
+     * @param  ?string $phone The phone number.
+     * @return self
      */
-    public function setPhone(string $phone): self
+    public function setPhone(?string $phone): self
     {
         $this->phone = $phone;
 
@@ -155,9 +169,9 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     }
 
     /**
-     * Get phone
+     * Get phone.
      *
-     * @return string
+     * @return ?string
      */
     public function getPhone(): ?string
     {
@@ -165,13 +179,12 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     }
 
     /**
-     * Set facebook
+     * Set facebook.
      *
-     * @param string $facebook
-     *
-     * @return Profile
+     * @param ?string $facebook The facebook url.
+     * @return self
      */
-    public function setFacebook(string $facebook): self
+    public function setFacebook(?string $facebook): self
     {
         $this->facebook = $facebook;
 
@@ -179,9 +192,9 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     }
 
     /**
-     * Get facebook
+     * Get facebook.
      *
-     * @return string
+     * @return ?string
      */
     public function getFacebook(): ?string
     {
@@ -191,11 +204,10 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     /**
      * Set twitter
      *
-     * @param string $twitter
-     *
-     * @return Profile
+     * @param ?string $twitter The twitter url.
+     * @return self
      */
-    public function setTwitter(string $twitter): self
+    public function setTwitter(?string $twitter): self
     {
         $this->twitter = $twitter;
 
@@ -203,9 +215,9 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     }
 
     /**
-     * Get twitter
+     * Get twitter.
      *
-     * @return string
+     * @return ?string
      */
     public function getTwitter(): ?string
     {
@@ -213,11 +225,10 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     }
 
     /**
-     * Set image
+     * Set image.
      *
-     * @param Media $image
-     *
-     * @return Profile
+     * @param  ?Media $image The media object to set as the image.
+     * @return self
      */
     public function setImage(?Media $image): self
     {
@@ -227,9 +238,9 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     }
 
     /**
-     * Get image
+     * Get image.
      *
-     * @return Media
+     * @return ?Media
      */
     public function getImage(): ?Media
     {
@@ -237,11 +248,10 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     }
 
     /**
-     * Set firstName
+     * Set first name.
      *
-     * @param string $first_name
-     *
-     * @return Profile
+     * @param  string $first_name The first name.
+     * @return self
      */
     public function setFirstName(string $first_name): self
     {
@@ -251,9 +261,9 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     }
 
     /**
-     * Get firstName
+     * Get first name.
      *
-     * @return string
+     * @return ?string
      */
     public function getFirstName(): ?string
     {
@@ -261,11 +271,10 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     }
 
     /**
-     * Set lastName
+     * Set last name.
      *
-     * @param string $last_name
-     *
-     * @return Profile
+     * @param  string $last_name The last name.
+     * @return self
      */
     public function setLastName(string $last_name): self
     {
@@ -275,9 +284,9 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     }
 
     /**
-     * Get lastName
+     * Get last name.
      *
-     * @return string
+     * @return ?string
      */
     public function getLastName(): ?string
     {
@@ -285,11 +294,10 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     }
 
     /**
-     * Set slug
+     * Set slug.
      *
-     * @param string $slug
-     *
-     * @return Profile
+     * @param  string $slug The slug to set.
+     * @return self
      */
     public function setSlug(string $slug): self
     {
@@ -299,9 +307,9 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     }
 
     /**
-     * Get slug
+     * Get slug.
      *
-     * @return string
+     * @return ?string
      */
     public function getSlug(): ?string
     {
@@ -309,8 +317,9 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     }
 
     /**
-     * Get has_profile
-     * @return bool
+     * Check if the user has a profile.
+     *
+     * @return boolean
      */
     public function hasProfile(): bool
     {
@@ -318,8 +327,10 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     }
 
     /**
-     * Set has_profile
-     * @return $this
+     * Set whether the user has a profile.
+     *
+     * @param  boolean $has_profile Whether or not the user has a profile.
+     * @return self
      */
     public function setHasProfile(bool $has_profile): self
     {
@@ -327,7 +338,12 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
         return $this;
     }
 
-    public function __toString()
+    /**
+     * Convert to a string, prefer real name, fallback on username.
+     *
+     * @return string
+     */
+    public function __toString(): string
     {
         if (!isset($this->first_name) || !isset($this->last_name)) {
             return $this->username;
