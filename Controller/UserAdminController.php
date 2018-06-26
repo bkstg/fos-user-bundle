@@ -4,7 +4,7 @@ namespace Bkstg\FOSUserBundle\Controller;
 
 use Bkstg\CoreBundle\Controller\Controller;
 use Bkstg\FOSUserBundle\Entity\User;
-use Bkstg\FOSUserBundle\Form\Type\UserType;
+use Bkstg\FOSUserBundle\Form\UserType;
 use FOS\UserBundle\Model\UserManagerInterface;
 use FOS\UserBundle\Util\TokenGeneratorInterface;
 use Knp\Component\Pager\PaginatorInterface;

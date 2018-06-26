@@ -7,6 +7,25 @@ unit:
         abbr: 'kg'
     meters:
         abbr: 'm'
+production_membership:
+    form:
+        member: 'Member'
+        roles: 'Roles'
+        roles_choices:
+            admin: 'Admin'
+            editor: 'Editor'
+        status: 'Status'
+        status_choices:
+            active: 'Active'
+            blocked: 'Blocked'
+        expiry: 'Expiry'
+production_role:
+    form:
+        name: 'Name'
+        designation: 'Designation'
+        designation_choices:
+            cast: 'Cast'
+            crew: 'Crew'
 membershp:
     created: '"%user%" added to "%production%".'
     updated: 'Membership for "%user%" edited.'

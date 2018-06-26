@@ -1,6 +1,6 @@
 <?php
 
-namespace Bkstg\FOSUserBundle\Form\Type;
+namespace Bkstg\FOSUserBundle\Form;
 
 use MidnightLuke\PhpUnitsOfMeasureBundle\Form\Type\LengthType;
 use MidnightLuke\PhpUnitsOfMeasureBundle\Form\Type\MassType;
@@ -47,9 +47,9 @@ class ProfileType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => 'Bkstg\FOSUserBundle\Entity\User'
-        ));
+        ]);
     }
 
     /**

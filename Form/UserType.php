@@ -1,6 +1,6 @@
 <?php
 
-namespace Bkstg\FOSUserBundle\Form\Type;
+namespace Bkstg\FOSUserBundle\Form;
 
 use Bkstg\FOSUserBundle\Entity\User;
 use Symfony\Component\Form\AbstractType;
@@ -34,8 +34,8 @@ class UserType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => User::class,
-        ));
+        ]);
     }
 }

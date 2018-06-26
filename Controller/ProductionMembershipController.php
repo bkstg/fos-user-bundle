@@ -5,7 +5,7 @@ namespace Bkstg\FOSUserBundle\Controller;
 use Bkstg\CoreBundle\Controller\Controller;
 use Bkstg\CoreBundle\Entity\Production;
 use Bkstg\FOSUserBundle\Entity\ProductionMembership;
-use Bkstg\FOSUserBundle\Form\Type\ProductionMembershipType;
+use Bkstg\FOSUserBundle\Form\ProductionMembershipType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

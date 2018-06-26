@@ -258,7 +258,7 @@ class ProductionMembership implements ProductionMembershipInterface
      *
      * @return ArrayCollection
      */
-    public function getProductionRoles(): ArrayCollection
+    public function getProductionRoles()
     {
         return $this->production_roles;
     }

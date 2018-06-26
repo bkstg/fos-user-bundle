@@ -60,7 +60,7 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
      *
      * @return ArrayCollection
      */
-    public function getMemberships(): ArrayCollection
+    public function getMemberships()
     {
         return $this->memberships;
     }

@@ -4,7 +4,7 @@ namespace Bkstg\FOSUserBundle\Controller;
 
 use Bkstg\CoreBundle\Controller\Controller;
 use Bkstg\FOSUserBundle\Entity\User;
-use Bkstg\FOSUserBundle\Form\Type\ProfileType;
+use Bkstg\FOSUserBundle\Form\ProfileType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
