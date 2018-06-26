@@ -14,6 +14,12 @@ class ProductionMenuSubscriber implements EventSubscriberInterface
     private $factory;
     private $auth;
 
+    /**
+     * Create a new production menu subscriber.
+     *
+     * @param FactoryInterface              $factory The menu factory service.
+     * @param AuthorizationCheckerInterface $auth    The authorization checker service.
+     */
     public function __construct(
         FactoryInterface $factory,
         AuthorizationCheckerInterface $auth
@@ -22,18 +28,28 @@ class ProductionMenuSubscriber implements EventSubscriberInterface
         $this->auth = $auth;
     }
 
+    /**
+     * Return the subscribed events.
+     *
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
-        // return the subscribed events, their methods and priorities
-        return array(
-           ProductionMenuCollectionEvent::NAME => array(
-               array('addProfileMenuItem', -10),
-               array('addMemberMenuItem', -50),
-           )
-        );
+        return [
+           ProductionMenuCollectionEvent::NAME => [
+               ['addDirectoryMenuItem', -10],
+               ['addMemberMenuItem', -50],
+           ]
+        ];
     }
 
-    public function addProfileMenuItem(ProductionMenuCollectionEvent $event)
+    /**
+     * Add the directory menu item.
+     *
+     * @param ProductionMenuCollectionEvent $event The menu collection event.
+     * @return void
+     */
+    public function addDirectoryMenuItem(ProductionMenuCollectionEvent $event): void
     {
         $menu = $event->getMenu();
         $group = $event->getGroup();
@@ -47,10 +63,15 @@ class ProductionMenuSubscriber implements EventSubscriberInterface
             ],
         ]);
         $menu->addChild($directory);
-
     }
 
-    public function addMemberMenuItem(ProductionMenuCollectionEvent $event)
+    /**
+     * Add the members menu item under settings for admins.
+     *
+     * @param ProductionMenuCollectionEvent $event The menu collection event.
+     * @return void
+     */
+    public function addMemberMenuItem(ProductionMenuCollectionEvent $event): void
     {
         $menu = $event->getMenu();
         $group = $event->getGroup();

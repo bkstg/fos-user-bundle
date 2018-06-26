@@ -12,13 +12,23 @@ class MainMenuSubscriber implements EventSubscriberInterface
 {
     private $factory;
 
-    public function __construct(FactoryInterface $factory) {
+    /**
+     * Create a new main menu subscriber.
+     *
+     * @param FactoryInterface $factory The menu factory service.
+     */
+    public function __construct(FactoryInterface $factory)
+    {
         $this->factory = $factory;
     }
 
-    public static function getSubscribedEvents()
+    /**
+     * Return the subscribed events.
+     *
+     * @return array
+     */
+    public static function getSubscribedEvents(): array
     {
-        // return the subscribed events, their methods and priorities
         return [
            MainMenuCollectionEvent::NAME => [
                ['addDirectoryMenuItem', 0],
@@ -26,6 +36,12 @@ class MainMenuSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * Create the main directory menu link.
+     *
+     * @param  MenuCollectionEvent $event The menu collection event.
+     * @return void
+     */
     public function addDirectoryMenuItem(MenuCollectionEvent $event)
     {
         $menu = $event->getMenu();

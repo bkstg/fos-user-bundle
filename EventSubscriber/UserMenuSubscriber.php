@@ -14,6 +14,12 @@ class UserMenuSubscriber implements EventSubscriberInterface
     private $factory;
     private $token_storage;
 
+    /**
+     * Create a new user menu subscriber.
+     *
+     * @param FactoryInterface      $factory       The menu factory service.
+     * @param TokenStorageInterface $token_storage The token storage service.
+     */
     public function __construct(
         FactoryInterface $factory,
         TokenStorageInterface $token_storage
@@ -22,9 +28,13 @@ class UserMenuSubscriber implements EventSubscriberInterface
         $this->token_storage = $token_storage;
     }
 
+    /**
+     * Return the subscribed events.
+     *
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
-        // return the subscribed events, their methods and priorities
         return [
            UserMenuCollectionEvent::NAME => [
                ['addProfileMenuItem', 50],
@@ -32,11 +42,18 @@ class UserMenuSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function addProfileMenuItem(MenuCollectionEvent $event)
+    /**
+     * Add the show/create menu item.
+     *
+     * @param MenuCollectionEvent $event The menu collection event.
+     * @return void
+     */
+    public function addProfileMenuItem(MenuCollectionEvent $event): void
     {
         $menu = $event->getMenu();
         $user = $this->token_storage->getToken()->getUser();
 
+        // If this user has a profile link it, otherwise link to edit.
         if ($user->hasProfile()) {
             $directory = $this->factory->createItem('menu_item.profile_show', [
                 'route' => 'bkstg_profile_read',

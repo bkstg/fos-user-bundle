@@ -12,21 +12,37 @@ class AdminMenuSubscriber implements EventSubscriberInterface
 {
     private $factory;
 
-    public function __construct(FactoryInterface $factory) {
+    /**
+     * Create a new admin menu subscriber.
+     *
+     * @param FactoryInterface $factory The menu factory service.
+     */
+    public function __construct(FactoryInterface $factory)
+    {
         $this->factory = $factory;
     }
 
-    public static function getSubscribedEvents()
+    /**
+     * Return the subscribed events.
+     *
+     * @return array
+     */
+    public static function getSubscribedEvents(): array
     {
-        // return the subscribed events, their methods and priorities
-        return array(
-           AdminMenuCollectionEvent::NAME => array(
-               array('addUserMenuItem', -5),
-           )
-        );
+        return [
+           AdminMenuCollectionEvent::NAME => [
+               ['addUserMenuItem', -5],
+           ]
+        ];
     }
 
-    public function addUserMenuItem(MenuCollectionEvent $event)
+    /**
+     * Add user admin menu items.
+     *
+     * @param  MenuCollectionEvent $event The admin menu collection event.
+     * @return void
+     */
+    public function addUserMenuItem(MenuCollectionEvent $event): void
     {
         $menu = $event->getMenu();
 
@@ -40,14 +56,14 @@ class AdminMenuSubscriber implements EventSubscriberInterface
         ]);
         $menu->addChild($users);
 
-        // Create users menu item.
+        // Create index menu item.
         $users_list = $this->factory->createItem('menu_item.users', [
             'route' => 'bkstg_user_admin_index',
             'extras' => ['translation_domain' => BkstgFOSUserBundle::TRANSLATION_DOMAIN],
         ]);
         $users->addChild($users_list);
 
-        // Create users menu item.
+        // Create archive menu item.
         $users_archive = $this->factory->createItem('menu_item.archive', [
             'route' => 'bkstg_user_admin_archive',
             'extras' => ['translation_domain' => BkstgFOSUserBundle::TRANSLATION_DOMAIN],
