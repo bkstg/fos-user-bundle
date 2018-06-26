@@ -54,6 +54,16 @@ profile:
         websites: 'Websites'
         height: 'Height'
         weight: 'Weight'
+    form:
+        image: 'Image'
+        first_name: 'First name'
+        last_name: 'Last name'
+        email: 'Email'
+        phone: 'Phone'
+        height: 'Height'
+        weight: 'Weight'
+        facebook: 'Facebook'
+        twitter: 'Twitter'
 directory:
     title: 'Directory'
 users: 'Users'
@@ -79,3 +89,5 @@ user:
         roles: 'Roles'
         status: 'Status'
         last_login: 'Last login'
+widget_label_binary_content: 'File'
+widget_label_unlink: 'Remove'
