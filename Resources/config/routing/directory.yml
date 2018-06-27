@@ -1,8 +1,8 @@
-bkstg_directory_list:
+bkstg_directory_index:
     path: /
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\DirectoryController:indexAction
-bkstg_directory_show:
+bkstg_directory_read:
     path: /{profile_slug}
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\DirectoryController:readAction

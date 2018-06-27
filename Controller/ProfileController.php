@@ -59,7 +59,7 @@ class ProfileController extends Controller
             );
 
             return new RedirectResponse($this->url_generator->generate(
-                'bkstg_directory_show',
+                'bkstg_directory_read',
                 ['profile_slug' => $user->getSlug()]
             ));
         }

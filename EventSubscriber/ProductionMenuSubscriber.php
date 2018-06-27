@@ -55,7 +55,7 @@ class ProductionMenuSubscriber implements EventSubscriberInterface
         $group = $event->getGroup();
 
         $directory = $this->factory->createItem('menu_item.directory', [
-            'route' => 'bkstg_production_directory_list',
+            'route' => 'bkstg_production_directory_index',
             'routeParameters' => ['production_slug' => $group->getSlug()],
             'extras' => [
                 'icon' => 'users',
