@@ -3,7 +3,13 @@
 {% set page_title = 'production_membership.members'|trans({ '%production%': production.name }) %}
 
 {% block content %}
-  {% include '@BkstgFOSUser/ProductionMembership/_actions.html.twig' %}
+  {# Link to create a new membership. #}
+  <a href="{{ url('bkstg_production_membership_create', { 'production_slug': production.slug }) }}" class="btn btn-success">
+    <i class="fa fa-plus" aria-hidden="true"></i> {{ 'production_membership.create'|trans }}
+  </a>
+
+  {# Table of existing memberships. #}
+  <p>{% include '@BkstgFOSUser/ProductionMembership/_actions.html.twig' %}</p>
   <p><div class="table-responsive">
     <table class="table table-striped">
       <thead>

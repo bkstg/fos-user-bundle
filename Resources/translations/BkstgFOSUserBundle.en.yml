@@ -8,6 +8,7 @@ unit:
     meters:
         abbr: 'm'
 production_membership:
+    create: 'Create new membership'
     members: '%production% members'
     edit: 'Edit'
     delete: 'Delete'
