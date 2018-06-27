@@ -7,6 +7,7 @@ use Bkstg\CoreBundle\Entity\Production;
 use Bkstg\FOSUserBundle\Entity\ProductionMembership;
 use Bkstg\FOSUserBundle\Form\ProductionMembershipType;
 use Doctrine\Common\Collections\ArrayCollection;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +23,7 @@ class ProductionMembershipController extends Controller
      * @param  string                        $production_slug The production slug.
      * @param  Request                       $request         The incoming request.
      * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param  PaginatorInterface            $paginator       The paginator service.
      * @throws NotFoundHttpException                          If the production is not found.
      * @throws AccessDeniedException                          If the user is not an admin in the group.
      * @return Response
@@ -29,7 +31,8 @@ class ProductionMembershipController extends Controller
     public function indexAction(
         string $production_slug,
         Request $request,
-        AuthorizationCheckerInterface $auth
+        AuthorizationCheckerInterface $auth,
+        PaginatorInterface $paginator
     ): Response {
         // Lookup the production by production_slug.
         $production_repo = $this->em->getRepository(Production::class);
@@ -43,7 +46,8 @@ class ProductionMembershipController extends Controller
         }
 
         // Get active memberships.
-        $memberships = $this->em->getRepository(ProductionMembership::class)->findAllActive($production);
+        $query = $this->em->getRepository(ProductionMembership::class)->findAllActiveQuery($production);
+        $memberships = $paginator->paginate($query, $request->query->getInt('page', 1));
 
         // Return the membership index.
         return new Response($this->templating->render(
@@ -61,6 +65,7 @@ class ProductionMembershipController extends Controller
      * @param  string                        $production_slug The production slug.
      * @param  Request                       $request         The incoming request.
      * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param  PaginatorInterface            $paginator       The paginator service.
      * @throws NotFoundHttpException                          If the production is not found.
      * @throws AccessDeniedException                          If the user is not an admin in the group.
      * @return Response
@@ -68,7 +73,8 @@ class ProductionMembershipController extends Controller
     public function archiveAction(
         string $production_slug,
         Request $request,
-        AuthorizationCheckerInterface $auth
+        AuthorizationCheckerInterface $auth,
+        PaginatorInterface $paginator
     ): Response {
         // Lookup the production by production_slug.
         $production_repo = $this->em->getRepository(Production::class);
@@ -82,7 +88,8 @@ class ProductionMembershipController extends Controller
         }
 
         // Get archived memberships.
-        $memberships = $this->em->getRepository(ProductionMembership::class)->findAllInactive($production);
+        $query = $this->em->getRepository(ProductionMembership::class)->findAllInactiveQuery($production);
+        $memberships = $paginator->paginate($query, $request->query->getInt('page', 1));
 
         // Return the membership archive.
         return new Response($this->templating->render(
