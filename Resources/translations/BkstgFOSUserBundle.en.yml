@@ -8,6 +8,18 @@ unit:
     meters:
         abbr: 'm'
 production_membership:
+    members: '%production% members'
+    edit: 'Edit'
+    delete: 'Delete'
+    list: 'Members'
+    archive: 'Archive'
+    label:
+        user: 'User'
+        production_roles: 'Production roles'
+        roles: 'Roles'
+        expiry: 'Expiry'
+    no_production_roles: 'No production roles'
+    no_roles: 'No roles'
     form:
         member: 'Member'
         roles: 'Roles'

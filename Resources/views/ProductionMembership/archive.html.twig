@@ -1,67 +1,41 @@
 {% extends '@BkstgCore/layout.html.twig' %}
 {% set page_title = '%production% Members'|trans({'%production%': production.name}) %}
 {% block content %}
-  <p><ul class="nav nav-tabs mb-3">
-    <li class="nav-item">
-      <a class="nav-link{% if app.request.query.get('status') != 'inactive' %} active{% endif %}" href="{{ url('bkstg_production_membership_index', {'production_slug': production.slug}) }}">{{ 'Active'|trans }}</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link{% if app.request.query.get('status') == 'inactive' %} active{% endif %}" href="{{ url('bkstg_production_membership_index', {'production_slug': production.slug}) }}?status=inactive">{{ 'Inactive'|trans }}</a>
-    </li>
-  </ul></p>
-  {% if memberships is empty %}
-    <p>{{ 'No memberships found.'|trans }}</p>
-  {% else %}
-    <p><div class="table-responsive">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>{{ 'User'|trans }}</th>
-            <th>{{ 'Roles'|trans }}</th>
-            <th>{{ 'Expiry'|trans }}</th>
+  {% include '@BkstgFOSUser/ProductionMembership/_actions.html.twig' %}
+  <p><div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>{{ 'User'|trans }}</th>
+          <th>{{ 'Roles'|trans }}</th>
+          <th>{{ 'Expiry'|trans }}</th>
+          {% if is_granted('GROUP_ROLE_ADMIN', production) %}
+            <th></th>
+          {% endif %}
+        </tr>
+      </thead>
+      <tbody>
+      {% for membership in memberships %}
+        <tr>
+          <td>{{ membership.member.username }}</td>
+          <td>
+            <ul>
+              {% for role in membership.roles %}
+                <li>{{ role }}</li>
+              {% endfor %}
+            </ul>
+          </td>
+          <td>{{ membership.expiry ? membership.expiry|date : '' }}</td>
+          <td>
             {% if is_granted('GROUP_ROLE_ADMIN', production) %}
-              <th></th>
+              <a href="{{ url('bkstg_production_membership_update', {'production_slug': production.slug, 'id': membership.id}) }}">Edit</a>
+              -
+              <a href="{{ url('bkstg_production_membership_delete', {'production_slug': production.slug, 'id': membership.id}) }}">Delete</a>
             {% endif %}
-          </tr>
-        </thead>
-        <tbody>
-        {% for membership in memberships %}
-          <tr>
-            <td>{{ membership.member.username }}</td>
-            <td>
-              <ul>
-                {% for role in membership.roles %}
-                  <li>{{ role }}</li>
-                {% endfor %}
-              </ul>
-            </td>
-            <td>{{ membership.expiry ? membership.expiry|date : '' }}</td>
-            <td>
-              {% if is_granted('GROUP_ROLE_ADMIN', production) %}
-                <a href="{{ url('bkstg_production_membership_update', {'production_slug': production.slug, 'id': membership.id}) }}">Edit</a>
-                -
-                <a href="{{ url('bkstg_production_membership_delete', {'production_slug': production.slug, 'id': membership.id}) }}">Delete</a>
-              {% endif %}
-            </td>
-          </tr>
-        {% endfor %}
-        </tbody>
-      </table>
-    </div></p>
-  {% endif %}
-{% endblock %}
-
-{# Override header block to add create link #}
-{% block header %}
-  <header>
-    <h1>
-      {% if is_granted('GROUP_ROLE_ADMIN', production) %}
-        <a href="{{ url('bkstg_production_membership_create', {'production_slug': production.slug}) }}" class="btn btn-success">
-          <span class="fa fa-plus" aria-hidden="true"></span>
-          <span class="sr-only">{{ 'Create new production'|trans }}</span>
-        </a>
-      {% endif %}
-      {{ page_title }}
-    </h1>
-  </header>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div></p>
 {% endblock %}
