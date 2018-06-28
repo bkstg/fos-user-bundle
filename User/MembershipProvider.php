@@ -15,14 +15,24 @@ class MembershipProvider implements MembershipProviderInterface
     private $em;
     private $repo;
 
+    /**
+     * Create a new membership provider service.
+     *
+     * @param EntityManagerInterface $em The entity manager service.
+     */
     public function __construct(EntityManagerInterface $em)
     {
+        // Create the repo for use in service.
         $this->em = $em;
         $this->repo = $this->em->getRepository(ProductionMembership::class);
     }
 
     /**
      * {@inheritdoc}
+     *
+     * @param  Production    $production The production to load a membership for.
+     * @param  UserInterface $user       The user to load a membership for.
+     * @return ?ProductionMembershipInterface
      */
     public function loadMembership(Production $production, UserInterface $user): ?ProductionMembershipInterface
     {
@@ -31,6 +41,9 @@ class MembershipProvider implements MembershipProviderInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param  Production $production The production to load memberships for.
+     * @return ProductionMembershipInterface[]
      */
     public function loadActiveMembershipsByProduction(Production $production)
     {
@@ -39,6 +52,9 @@ class MembershipProvider implements MembershipProviderInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param  UserInterface $user The user to load active memberships for.
+     * @return ProductionMembershipInterface[]
      */
     public function loadActiveMembershipsByUser(UserInterface $user)
     {
@@ -47,6 +63,9 @@ class MembershipProvider implements MembershipProviderInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param  Production $production The production to load memberships for.
+     * @return ProductionMembershipInterface[]
      */
     public function loadAllMembershipsByProduction(Production $production)
     {
@@ -55,6 +74,9 @@ class MembershipProvider implements MembershipProviderInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @param  UserInterface $user The user to load memberships for.
+     * @return ProductionMembershipInterface[]
      */
     public function loadAllMembershipsByUser(UserInterface $user)
     {
