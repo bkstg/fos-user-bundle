@@ -146,7 +146,7 @@ class ProductionMembershipController extends Controller
             $this->session->getFlashBag()->add(
                 'success',
                 $this->translator->trans('production_membership.created', [
-                    '%user%' => $membership->getMember()->getUsername(),
+                    '%user%' => $membership->getMember()->__toString(),
                     '%production%' => $production->getName(),
                 ], BkstgFOSUserBundle::TRANSLATION_DOMAIN)
             );
@@ -228,7 +228,7 @@ class ProductionMembershipController extends Controller
             $this->session->getFlashBag()->add(
                 'success',
                 $this->translator->trans('production_membership.updated', [
-                    '%user%' => $membership->getMember()->getUsername(),
+                    '%user%' => $membership->getMember()->__toString(),
                 ], BkstgFOSUserBundle::TRANSLATION_DOMAIN)
             );
             return new RedirectResponse($this->url_generator->generate('bkstg_production_membership_index', [
@@ -237,7 +237,7 @@ class ProductionMembershipController extends Controller
         }
 
         // Render the form.
-        return new Response($this->templating->render('@BkstgFOSUser/ProductionMembership/edit.html.twig', [
+        return new Response($this->templating->render('@BkstgFOSUser/ProductionMembership/update.html.twig', [
             'membership' => $membership,
             'production' => $production,
             'form' => $form->createView(),
@@ -288,7 +288,7 @@ class ProductionMembershipController extends Controller
         $form->handleRequest($request);
 
         // Delete the user.
-        if ($form->isValid() && $form->isSubmitted()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->em->remove($membership);
             $this->em->flush();
 
@@ -296,7 +296,7 @@ class ProductionMembershipController extends Controller
             $this->session->getFlashBag()->add(
                 'success',
                 $this->translator->trans('production_membership.deleted', [
-                    '%user%' => $membership->getMember()->getUsername(),
+                    '%user%' => $membership->getMember()->__toString(),
                 ], BkstgFOSUserBundle::TRANSLATION_DOMAIN)
             );
             return new RedirectResponse($this->url_generator->generate('bkstg_production_membership_index', [

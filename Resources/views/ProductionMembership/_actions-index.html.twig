@@ -1,0 +1,11 @@
+{% trans_default_domain 'BkstgFOSUserBundle' %}
+
+{% set route = app.request.attributes.get('_route') %}
+<ul class="nav nav-tabs mb-3">
+  <li class="nav-item">
+    <a class="nav-link{% if route == 'bkstg_production_membership_index' %} active{% endif %}" href="{{ url('bkstg_production_membership_index', { 'production_slug': production.slug }) }}">{{ 'production_membership.list'|trans }}</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link{% if route == 'bkstg_production_membership_archive' %} active{% endif %}" href="{{ url('bkstg_production_membership_archive', { 'production_slug': production.slug }) }}">{{ 'production_membership.archive'|trans }}</a>
+  </li>
+</ul>

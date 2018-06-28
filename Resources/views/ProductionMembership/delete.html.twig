@@ -1,15 +1,17 @@
-{% extends '@BkstgCore/layout-admin.html.twig' %}
-{% set page_title = 'Delete "%user%"\'s membership'|trans({'%user%': membership.member.username}) %}
-{% form_theme form 'bootstrap_3_layout.html.twig' %}
+{% extends '@BkstgCore/layout.html.twig' %}
+{% trans_default_domain 'BkstgFOSUserBundle' %}
+{% set page_title = 'production_membership.delete'|trans({ '%user%': membership.member }) %}
+
 {% block content %}
-  <p>{{ 'Are you sure you want to delete "%user%"\'s membership?'|trans({'%user%': membership.member.username}) }}</p>
-  <p>{{ 'All content associated with this membership will be lost or orphaned.'|trans }}</p>
-  <p><strong>{{ ' This action cannot be undone.'|trans }}</strong></p>
+  {% include '@BkstgFOSUser/ProductionMembership/_actions.html.twig' with { 'membership': membership } only %}
+  <p>{{ 'production_membership.delete_confirm'|trans({ '%user%': membership.member }) }}</p>
+  <p>{{ 'production_membership.delete_consequences'|trans }}</p>
+  <p><strong>{{ 'production_membership.delete_no_undo'|trans }}</strong></p>
   {{ form_start(form) }}
     {{ form_widget(form) }}
     <div class="form-group">
-      <a href="{{ url('bkstg_production_membership_index', {'production_slug': production.slug}) }}" class="btn btn-secondary">{{ 'Cancel'|trans }}</a>
-      <button type="submit" class="btn btn-danger">{{ 'Delete'|trans }}</button>
+      <a href="{{ url('bkstg_user_admin_index') }}" class="btn btn-secondary">{{ 'cancel'|trans }}</a>
+      <button type="submit" class="btn btn-danger">{{ 'delete'|trans }}</button>
     </div>
   {{ form_end(form) }}
 {% endblock %}

@@ -2,12 +2,16 @@ edit: 'Edit'
 delete: 'Delete'
 save: 'Save'
 cancel: 'Cancel'
+remove: 'Remove'
 unit:
     kilograms:
         abbr: 'kg'
     meters:
         abbr: 'm'
 production_membership:
+    delete_confirm: 'Are you sure you want to delete %user%''s membership?'
+    delete_consequences: 'All content associated with this user will be lost or orphaned.'
+    delete_no_undo: 'This action cannot be undone.'
     created: '%user% added to production %production%.'
     updated: '%user%''s membership updated.'
     deleted: '%user%''s membership deleted.'
@@ -18,8 +22,8 @@ production_membership:
     blocked: 'Blocked'
     create: 'Create new membership'
     members: '%production% members'
-    edit: 'Edit'
-    delete: 'Delete'
+    edit: 'Edit membership for %user%'
+    delete: 'Delete %user%''s membership'
     list: 'Members'
     archive: 'Archive'
     label:

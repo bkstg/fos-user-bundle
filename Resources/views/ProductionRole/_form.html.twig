@@ -1,3 +1,4 @@
+{% trans_default_domain 'BkstgFOSUserBundle' %}
 {% block production_role_widget %}
   <div class="form-row">
     <div class="col-3">
@@ -8,6 +9,6 @@
     </div>
   </div>
   <div class="btn-group">
-    <a href="#" class="collection-item-remove btn btn-danger"><i class="fa fa-times"></i> {{ 'Remove' }}</a>
+    <a href="#" class="collection-item-remove btn btn-danger"><i class="fa fa-times"></i> {{ 'remove'|trans }}</a>
   </div>
 {% endblock %}

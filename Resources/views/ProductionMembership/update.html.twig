@@ -1,7 +1,8 @@
 {% extends '@BkstgCore/layout.html.twig' %}
 {% trans_default_domain 'BkstgFOSUserBundle' %}
-{% set page_title = 'production_membership.create'|trans %}
+{% set page_title = 'production_membership.edit'|trans({ '%user%': membership.member }) %}
 
 {% block content %}
+  {% include '@BkstgFOSUser/ProductionMembership/_actions.html.twig' with { 'membership': membership } only %}
   {% include '@BkstgFOSUser/ProductionMembership/_form.html.twig' with { 'form': form, 'production': production } only %}
 {% endblock %}
