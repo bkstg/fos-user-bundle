@@ -22,31 +22,31 @@
         </tr>
       </thead>
       <tbody>
-      {% for user in users %}
-        <tr>
-          <td>
-            <div class="btn-group btn-group-sm">
-              <a href="{{ url('bkstg_user_admin_update', {'id': user.id}) }}" class="btn btn-info"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sr-only">{{ 'user.edit'|trans }}</span></a>
-              <a href="{{ url('bkstg_user_admin_delete', {'id': user.id}) }}" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i><span class="sr-only">{{ 'user.delete'|trans }}</span></a>
-            </div>
-          </td>
-          <td>{{ user.username }}</td>
-          <td>{{ user.email }}</td>
-          <td>
-            <ul>
-              {% for role in user.roles %}
-                <li>{{ role }}</li>
-              {% endfor %}
-            </ul>
-          </td>
-          <td>{{ user.enabled ? 'user.active'|trans : 'user.blocked'|trans }}</td>
-          <td>{{ user.lastLogin ? user.lastLogin|date(full_date) : '' }}</td>
-        </tr>
-      {% else %}
-        <tr>
-          <td colspan="6">{{ 'user.no_users'|trans }}</td>
-        </tr>
-      {% endfor %}
+        {% for user in users %}
+          <tr>
+            <td>
+              <div class="btn-group btn-group-sm">
+                <a href="{{ url('bkstg_user_admin_update', {'id': user.id}) }}" class="btn btn-info"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sr-only">{{ 'user.edit'|trans }}</span></a>
+                <a href="{{ url('bkstg_user_admin_delete', {'id': user.id}) }}" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i><span class="sr-only">{{ 'user.delete'|trans }}</span></a>
+              </div>
+            </td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+              <ul>
+                {% for role in user.roles %}
+                  <li>{{ role }}</li>
+                {% endfor %}
+              </ul>
+            </td>
+            <td>{{ user.enabled ? 'user.active'|trans : 'user.blocked'|trans }}</td>
+            <td>{{ user.lastLogin ? user.lastLogin|date(full_date) : '' }}</td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="6">{{ 'user.no_users'|trans }}</td>
+          </tr>
+        {% endfor %}
       </tbody>
     </table>
   </div></p>

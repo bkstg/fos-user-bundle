@@ -8,6 +8,14 @@ unit:
     meters:
         abbr: 'm'
 production_membership:
+    created: '%user% added to production %production%.'
+    updated: '%user%''s membership updated.'
+    deleted: '%user%''s membership deleted.'
+    archive_no_members: 'No memberships in the archive right now.'
+    archive_info: 'These memberships are blocked or expired, you can edit them here.'
+    active: 'Active'
+    expired: 'Expired'
+    blocked: 'Blocked'
     create: 'Create new membership'
     members: '%production% members'
     edit: 'Edit'
@@ -19,6 +27,7 @@ production_membership:
         production_roles: 'Production roles'
         roles: 'Roles'
         expiry: 'Expiry'
+        status: 'Status'
     no_production_roles: 'No production roles'
     no_roles: 'No roles'
     form:

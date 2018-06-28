@@ -1,41 +1,65 @@
 {% extends '@BkstgCore/layout.html.twig' %}
-{% set page_title = '%production% Members'|trans({'%production%': production.name}) %}
+{% trans_default_domain 'BkstgFOSUserBundle' %}
+{% set page_title = 'production_membership.members'|trans({ '%production%': production.name }) %}
+
 {% block content %}
-  {% include '@BkstgFOSUser/ProductionMembership/_actions.html.twig' %}
+  {# Archive information #}
+  <div class="alert alert-info">
+    {{ 'production_membership.archive_info'|trans }}
+  </div>
+
+  {# Table of existing memberships. #}
+  <p>{% include '@BkstgFOSUser/ProductionMembership/_actions.html.twig' %}</p>
   <p><div class="table-responsive">
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>{{ 'User'|trans }}</th>
-          <th>{{ 'Roles'|trans }}</th>
-          <th>{{ 'Expiry'|trans }}</th>
-          {% if is_granted('GROUP_ROLE_ADMIN', production) %}
-            <th></th>
-          {% endif %}
+          <th></th>
+          <th>{{ 'production_membership.label.user'|trans }}</th>
+          <th>{{ 'production_membership.label.roles'|trans }}</th>
+          <th>{{ 'production_membership.label.production_roles'|trans }}</th>
+          <th>{{ 'production_membership.label.status'|trans }}</th>
+          <th>{{ knp_pagination_sortable(memberships, 'production_membership.label.expiry'|trans, 'm.expiry') }}</th>
         </tr>
       </thead>
       <tbody>
-      {% for membership in memberships %}
-        <tr>
-          <td>{{ membership.member.username }}</td>
-          <td>
-            <ul>
-              {% for role in membership.roles %}
-                <li>{{ role }}</li>
-              {% endfor %}
-            </ul>
-          </td>
-          <td>{{ membership.expiry ? membership.expiry|date : '' }}</td>
-          <td>
-            {% if is_granted('GROUP_ROLE_ADMIN', production) %}
-              <a href="{{ url('bkstg_production_membership_update', {'production_slug': production.slug, 'id': membership.id}) }}">Edit</a>
-              -
-              <a href="{{ url('bkstg_production_membership_delete', {'production_slug': production.slug, 'id': membership.id}) }}">Delete</a>
-            {% endif %}
-          </td>
-        </tr>
-      {% endfor %}
+        {% for membership in memberships %}
+          <tr>
+            <td>
+              <div class="btn-group btn-group-sm">
+                <a href="{{ url('bkstg_production_membership_update', { 'production_slug': production.slug, 'id': membership.id}) }}" class="btn btn-info"><i class="fa fa-pencil" aria-hidden="true"></i><span class="sr-only">{{ 'production_membership.edit'|trans }}</span></a>
+                <a href="{{ url('bkstg_production_membership_delete', { 'production_slug': production.slug, 'id': membership.id}) }}" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i><span class="sr-only">{{ 'production_membership.delete'|trans }}</span></a>
+              </div>
+            </td>
+            <td><a href="{{ url('bkstg_production_directory_read', { 'production_slug': production.slug, 'profile_slug': membership.member.slug }) }}">{{ membership.member }}</td>
+            <td>
+              <ul>
+                {% for role in membership.roles %}
+                  <li>{{ role }}</li>
+                {% else %}
+                  <li class="text-muted">{{ 'production_membership.no_roles'|trans }}</li>
+                {% endfor %}
+              </ul>
+            </td>
+            <td>
+              <ul>
+                {% for production_role in membership.productionRoles %}
+                  <li><strong>{{ production_role.designation }}</strong>: {{ production_role.name }}</li>
+                {% else %}
+                  <li class="text-muted">{{ 'production_membership.no_production_roles'|trans }}</li>
+                {% endfor %}
+              </ul>
+            </td>
+            <td>{{ membership.expired ? 'production_membership.expired'|trans : membership.status ? 'production_membership.active'|trans : 'production_membership.blocked'|trans }}</td>
+            <td>{{ membership.expiry ? membership.expiry|date(full_date) : '' }}</td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="6">{{ 'production_membership.archive_no_members'|trans }}</td>
+          </tr>
+        {% endfor %}
       </tbody>
     </table>
   </div></p>
+  {{ knp_pagination_render(memberships) }}
 {% endblock %}

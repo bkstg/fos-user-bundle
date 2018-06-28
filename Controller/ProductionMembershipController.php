@@ -4,6 +4,7 @@ namespace Bkstg\FOSUserBundle\Controller;
 
 use Bkstg\CoreBundle\Controller\Controller;
 use Bkstg\CoreBundle\Entity\Production;
+use Bkstg\FOSUserBundle\BkstgFOSUserBundle;
 use Bkstg\FOSUserBundle\Entity\ProductionMembership;
 use Bkstg\FOSUserBundle\Form\ProductionMembershipType;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -127,7 +128,7 @@ class ProductionMembershipController extends Controller
             throw new AccessDeniedException();
         }
 
-        // Create a new membership.
+        // Create a new production_membership.
         $membership = new ProductionMembership();
         $membership->setGroup($production);
 
@@ -144,10 +145,10 @@ class ProductionMembershipController extends Controller
             // Set success message and redirect.
             $this->session->getFlashBag()->add(
                 'success',
-                $this->translator->trans('membership.created', [
+                $this->translator->trans('production_membership.created', [
                     '%user%' => $membership->getMember()->getUsername(),
                     '%production%' => $production->getName(),
-                ])
+                ], BkstgFOSUserBundle::TRANSLATION_DOMAIN)
             );
             return new RedirectResponse($this->url_generator->generate('bkstg_production_membership_index', [
                 'production_slug' => $production->getSlug(),
@@ -226,9 +227,9 @@ class ProductionMembershipController extends Controller
             // Set success message and redirect.
             $this->session->getFlashBag()->add(
                 'success',
-                $this->translator->trans('membership.updated', [
+                $this->translator->trans('production_membership.updated', [
                     '%user%' => $membership->getMember()->getUsername(),
-                ])
+                ], BkstgFOSUserBundle::TRANSLATION_DOMAIN)
             );
             return new RedirectResponse($this->url_generator->generate('bkstg_production_membership_index', [
                 'production_slug' => $production->getSlug(),
@@ -294,9 +295,9 @@ class ProductionMembershipController extends Controller
             // Set success message and redirect.
             $this->session->getFlashBag()->add(
                 'success',
-                $this->translator->trans('membership.deleted', [
+                $this->translator->trans('production_membership.deleted', [
                     '%user%' => $membership->getMember()->getUsername(),
-                ])
+                ], BkstgFOSUserBundle::TRANSLATION_DOMAIN)
             );
             return new RedirectResponse($this->url_generator->generate('bkstg_production_membership_index', [
                 'production_slug' => $production->getSlug(),
