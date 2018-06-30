@@ -55,6 +55,6 @@ class ProductionRoleType extends AbstractType
      */
     public function getBlockPrefix(): string
     {
-        return 'production_role';
+        return 'bkstg_production_role';
     }
 }
