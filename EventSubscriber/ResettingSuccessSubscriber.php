@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\FOSUserBundle\EventSubscriber;
 
 use FOS\UserBundle\Event\FormEvent;
@@ -32,15 +41,14 @@ class ResettingSuccessSubscriber implements EventSubscriberInterface
         return [
             FOSUserEvents::RESETTING_RESET_SUCCESS => [
                 ['generateResponse', 0],
-            ]
+            ],
         ];
     }
 
     /**
      * Generate a redirect response to the correct destination.
      *
-     * @param  FormEvent $event The form event.
-     * @return void
+     * @param FormEvent $event The form event.
      */
     public function generateResponse(FormEvent $event): void
     {

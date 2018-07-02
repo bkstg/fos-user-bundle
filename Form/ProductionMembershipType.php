@@ -1,14 +1,21 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\FOSUserBundle\Form;
 
 use Bkstg\FOSUserBundle\BkstgFOSUserBundle;
 use Bkstg\FOSUserBundle\Entity\ProductionMembership;
 use Bkstg\FOSUserBundle\Entity\User;
-use Bkstg\FOSUserBundle\Form\ProductionRoleType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -20,9 +27,8 @@ class ProductionMembershipType extends AbstractType
     /**
      * {@inheritdoc}
      *
-     * @param  FormBuilderInterface $builder The form builder.
-     * @param  array                $options The options for this form.
-     * @return void
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array                $options The options for this form.
      */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -67,8 +73,7 @@ class ProductionMembershipType extends AbstractType
     /**
      * {@inheritdoc}
      *
-     * @param  OptionsResolver $resolver The options resolver.
-     * @return void
+     * @param OptionsResolver $resolver The options resolver.
      */
     public function configureOptions(OptionsResolver $resolver): void
     {

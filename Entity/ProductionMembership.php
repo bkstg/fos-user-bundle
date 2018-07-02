@@ -1,11 +1,18 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Bkstg\FOSUserBundle\Entity;
 
 use Bkstg\CoreBundle\Entity\Production;
 use Bkstg\CoreBundle\User\ProductionMembershipInterface;
-use Bkstg\FOSUserBundle\Entity\ProductionRole;
-use Bkstg\FOSUserBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 use MidnightLuke\GroupSecurityBundle\Model\GroupInterface;
 use MidnightLuke\GroupSecurityBundle\Model\GroupMemberInterface;
@@ -54,8 +61,10 @@ class ProductionMembership implements ProductionMembershipInterface
     /**
      * Set the group for this membership.
      *
-     * @param  GroupInterface $group The group to set.
+     * @param GroupInterface $group The group to set.
+     *
      * @throws \Exception When the group is not a production.
+     *
      * @return self
      */
     public function setGroup(GroupInterface $group): self
@@ -64,6 +73,7 @@ class ProductionMembership implements ProductionMembershipInterface
             throw new \Exception(sprintf('The group type "%s" is not supported.', get_class($group)));
         }
         $this->group = $group;
+
         return $this;
     }
 
@@ -80,8 +90,10 @@ class ProductionMembership implements ProductionMembershipInterface
     /**
      * Set the member for this membership.
      *
-     * @param  GroupMemberInterface $member The member to set.
+     * @param GroupMemberInterface $member The member to set.
+     *
      * @throws \Exception If the member is not a User.
+     *
      * @return self
      */
     public function setMember(GroupMemberInterface $member): self
@@ -90,6 +102,7 @@ class ProductionMembership implements ProductionMembershipInterface
             throw new \Exception(sprintf('The member type "%s" is not supported.', get_class($member)));
         }
         $this->member = $member;
+
         return $this;
     }
 
@@ -110,7 +123,8 @@ class ProductionMembership implements ProductionMembershipInterface
     /**
      * Set all the roles for this membership.
      *
-     * @param  array $roles An array of roles.
+     * @param array $roles An array of roles.
+     *
      * @return self
      */
     public function setRoles(array $roles): self
@@ -127,7 +141,8 @@ class ProductionMembership implements ProductionMembershipInterface
     /**
      * Add a role to this membership.
      *
-     * @param  string $role The role to add.
+     * @param string $role The role to add.
+     *
      * @return self
      */
     public function addRole(string $role): self
@@ -135,7 +150,7 @@ class ProductionMembership implements ProductionMembershipInterface
         $role = strtoupper($role);
 
         // Don't add the default role, it is always present.
-        if ($role === self::GROUP_ROLE_DEFAULT) {
+        if (self::GROUP_ROLE_DEFAULT === $role) {
             return $this;
         }
 
@@ -150,7 +165,8 @@ class ProductionMembership implements ProductionMembershipInterface
     /**
      * Remove a role from this membership.
      *
-     * @param  string $role The role to remove.
+     * @param string $role The role to remove.
+     *
      * @return self
      */
     public function removeRole(string $role): self
@@ -166,8 +182,9 @@ class ProductionMembership implements ProductionMembershipInterface
     /**
      * Determine if this membership has a role.
      *
-     * @param  string $role The role to check for.
-     * @return boolean
+     * @param string $role The role to check for.
+     *
+     * @return bool
      */
     public function hasRole(string $role): bool
     {
@@ -187,12 +204,14 @@ class ProductionMembership implements ProductionMembershipInterface
     /**
      * Set the status of this membership.
      *
-     * @param  boolean $status The status to set.
+     * @param bool $status The status to set.
+     *
      * @return self
      */
     public function setStatus(bool $status): self
     {
         $this->status = $status;
+
         return $this;
     }
 
@@ -209,47 +228,53 @@ class ProductionMembership implements ProductionMembershipInterface
     /**
      * Set the expiry for this membership.
      *
-     * @param  ?\DateTimeInterface $expiry The expiry to set.
+     * @param ?\DateTimeInterface $expiry The expiry to set.
+     *
      * @return self
      */
     public function setExpiry(?\DateTimeInterface $expiry): self
     {
         $this->expiry = $expiry;
+
         return $this;
     }
 
     /**
      * Check if this membership is expired.
      *
-     * @return boolean
+     * @return bool
      */
     public function isExpired(): bool
     {
-        return ($this->expiry !== null && $this->expiry < new \DateTime('now'));
+        return null !== $this->expiry && $this->expiry < new \DateTime('now');
     }
 
     /**
      * Add a production role to this membership.
      *
-     * @param  ProductionRole $production_role The production role to add.
+     * @param ProductionRole $production_role The production role to add.
+     *
      * @return self
      */
     public function addProductionRole(ProductionRole $production_role): self
     {
         $production_role->setProductionMembership($this);
         $this->production_roles->add($production_role);
+
         return $this;
     }
 
     /**
      * Remove a production role from this membership.
      *
-     * @param  ProductionRole $production_role The production role to remove.
+     * @param ProductionRole $production_role The production role to remove.
+     *
      * @return self
      */
     public function removeProductionRole(ProductionRole $production_role): self
     {
         $this->production_roles->removeElement($production_role);
+
         return $this;
     }
 

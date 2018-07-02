@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\FOSUserBundle\Controller;
 
 use Bkstg\CoreBundle\Controller\Controller;
@@ -22,8 +31,10 @@ class ProductionDirectoryController extends Controller
      * @param AuthorizationCheckerInterface $auth            The authorization checker service.
      * @param PaginatorInterface            $paginator       The paginator service.
      * @param Request                       $request         The request.
+     *
      * @throws NotFoundHttpException If the production does not exist.
      * @throws AccessDeniedException If the current user is not a member.
+     *
      * @return Response
      */
     public function indexAction(
@@ -49,6 +60,7 @@ class ProductionDirectoryController extends Controller
 
         // Render the response.
         $users = $paginator->paginate($query, $request->query->getInt('page', 1));
+
         return new Response($this->templating->render('@BkstgFOSUser/ProductionDirectory/index.html.twig', [
             'production' => $production,
             'users' => $users,
@@ -60,7 +72,9 @@ class ProductionDirectoryController extends Controller
      *
      * @param string $production_slug The production slug.
      * @param string $profile_slug    The profile slug.
+     *
      * @throws NotFoundHttpException If the production or profile is not found.
+     *
      * @return Response
      */
     public function readAction(string $production_slug, string $profile_slug): Response

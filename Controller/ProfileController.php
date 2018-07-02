@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\FOSUserBundle\Controller;
 
 use Bkstg\CoreBundle\Controller\Controller;
@@ -15,7 +24,8 @@ class ProfileController extends Controller
     /**
      * Render the current user's profile.
      *
-     * @param  TokenStorageInterface $token_storage The token storage service.
+     * @param TokenStorageInterface $token_storage The token storage service.
+     *
      * @return Response
      */
     public function readAction(TokenStorageInterface $token_storage): Response
@@ -30,8 +40,9 @@ class ProfileController extends Controller
     /**
      * Edit the current user's profile.
      *
-     * @param  Request               $request       The incoming request.
-     * @param  TokenStorageInterface $token_storage The token storage service.
+     * @param Request               $request       The incoming request.
+     * @param TokenStorageInterface $token_storage The token storage service.
+     *
      * @return Response
      */
     public function updateAction(
@@ -63,6 +74,7 @@ class ProfileController extends Controller
                 ['profile_slug' => $user->getSlug()]
             ));
         }
+
         return new Response($this->templating->render(
             '@BkstgFOSUser/Profile/update.html.twig',
             [

@@ -1,12 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\FOSUserBundle\EventListener;
 
 use Bkstg\CoreBundle\Entity\Production;
 use Bkstg\FOSUserBundle\Entity\ProductionMembership;
 use Bkstg\FOSUserBundle\Entity\User;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
-use MidnightLuke\GroupSecurityBundle\Model\GroupMembershipInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Translation\TranslatorInterface;
@@ -37,8 +45,7 @@ class MembershipCreator
     /**
      * When a user creates a production make them an admin in the production.
      *
-     * @param  LifecycleEventArgs $args The event arguments.
-     * @return void
+     * @param LifecycleEventArgs $args The event arguments.
      */
     public function prePersist(LifecycleEventArgs $args): void
     {
@@ -46,7 +53,7 @@ class MembershipCreator
         $object = $args->getObject();
         $token = $this->token_storage->getToken();
         if (!$object instanceof Production
-          || $token === null) {
+          || null === $token) {
             return;
         }
 

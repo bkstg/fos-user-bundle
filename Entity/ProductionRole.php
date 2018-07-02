@@ -1,9 +1,17 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 
 namespace Bkstg\FOSUserBundle\Entity;
 
 use Bkstg\CoreBundle\User\ProductionRoleInterface;
-use Bkstg\FOSUserBundle\Entity\ProductionMembership;
 
 class ProductionRole implements ProductionRoleInterface
 {
@@ -15,7 +23,7 @@ class ProductionRole implements ProductionRoleInterface
     /**
      * Get the id for this role.
      *
-     * @return integer The id for this role.
+     * @return int The id for this role.
      */
     public function getId(): ?int
     {
@@ -36,11 +44,13 @@ class ProductionRole implements ProductionRoleInterface
      * Set name.
      *
      * @param string $name The name of the role.
+     *
      * @return self
      */
     public function setName(string $name): self
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -58,11 +68,13 @@ class ProductionRole implements ProductionRoleInterface
      * Set designation.
      *
      * @param string $designation The designation for this role.
+     *
      * @return self
      */
     public function setDesignation(string $designation): self
     {
         $this->designation = $designation;
+
         return $this;
     }
 
@@ -79,12 +91,14 @@ class ProductionRole implements ProductionRoleInterface
     /**
      * Set production membership for this role.
      *
-     * @param  ProductionMembership $production_membership The membership to set.
+     * @param ProductionMembership $production_membership The membership to set.
+     *
      * @return self
      */
     public function setProductionMembership(ProductionMembership $production_membership): self
     {
         $this->production_membership = $production_membership;
+
         return $this;
     }
 }

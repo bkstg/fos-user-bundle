@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\FOSUserBundle\Repository;
 
 use Bkstg\CoreBundle\Entity\Production;
@@ -12,7 +21,8 @@ class UserRepository extends EntityRepository
     /**
      * Prepare query to find all active users.
      *
-     * @param  boolean $only_profile Optionally filter by only users with a profile.
+     * @param bool $only_profile Optionally filter by only users with a profile.
+     *
      * @return Query
      */
     public function findAllActiveQuery(bool $only_profile = false): Query
@@ -25,13 +35,15 @@ class UserRepository extends EntityRepository
             $qb->andWhere($qb->expr()->eq('u.has_profile', ':has_profile'))
                 ->setParameter('has_profile', true);
         }
+
         return $qb->getQuery();
     }
 
     /**
      * Prepare query to find all blocked users.
      *
-     * @param  boolean $only_profile Optionally filter by only users with a profile.
+     * @param bool $only_profile Optionally filter by only users with a profile.
+     *
      * @return Query
      */
     public function findAllBlockedQuery(bool $only_profile = false): Query
@@ -44,6 +56,7 @@ class UserRepository extends EntityRepository
             $qb->andWhere($qb->expr()->eq('u.has_profile', ':has_profile'))
                 ->setParameter('has_profile', true);
         }
+
         return $qb->getQuery();
     }
 
@@ -51,7 +64,8 @@ class UserRepository extends EntityRepository
      * Prepare query to find all users by production.
      *
      * @param Production $production   The production to search for.
-     * @param boolean    $only_profile Optionally filter by only users with a profile.
+     * @param bool       $only_profile Optionally filter by only users with a profile.
+     *
      * @return Query
      */
     public function findUsersByGroupQuery(Production $production, bool $only_profile = false): Query
@@ -83,7 +97,8 @@ class UserRepository extends EntityRepository
     /**
      * Find all active users.
      *
-     * @param  boolean $only_profile Optionally filter by only users with a profile.
+     * @param bool $only_profile Optionally filter by only users with a profile.
+     *
      * @return User[]
      */
     public function findAllActive(bool $only_profile = false)
@@ -94,7 +109,8 @@ class UserRepository extends EntityRepository
     /**
      * Find all blocked users.
      *
-     * @param  boolean $only_profile Optionally filter by only users with a profile.
+     * @param bool $only_profile Optionally filter by only users with a profile.
+     *
      * @return User[]
      */
     public function findAllBlocked(bool $only_profile = false)
@@ -106,7 +122,8 @@ class UserRepository extends EntityRepository
      * Find all users by production.
      *
      * @param Production $production   The production to search for.
-     * @param boolean    $only_profile Optionally filter by only users with a profile.
+     * @param bool       $only_profile Optionally filter by only users with a profile.
+     *
      * @return User[]
      */
     public function findUsersByGroup(Production $production, bool $only_profile = false)

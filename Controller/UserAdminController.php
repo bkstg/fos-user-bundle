@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\FOSUserBundle\Controller;
 
 use Bkstg\CoreBundle\Controller\Controller;
@@ -18,8 +27,9 @@ class UserAdminController extends Controller
     /**
      * Show a list of active users.
      *
-     * @param  Request            $request   The request.
-     * @param  PaginatorInterface $paginator The paginator service.
+     * @param Request            $request   The request.
+     * @param PaginatorInterface $paginator The paginator service.
+     *
      * @return Response
      */
     public function indexAction(Request $request, PaginatorInterface $paginator): Response
@@ -27,6 +37,7 @@ class UserAdminController extends Controller
         // Paginate the user query and render.
         $query = $this->em->getRepository(User::class)->findAllActiveQuery();
         $users = $paginator->paginate($query, $request->query->getInt('page', 1));
+
         return new Response($this->templating->render('@BkstgFOSUser/UserAdmin/index.html.twig', [
             'users' => $users,
         ]));
@@ -35,8 +46,9 @@ class UserAdminController extends Controller
     /**
      * Show a list of archived users.
      *
-     * @param  Request            $request   The request.
-     * @param  PaginatorInterface $paginator The paginator service.
+     * @param Request            $request   The request.
+     * @param PaginatorInterface $paginator The paginator service.
+     *
      * @return Response
      */
     public function archiveAction(Request $request, PaginatorInterface $paginator): Response
@@ -44,6 +56,7 @@ class UserAdminController extends Controller
         // Paginate the user query and render.
         $query = $this->em->getRepository(User::class)->findAllBlockedQuery();
         $users = $paginator->paginate($query, $request->query->getInt('page', 1));
+
         return new Response($this->templating->render('@BkstgFOSUser/UserAdmin/archive.html.twig', [
             'users' => $users,
         ]));
@@ -52,9 +65,10 @@ class UserAdminController extends Controller
     /**
      * Create a new user for the backstage.
      *
-     * @param  Request                 $request         The request.
-     * @param  UserManagerInterface    $user_manager    The user manager service.
-     * @param  TokenGeneratorInterface $token_generator The token generator service.
+     * @param Request                 $request         The request.
+     * @param UserManagerInterface    $user_manager    The user manager service.
+     * @param TokenGeneratorInterface $token_generator The token generator service.
+     *
      * @return Response
      */
     public function createAction(
@@ -88,6 +102,7 @@ class UserAdminController extends Controller
                     '%user%' => $user->getUsername(),
                 ])
             );
+
             return new RedirectResponse($this->url_generator->generate('bkstg_user_admin_index'));
         }
 
@@ -100,10 +115,12 @@ class UserAdminController extends Controller
     /**
      * Update a user.
      *
-     * @param  integer              $id           The id of the user.
-     * @param  Request              $request      The incoming request.
-     * @param  UserManagerInterface $user_manager The user manager service.
-     * @throws NotFoundHttpException              When the user is not found.
+     * @param int                  $id           The id of the user.
+     * @param Request              $request      The incoming request.
+     * @param UserManagerInterface $user_manager The user manager service.
+     *
+     * @throws NotFoundHttpException When the user is not found.
+     *
      * @return Response
      */
     public function updateAction(
@@ -132,6 +149,7 @@ class UserAdminController extends Controller
                     '%user%' => $user->getUsername(),
                 ])
             );
+
             return new RedirectResponse($this->url_generator->generate('bkstg_user_admin_index'));
         }
 
@@ -145,10 +163,12 @@ class UserAdminController extends Controller
     /**
      * Delete a user.
      *
-     * @param  integer              $id           The id of the user.
-     * @param  Request              $request      The incoming request.
-     * @param  UserManagerInterface $user_manager The user manager service.
-     * @throws NotFoundHttpException              When the user is not found.
+     * @param int                  $id           The id of the user.
+     * @param Request              $request      The incoming request.
+     * @param UserManagerInterface $user_manager The user manager service.
+     *
+     * @throws NotFoundHttpException When the user is not found.
+     *
      * @return Response
      */
     public function deleteAction(
@@ -176,6 +196,7 @@ class UserAdminController extends Controller
                     '%user%' => $user->getUsername(),
                 ])
             );
+
             return new RedirectResponse($this->url_generator->generate('bkstg_user_admin_index'));
         }
 

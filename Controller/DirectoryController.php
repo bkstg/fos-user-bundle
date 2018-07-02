@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\FOSUserBundle\Controller;
 
 use Bkstg\CoreBundle\Controller\Controller;
@@ -16,9 +25,10 @@ class DirectoryController extends Controller
     /**
      * Show a directory listing of users with profile information.
      *
-     * @param  Request               $request       The request.
-     * @param  PaginatorInterface    $paginator     The paginator service.
-     * @param  TokenStorageInterface $token_storage The token storage service.
+     * @param Request               $request       The request.
+     * @param PaginatorInterface    $paginator     The paginator service.
+     * @param TokenStorageInterface $token_storage The token storage service.
+     *
      * @return Response
      */
     public function indexAction(
@@ -44,6 +54,7 @@ class DirectoryController extends Controller
 
         // Paginate and return the output.
         $users = $paginator->paginate($query, $request->query->getInt('page', 1));
+
         return new Response($this->templating->render('@BkstgFOSUser/Directory/index.html.twig', [
             'users' => $users,
         ]));
@@ -52,9 +63,11 @@ class DirectoryController extends Controller
     /**
      * Show a single profile.
      *
-     * @param  string                $profile_slug  The profile slug to look for.
-     * @param  TokenStorageInterface $token_storage The token storage service.
+     * @param string                $profile_slug  The profile slug to look for.
+     * @param TokenStorageInterface $token_storage The token storage service.
+     *
      * @throws NotFoundHttpException When the user is not found.
+     *
      * @return Response
      */
     public function readAction(

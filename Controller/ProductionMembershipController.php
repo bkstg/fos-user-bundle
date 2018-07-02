@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\FOSUserBundle\Controller;
 
 use Bkstg\CoreBundle\Controller\Controller;
@@ -21,12 +30,14 @@ class ProductionMembershipController extends Controller
     /**
      * Show a list of active memberships.
      *
-     * @param  string                        $production_slug The production slug.
-     * @param  Request                       $request         The incoming request.
-     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
-     * @param  PaginatorInterface            $paginator       The paginator service.
-     * @throws NotFoundHttpException                          If the production is not found.
-     * @throws AccessDeniedException                          If the user is not an admin in the group.
+     * @param string                        $production_slug The production slug.
+     * @param Request                       $request         The incoming request.
+     * @param AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param PaginatorInterface            $paginator       The paginator service.
+     *
+     * @throws NotFoundHttpException If the production is not found.
+     * @throws AccessDeniedException If the user is not an admin in the group.
+     *
      * @return Response
      */
     public function indexAction(
@@ -63,12 +74,14 @@ class ProductionMembershipController extends Controller
     /**
      * Show a list of archived memberships.
      *
-     * @param  string                        $production_slug The production slug.
-     * @param  Request                       $request         The incoming request.
-     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
-     * @param  PaginatorInterface            $paginator       The paginator service.
-     * @throws NotFoundHttpException                          If the production is not found.
-     * @throws AccessDeniedException                          If the user is not an admin in the group.
+     * @param string                        $production_slug The production slug.
+     * @param Request                       $request         The incoming request.
+     * @param AuthorizationCheckerInterface $auth            The authorization checker service.
+     * @param PaginatorInterface            $paginator       The paginator service.
+     *
+     * @throws NotFoundHttpException If the production is not found.
+     * @throws AccessDeniedException If the user is not an admin in the group.
+     *
      * @return Response
      */
     public function archiveAction(
@@ -105,11 +118,13 @@ class ProductionMembershipController extends Controller
     /**
      * Create a new membership in this group.
      *
-     * @param  string                        $production_slug The production slug.
-     * @param  Request                       $request         The incoming request.
-     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
-     * @throws NotFoundHttpException                          If the production is not found.
-     * @throws AccessDeniedException                          If the user is not an admin in the group.
+     * @param string                        $production_slug The production slug.
+     * @param Request                       $request         The incoming request.
+     * @param AuthorizationCheckerInterface $auth            The authorization checker service.
+     *
+     * @throws NotFoundHttpException If the production is not found.
+     * @throws AccessDeniedException If the user is not an admin in the group.
+     *
      * @return Response
      */
     public function createAction(
@@ -150,6 +165,7 @@ class ProductionMembershipController extends Controller
                     '%production%' => $production->getName(),
                 ], BkstgFOSUserBundle::TRANSLATION_DOMAIN)
             );
+
             return new RedirectResponse($this->url_generator->generate('bkstg_production_membership_index', [
                 'production_slug' => $production->getSlug(),
             ]));
@@ -165,12 +181,14 @@ class ProductionMembershipController extends Controller
     /**
      * Update an existing group membership.
      *
-     * @param  string                        $production_slug The production slug.
-     * @param  integer                       $id              The membership id.
-     * @param  Request                       $request         The incoming request.
-     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
-     * @throws NotFoundHttpException                          If the production is not found.
-     * @throws AccessDeniedException                          If the user is not an admin in the group.
+     * @param string                        $production_slug The production slug.
+     * @param int                           $id              The membership id.
+     * @param Request                       $request         The incoming request.
+     * @param AuthorizationCheckerInterface $auth            The authorization checker service.
+     *
+     * @throws NotFoundHttpException If the production is not found.
+     * @throws AccessDeniedException If the user is not an admin in the group.
+     *
      * @return Response
      */
     public function updateAction(
@@ -231,6 +249,7 @@ class ProductionMembershipController extends Controller
                     '%user%' => $membership->getMember()->__toString(),
                 ], BkstgFOSUserBundle::TRANSLATION_DOMAIN)
             );
+
             return new RedirectResponse($this->url_generator->generate('bkstg_production_membership_index', [
                 'production_slug' => $production->getSlug(),
             ]));
@@ -247,12 +266,14 @@ class ProductionMembershipController extends Controller
     /**
      * Delete an existing group membership.
      *
-     * @param  string                        $production_slug The production slug.
-     * @param  integer                       $id              The membership id.
-     * @param  Request                       $request         The incoming request.
-     * @param  AuthorizationCheckerInterface $auth            The authorization checker service.
-     * @throws NotFoundHttpException                          If the production is not found.
-     * @throws AccessDeniedException                          If the user is not an admin in the group.
+     * @param string                        $production_slug The production slug.
+     * @param int                           $id              The membership id.
+     * @param Request                       $request         The incoming request.
+     * @param AuthorizationCheckerInterface $auth            The authorization checker service.
+     *
+     * @throws NotFoundHttpException If the production is not found.
+     * @throws AccessDeniedException If the user is not an admin in the group.
+     *
      * @return Response
      */
     public function deleteAction(
@@ -299,6 +320,7 @@ class ProductionMembershipController extends Controller
                     '%user%' => $membership->getMember()->__toString(),
                 ], BkstgFOSUserBundle::TRANSLATION_DOMAIN)
             );
+
             return new RedirectResponse($this->url_generator->generate('bkstg_production_membership_index', [
                 'production_slug' => $production->getSlug(),
             ]));

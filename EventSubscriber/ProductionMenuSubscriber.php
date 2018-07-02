@@ -1,8 +1,16 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\FOSUserBundle\EventSubscriber;
 
-use Bkstg\CoreBundle\Event\MenuCollectionEvent;
 use Bkstg\CoreBundle\Event\ProductionMenuCollectionEvent;
 use Bkstg\FOSUserBundle\BkstgFOSUserBundle;
 use Knp\Menu\FactoryInterface;
@@ -39,7 +47,7 @@ class ProductionMenuSubscriber implements EventSubscriberInterface
            ProductionMenuCollectionEvent::NAME => [
                ['addDirectoryMenuItem', -10],
                ['addMemberMenuItem', -50],
-           ]
+           ],
         ];
     }
 
@@ -47,7 +55,6 @@ class ProductionMenuSubscriber implements EventSubscriberInterface
      * Add the directory menu item.
      *
      * @param ProductionMenuCollectionEvent $event The menu collection event.
-     * @return void
      */
     public function addDirectoryMenuItem(ProductionMenuCollectionEvent $event): void
     {
@@ -69,7 +76,6 @@ class ProductionMenuSubscriber implements EventSubscriberInterface
      * Add the members menu item under settings for admins.
      *
      * @param ProductionMenuCollectionEvent $event The menu collection event.
-     * @return void
      */
     public function addMemberMenuItem(ProductionMenuCollectionEvent $event): void
     {

@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\FOSUserBundle\Form;
 
 use Bkstg\FOSUserBundle\BkstgFOSUserBundle;
@@ -17,11 +26,10 @@ class UserType extends AbstractType
     /**
      * {@inheritdoc}
      *
-     * @param  FormBuilderInterface $builder The form builder.
-     * @param  array                $options The form options.
-     * @return void
+     * @param FormBuilderInterface $builder The form builder.
+     * @param array                $options The form options.
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('username', TextType::class, [
@@ -50,9 +58,8 @@ class UserType extends AbstractType
      * {@inheritdoc}
      *
      * @param OptionsResolver $resolver The options resolver.
-     * @return void
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'translation_domain' => BkstgFOSUserBundle::TRANSLATION_DOMAIN,

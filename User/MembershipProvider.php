@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\FOSUserBundle\User;
 
 use Bkstg\CoreBundle\Entity\Production;
@@ -8,7 +17,6 @@ use Bkstg\CoreBundle\User\ProductionMembershipInterface;
 use Bkstg\CoreBundle\User\UserInterface;
 use Bkstg\FOSUserBundle\Entity\ProductionMembership;
 use Doctrine\ORM\EntityManagerInterface;
-use MidnightLuke\GroupSecurityBundle\Model\GroupInterface;
 
 class MembershipProvider implements MembershipProviderInterface
 {
@@ -30,8 +38,9 @@ class MembershipProvider implements MembershipProviderInterface
     /**
      * {@inheritdoc}
      *
-     * @param  Production    $production The production to load a membership for.
-     * @param  UserInterface $user       The user to load a membership for.
+     * @param Production    $production The production to load a membership for.
+     * @param UserInterface $user       The user to load a membership for.
+     *
      * @return ?ProductionMembershipInterface
      */
     public function loadMembership(Production $production, UserInterface $user): ?ProductionMembershipInterface
@@ -42,7 +51,8 @@ class MembershipProvider implements MembershipProviderInterface
     /**
      * {@inheritdoc}
      *
-     * @param  Production $production The production to load memberships for.
+     * @param Production $production The production to load memberships for.
+     *
      * @return ProductionMembershipInterface[]
      */
     public function loadActiveMembershipsByProduction(Production $production)
@@ -53,7 +63,8 @@ class MembershipProvider implements MembershipProviderInterface
     /**
      * {@inheritdoc}
      *
-     * @param  UserInterface $user The user to load active memberships for.
+     * @param UserInterface $user The user to load active memberships for.
+     *
      * @return ProductionMembershipInterface[]
      */
     public function loadActiveMembershipsByUser(UserInterface $user)
@@ -64,7 +75,8 @@ class MembershipProvider implements MembershipProviderInterface
     /**
      * {@inheritdoc}
      *
-     * @param  Production $production The production to load memberships for.
+     * @param Production $production The production to load memberships for.
+     *
      * @return ProductionMembershipInterface[]
      */
     public function loadAllMembershipsByProduction(Production $production)
@@ -75,7 +87,8 @@ class MembershipProvider implements MembershipProviderInterface
     /**
      * {@inheritdoc}
      *
-     * @param  UserInterface $user The user to load memberships for.
+     * @param UserInterface $user The user to load memberships for.
+     *
      * @return ProductionMembershipInterface[]
      */
     public function loadAllMembershipsByUser(UserInterface $user)

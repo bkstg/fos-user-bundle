@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgCoreBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\FOSUserBundle\Entity;
 
 use Bkstg\CoreBundle\User\UserInterface;
@@ -68,8 +77,10 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     /**
      * {@inheritdoc}
      *
-     * @param  GroupMembershipInterface $membership The membership to set.
+     * @param GroupMembershipInterface $membership The membership to set.
+     *
      * @throws \Exception If the membership is not a production membership.
+     *
      * @return self
      */
     public function addMembership(GroupMembershipInterface $membership): self
@@ -81,13 +92,15 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
         if (!$this->memberships->contains($membership)) {
             $this->memberships->add($membership);
         }
+
         return $this;
     }
 
     /**
      * {@inheritdoc}
      *
-     * @param  GroupMembershipInterface $membership The membership to remove.
+     * @param GroupMembershipInterface $membership The membership to remove.
+     *
      * @return self
      */
     public function removeMembership(GroupMembershipInterface $membership): self
@@ -95,14 +108,16 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
         if ($this->memberships->contains($membership)) {
             $this->memberships->remove($membership);
         }
+
         return $this;
     }
 
     /**
      * {@inheritdoc}
      *
-     * @param  GroupMembershipInterface $membership The membership to check for.
-     * @return boolean
+     * @param GroupMembershipInterface $membership The membership to check for.
+     *
+     * @return bool
      */
     public function hasMembership(GroupMembershipInterface $membership): bool
     {
@@ -112,7 +127,8 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     /**
      * Set height.
      *
-     * @param  ?Length $height The height to set.
+     * @param ?Length $height The height to set.
+     *
      * @return self
      */
     public function setHeight(?Length $height): self
@@ -135,7 +151,8 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     /**
      * Set weight.
      *
-     * @param  ?Mass $weight The weight to set.
+     * @param ?Mass $weight The weight to set.
+     *
      * @return self
      */
     public function setWeight(?Mass $weight): self
@@ -158,7 +175,8 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     /**
      * Set phone.
      *
-     * @param  ?string $phone The phone number.
+     * @param ?string $phone The phone number.
+     *
      * @return self
      */
     public function setPhone(?string $phone): self
@@ -182,6 +200,7 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
      * Set facebook.
      *
      * @param ?string $facebook The facebook url.
+     *
      * @return self
      */
     public function setFacebook(?string $facebook): self
@@ -202,9 +221,10 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     }
 
     /**
-     * Set twitter
+     * Set twitter.
      *
      * @param ?string $twitter The twitter url.
+     *
      * @return self
      */
     public function setTwitter(?string $twitter): self
@@ -227,7 +247,8 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     /**
      * Set image.
      *
-     * @param  ?Media $image The media object to set as the image.
+     * @param ?Media $image The media object to set as the image.
+     *
      * @return self
      */
     public function setImage(?Media $image): self
@@ -250,7 +271,8 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     /**
      * Set first name.
      *
-     * @param  string $first_name The first name.
+     * @param string $first_name The first name.
+     *
      * @return self
      */
     public function setFirstName(string $first_name): self
@@ -273,7 +295,8 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     /**
      * Set last name.
      *
-     * @param  string $last_name The last name.
+     * @param string $last_name The last name.
+     *
      * @return self
      */
     public function setLastName(string $last_name): self
@@ -296,7 +319,8 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     /**
      * Set slug.
      *
-     * @param  string $slug The slug to set.
+     * @param string $slug The slug to set.
+     *
      * @return self
      */
     public function setSlug(string $slug): self
@@ -319,22 +343,24 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
     /**
      * Check if the user has a profile.
      *
-     * @return boolean
+     * @return bool
      */
     public function hasProfile(): bool
     {
-        return ($this->has_profile === true);
+        return true === $this->has_profile;
     }
 
     /**
      * Set whether the user has a profile.
      *
-     * @param  boolean $has_profile Whether or not the user has a profile.
+     * @param bool $has_profile Whether or not the user has a profile.
+     *
      * @return self
      */
     public function setHasProfile(bool $has_profile): self
     {
         $this->has_profile = $has_profile;
+
         return $this;
     }
 
@@ -348,6 +374,7 @@ class User extends BaseUser implements GroupMemberInterface, UserInterface
         if (!isset($this->first_name) || !isset($this->last_name)) {
             return $this->username;
         }
+
         return sprintf('%s %s', $this->first_name, $this->last_name);
     }
 }
