@@ -1,8 +1,10 @@
 bkstg_production_directory_index:
     path: /
+    methods: [GET]
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\ProductionDirectoryController:indexAction
 bkstg_production_directory_read:
     path: /{profile_slug}
+    methods: [GET]
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\ProductionDirectoryController:readAction

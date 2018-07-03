@@ -1,20 +1,25 @@
 bkstg_user_admin_index:
     path: /
+    methods: [GET]
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\UserAdminController:indexAction
 bkstg_user_admin_archive:
     path: /archive
+    methods: [GET]
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\UserAdminController:archiveAction
 bkstg_user_admin_create:
     path: /create
+    methods: [GET,POST]
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\UserAdminController:createAction
 bkstg_user_admin_update:
     path: /{id}/edit
+    methods: [GET,POST]
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\UserAdminController:updateAction
 bkstg_user_admin_delete:
     path: /{id}/delete
+    methods: [GET,POST]
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\UserAdminController:deleteAction

@@ -1,8 +1,10 @@
 bkstg_profile_read:
     path: /
+    methods: [GET]
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\ProfileController:readAction
 bkstg_profile_update:
     path: /edit
+    methods: [GET,POST]
     defaults:
         _controller: Bkstg\FOSUserBundle\Controller\ProfileController:updateAction
