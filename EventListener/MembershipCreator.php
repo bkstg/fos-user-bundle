@@ -70,7 +70,7 @@ class MembershipCreator
         $membership = new ProductionMembership();
         $membership->setGroup($object);
         $membership->setMember($user);
-        $membership->setStatus(true);
+        $membership->setActive(true);
         $membership->addRole('GROUP_ROLE_ADMIN');
         $om->persist($membership);
 

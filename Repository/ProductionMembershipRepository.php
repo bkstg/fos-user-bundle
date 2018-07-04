@@ -46,12 +46,12 @@ class ProductionMembershipRepository extends EntityRepository
 
             // Add conditions.
             ->andWhere($qb->expr()->eq('m.member', ':member'))
-            ->andWhere($qb->expr()->eq('m.status', ':membership_status'))
+            ->andWhere($qb->expr()->eq('m.active', ':membership_active'))
             ->andWhere($qb->expr()->orX(
                 $qb->expr()->isNull('m.expiry'),
                 $qb->expr()->gt('m.expiry', ':now')
             ))
-            ->andWhere($qb->expr()->eq('g.status', ':production_status'))
+            ->andWhere($qb->expr()->eq('g.active', ':production_active'))
             ->andWhere($qb->expr()->orX(
                 $qb->expr()->isNull('g.expiry'),
                 $qb->expr()->gt('g.expiry', ':now')
@@ -59,8 +59,8 @@ class ProductionMembershipRepository extends EntityRepository
 
             // Add parameters.
             ->setParameter('member', $user)
-            ->setParameter('membership_status', true)
-            ->setParameter('production_status', true)
+            ->setParameter('membership_active', true)
+            ->setParameter('production_active', true)
             ->setParameter('now', new \DateTime())
 
             // Order by and get results.
@@ -93,7 +93,7 @@ class ProductionMembershipRepository extends EntityRepository
 
         return $qb
             // Add conditions.
-            ->andWhere($qb->expr()->eq('m.status', ':membership_status'))
+            ->andWhere($qb->expr()->eq('m.active', ':membership_active'))
             ->andWhere($qb->expr()->orX(
                 $qb->expr()->isNull('m.expiry'),
                 $qb->expr()->gt('m.expiry', ':now')
@@ -101,7 +101,7 @@ class ProductionMembershipRepository extends EntityRepository
             ->andWhere($qb->expr()->eq('m.group', ':production'))
 
             // Add parameters.
-            ->setParameter('membership_status', true)
+            ->setParameter('membership_active', true)
             ->setParameter('production', $production)
             ->setParameter('now', new \DateTime())
 
@@ -134,7 +134,7 @@ class ProductionMembershipRepository extends EntityRepository
 
         return $qb
             // Add conditions.
-            ->andWhere($qb->expr()->eq('m.status', ':membership_status'))
+            ->andWhere($qb->expr()->eq('m.active', ':membership_active'))
             ->orWhere($qb->expr()->andX(
                 $qb->expr()->isNotNull('m.expiry'),
                 $qb->expr()->lt('m.expiry', ':now')
@@ -142,7 +142,7 @@ class ProductionMembershipRepository extends EntityRepository
             ->andWhere($qb->expr()->eq('m.group', ':production'))
 
             // Add parameters.
-            ->setParameter('membership_status', false)
+            ->setParameter('membership_active', false)
             ->setParameter('production', $production)
             ->setParameter('now', new \DateTime())
 

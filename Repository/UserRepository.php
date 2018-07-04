@@ -76,13 +76,14 @@ class UserRepository extends EntityRepository
             ->join('m.group', 'g')
             ->andWhere($qb->expr()->eq('g', ':group'))
             ->andWhere($qb->expr()->eq('u.enabled', ':enabled'))
-            ->andWhere($qb->expr()->eq('m.status', ':enabled'))
+            ->andWhere($qb->expr()->eq('m.active', ':active'))
             ->andWhere($qb->expr()->orX(
                 $qb->expr()->isNull('m.expiry'),
                 $qb->expr()->gt('m.expiry', ':now')
             ))
             ->setParameter('group', $production)
             ->setParameter('enabled', true)
+            ->setParameter('active', true)
             ->setParameter('now', new \DateTime())
         ;
 

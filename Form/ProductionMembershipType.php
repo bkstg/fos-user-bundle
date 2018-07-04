@@ -54,7 +54,7 @@ class ProductionMembershipType extends AbstractType
                 'allow_delete' => true,
                 'by_reference' => false,
             ])
-            ->add('status', ChoiceType::class, [
+            ->add('active', ChoiceType::class, [
                 'label' => 'production_membership.form.status',
                 'choices' => [
                     'production_membership.form.status_choices.active' => true,

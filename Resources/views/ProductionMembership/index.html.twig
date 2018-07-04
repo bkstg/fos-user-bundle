@@ -50,7 +50,7 @@
                 {% endfor %}
               </ul>
             </td>
-            <td>{{ membership.expired ? 'production_membership.expired'|trans : membership.status ? 'production_membership.active'|trans : 'production_membership.blocked'|trans }}</td>
+            <td>{{ membership.expired ? 'production_membership.expired'|trans : membership.active ? 'production_membership.active'|trans : 'production_membership.blocked'|trans }}</td>
             <td>{{ membership.expiry ? membership.date|date(full_date) : '' }}</td>
           </tr>
         {% else %}

@@ -25,7 +25,7 @@ class ProductionMembership implements ProductionMembershipInterface
     private $group;
     private $member;
     private $roles;
-    private $status;
+    private $active;
     private $expiry;
     private $production_roles;
 
@@ -192,25 +192,25 @@ class ProductionMembership implements ProductionMembershipInterface
     }
 
     /**
-     * Get the status of this membership.
+     * Get the active of this membership.
      *
-     * @return ?boolean
+     * @return boolean
      */
-    public function getStatus(): ?bool
+    public function isActive(): bool
     {
-        return $this->status;
+        return $this->active === true;
     }
 
     /**
-     * Set the status of this membership.
+     * Set the active of this membership.
      *
-     * @param bool $status The status to set.
+     * @param bool $active The active to set.
      *
      * @return self
      */
-    public function setStatus(bool $status): self
+    public function setActive(bool $active): self
     {
-        $this->status = $status;
+        $this->active = $active;
 
         return $this;
     }

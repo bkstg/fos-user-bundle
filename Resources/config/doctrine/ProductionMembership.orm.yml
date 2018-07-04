@@ -10,7 +10,7 @@ Bkstg\FOSUserBundle\Entity\ProductionMembership:
                 strategy: AUTO
 
     fields:
-        status:
+        active:
             type: boolean
         roles:
             type: array
