@@ -12,12 +12,14 @@ declare(strict_types=1);
 namespace Bkstg\FOSUserBundle\Entity;
 
 use Bkstg\CoreBundle\Entity\Production;
+use Bkstg\CoreBundle\Model\ActiveInterface;
+use Bkstg\CoreBundle\Model\ExpirableInterface;
 use Bkstg\CoreBundle\User\ProductionMembershipInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use MidnightLuke\GroupSecurityBundle\Model\GroupInterface;
 use MidnightLuke\GroupSecurityBundle\Model\GroupMemberInterface;
 
-class ProductionMembership implements ProductionMembershipInterface
+class ProductionMembership implements ProductionMembershipInterface, ActiveInterface, ExpirableInterface
 {
     const GROUP_ROLE_DEFAULT = 'GROUP_ROLE_USER';
 
@@ -194,11 +196,11 @@ class ProductionMembership implements ProductionMembershipInterface
     /**
      * Get the active of this membership.
      *
-     * @return boolean
+     * @return bool
      */
     public function isActive(): bool
     {
-        return $this->active === true;
+        return true === $this->active;
     }
 
     /**
