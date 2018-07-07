@@ -72,7 +72,7 @@ class UserMenuSubscriber implements EventSubscriberInterface
             ]);
         } else {
             $directory = $this->factory->createItem('menu_item.profile_create', [
-                'route' => 'bkstg_profile_edit',
+                'route' => 'bkstg_profile_update',
                 'extras' => [
                     'icon' => 'user-plus',
                     'translation_domain' => BkstgFOSUserBundle::TRANSLATION_DOMAIN,
