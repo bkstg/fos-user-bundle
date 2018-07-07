@@ -60,7 +60,7 @@ class ProfileController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             // Cascade active property to image.
             if (null !== $image = $user->getImage()) {
-                $image->setActive($user->getEnabled());
+                $image->setActive($user->isEnabled());
             }
 
             // Persist the profile and flush.
