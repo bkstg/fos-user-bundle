@@ -1,0 +1,11 @@
+{% embed '@BkstgTimeline/Timeline/default.html.twig' %}
+  {% trans_default_domain 'BkstgFOSUserBundle' %}
+  {% block timeline_text %}
+    <big><i class="fa fa-user-plus"></i></big>
+    <strong>{{ timeline_component_render(timeline, 'subject') }}</strong>
+    {{ 'timeline.added'|trans }}
+    <strong>{{ timeline_component_render(timeline, 'directComplement') }}</strong>
+    {{ 'timeline.to'|trans }}
+    <em>{{ timeline_component_render(timeline, 'indirectComplement') }}</em>
+  {% endblock %}
+{% endembed %}

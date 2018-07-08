@@ -129,3 +129,6 @@ user:
             blocked: 'Blocked'
 widget_label_binary_content: 'File'
 widget_label_unlink: 'Remove'
+timeline:
+    added: 'added'
+    to: 'to'
