@@ -289,4 +289,8 @@ class ProductionMembership implements ProductionMembershipInterface, ActiveInter
     {
         return $this->production_roles;
     }
+
+    public function __toString() {
+        return $this->getMember()->__toString();
+    }
 }

@@ -1,0 +1,17 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    # Spread services.
+    Bkstg\FOSUserBundle\Spread\:
+        resource: '../../Spread'
+        public: true
+        tags:
+            - { name: spy_timeline.spread }
+
+    # Doctrine event listeners.
+    Bkstg\FOSUserBundle\EventListener\MembershipTimelineListener:
+        tags:
+            - { name: doctrine.event_listener, event: postPersist, lazy: true }

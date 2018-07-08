@@ -5,7 +5,7 @@ services:
         public: false
     Bkstg\FOSUserBundle\:
         resource: '../../*'
-        exclude: '../../{Entity,Repository,Tests}'
+        exclude: '../../{Entity,Repository,Tests,EventListener,Spread,Resources}'
 
     # Controller services.
     Bkstg\FOSUserBundle\Controller\:
@@ -22,7 +22,7 @@ services:
         tags:
             - { name: doctrine.event_listener, event: preRemove, lazy: true }
 
-    # Service aliases.
+    # Service aliases for autowiring.
     Bkstg\CoreBundle\User\MembershipProviderInterface: '@Bkstg\FOSUserBundle\User\MembershipProvider'
     Bkstg\CoreBundle\User\ProfileProviderInterface: '@Bkstg\FOSUserBundle\User\ProfileProvider'
     Bkstg\CoreBundle\User\UserProviderInterface: '@Bkstg\FOSUserBundle\User\UserProvider'
