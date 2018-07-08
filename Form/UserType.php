@@ -47,9 +47,12 @@ class UserType extends AbstractType
                     'user.form.roles_choices.admin' => 'ROLE_ADMIN',
                 ],
             ])
-            ->add('enabled', CheckboxType::class, [
-                'label' => 'user.form.enabled',
-                'required' => false,
+            ->add('enabled', ChoiceType::class, [
+                'label' => 'user.form.status',
+                'choices' => [
+                    'user.form.status_choices.active' => true,
+                    'user.form.status_choices.blocked' => false,
+                ],
             ])
         ;
     }

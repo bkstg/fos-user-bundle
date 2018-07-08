@@ -123,6 +123,9 @@ user:
         roles_choices:
             admin: 'Admin'
             editor: 'Editor'
-        enabled: 'Enabled?'
+        status: 'Status'
+        status_choices:
+            active: 'Active'
+            blocked: 'Blocked'
 widget_label_binary_content: 'File'
 widget_label_unlink: 'Remove'
