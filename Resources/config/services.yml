@@ -5,7 +5,7 @@ services:
         public: false
     Bkstg\FOSUserBundle\:
         resource: '../../*'
-        exclude: '../../{Entity,Repository,Tests,EventListener,Spread,Resources}'
+        exclude: '../../{Entity,Repository,Tests,Timeline}'
 
     # Controller services.
     Bkstg\FOSUserBundle\Controller\:
@@ -24,5 +24,3 @@ services:
 
     # Service aliases for autowiring.
     Bkstg\CoreBundle\User\MembershipProviderInterface: '@Bkstg\FOSUserBundle\User\MembershipProvider'
-    Bkstg\CoreBundle\User\ProfileProviderInterface: '@Bkstg\FOSUserBundle\User\ProfileProvider'
-    Bkstg\CoreBundle\User\UserProviderInterface: '@Bkstg\FOSUserBundle\User\UserProvider'

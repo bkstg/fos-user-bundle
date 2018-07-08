@@ -5,13 +5,13 @@ services:
         public: false
 
     # Spread services.
-    Bkstg\FOSUserBundle\Spread\:
-        resource: '../../Spread'
+    Bkstg\FOSUserBundle\Timeline\Spread\:
+        resource: '../../Timeline/Spread'
         public: true
         tags:
             - { name: spy_timeline.spread }
 
     # Doctrine event listeners.
-    Bkstg\FOSUserBundle\EventListener\MembershipTimelineListener:
+    Bkstg\FOSUserBundle\Timeline\EventListener\MembershipTimelineListener:
         tags:
             - { name: doctrine.event_listener, event: postPersist, lazy: true }

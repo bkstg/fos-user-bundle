@@ -1,6 +1,6 @@
 <?php
 
-namespace Bkstg\FOSUserBundle\Spread;
+namespace Bkstg\FOSUserBundle\Timeline\Spread;
 
 use Spy\Timeline\Model\ActionInterface;
 use Spy\Timeline\Spread\Entry\EntryCollection;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Bkstg\FOSUserBundle\EventListener;
+namespace Bkstg\FOSUserBundle\Timeline\EventListener;
 
 use Bkstg\FOSUserBundle\Entity\ProductionMembership;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
