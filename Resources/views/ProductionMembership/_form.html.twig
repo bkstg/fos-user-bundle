@@ -2,6 +2,14 @@
 
 {% form_theme form '@BkstgFOSUser/ProductionRole/_form.html.twig' %}
 {{ form_start(form) }}
+  <div class="form-row">
+    <div class="col-md-2">
+      {{ form_row(form.active) }}
+    </div>
+    <div class="col">
+      {{ form_row(form.member) }}
+    </div>
+  </div>
   {{ form_widget(form) }}
   <div class="form-group">
     <a href="{{ url('bkstg_production_membership_index', { 'production_slug': production.slug }) }}" class="btn btn-secondary">{{ 'cancel'|trans }}</a>

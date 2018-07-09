@@ -145,6 +145,7 @@ class ProductionMembershipController extends Controller
 
         // Create a new production_membership.
         $membership = new ProductionMembership();
+        $membership->setActive(true);
         $membership->setGroup($production);
 
         // Create and handle the form.
