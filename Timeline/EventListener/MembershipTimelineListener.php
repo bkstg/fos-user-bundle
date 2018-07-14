@@ -1,5 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
+/*
+ * This file is part of the BkstgFOSUserBundle package.
+ * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
+
 namespace Bkstg\FOSUserBundle\Timeline\EventListener;
 
 use Bkstg\FOSUserBundle\Entity\ProductionMembership;
@@ -22,6 +31,7 @@ class MembershipTimelineListener
      * @param ActionManagerInterface $action_manager The action manager service.
      * @param UserProviderInterface  $user_provider  The user provider service.
      * @param UrlGeneratorInterface  $url_generator  The url generator service.
+     * @param TokenStorageInterface  $token_storage
      */
     public function __construct(
         ActionManagerInterface $action_manager,

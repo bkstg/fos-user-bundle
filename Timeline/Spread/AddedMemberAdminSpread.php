@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the BkstgCoreBundle package.
+ * This file is part of the BkstgFOSUserBundle package.
  * (c) Luke Bainbridge <http://www.lukebainbridge.ca/>
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -21,9 +21,10 @@ class AddedMemberAdminSpread extends AdminSpread
      */
     public function supports(ActionInterface $action)
     {
-        if ($action->getVerb() != 'added_member') {
+        if ('added_member' != $action->getVerb()) {
             return false;
         }
+
         return true;
     }
 }
