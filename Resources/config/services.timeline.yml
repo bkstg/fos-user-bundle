@@ -3,6 +3,8 @@ services:
         autowire: true
         autoconfigure: true
         public: false
+    Bkstg\FOSUserBundle\Timeline\:
+        resource: '../../Timeline/*'
 
     # Spread services.
     Bkstg\FOSUserBundle\Timeline\Spread\:

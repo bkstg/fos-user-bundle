@@ -14,7 +14,6 @@ namespace Bkstg\FOSUserBundle\Timeline\EventListener;
 use Bkstg\FOSUserBundle\Entity\ProductionMembership;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
 use Spy\Timeline\Driver\ActionManagerInterface;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
@@ -22,7 +21,6 @@ class MembershipTimelineListener
 {
     private $action_manager;
     private $user_provider;
-    private $url_genertor;
     private $token_storage;
 
     /**
@@ -30,13 +28,11 @@ class MembershipTimelineListener
      *
      * @param ActionManagerInterface $action_manager The action manager service.
      * @param UserProviderInterface  $user_provider  The user provider service.
-     * @param UrlGeneratorInterface  $url_generator  The url generator service.
      * @param TokenStorageInterface  $token_storage
      */
     public function __construct(
         ActionManagerInterface $action_manager,
         UserProviderInterface $user_provider,
-        UrlGeneratorInterface $url_generator,
         TokenStorageInterface $token_storage
     ) {
         $this->action_manager = $action_manager;
@@ -68,9 +64,6 @@ class MembershipTimelineListener
             'directComplement' => $member_component,
             'indirectComplement' => $group_component,
         ]);
-        $action->setLink($this->url_generator->generate('bkstg_production_read', [
-            'production_slug' => $membership->getGroup()->getSlug(),
-        ]));
 
         // Update the action.
         $this->action_manager->updateAction($action);
