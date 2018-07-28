@@ -37,7 +37,6 @@ class MembershipTimelineListener
     ) {
         $this->action_manager = $action_manager;
         $this->user_provider = $user_provider;
-        $this->url_generator = $url_generator;
         $this->token_storage = $token_storage;
     }
 
