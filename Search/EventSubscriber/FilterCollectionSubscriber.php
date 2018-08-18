@@ -39,8 +39,8 @@ class FilterCollectionSubscriber implements EventSubscriberInterface
     {
         $qb = $event->getQueryBuilder();
         $query = $qb->query()->bool()
-            ->addMust($qb->query()->term(['_type' => 'user']))
-            ->addMust($qb->query()->term(['enabled' => 1]))
+            ->addMust($qb->query()->term(['_index' => 'user']))
+            ->addMust($qb->query()->term(['enabled' => true]))
             ->addMust($qb->query()->term(['has_profile' => true]))
         ;
         $event->addFilter($query);
