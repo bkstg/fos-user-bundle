@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Bkstg\FOSUserBundle\Controller;
 
 use Bkstg\CoreBundle\Controller\Controller;
+use Bkstg\FOSUserBundle\BkstgFOSUserBundle;
 use Bkstg\FOSUserBundle\Entity\User;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -47,7 +48,8 @@ class DirectoryController extends Controller
                 'warning',
                 $this->translator->trans(
                     'profile.not_created',
-                    ['%url%' => $this->url_generator->generate('bkstg_profile_update', ['id' => $user->getId()])]
+                    ['%url%' => $this->url_generator->generate('bkstg_profile_update')],
+                    BkstgFOSUserBundle::TRANSLATION_DOMAIN
                 )
             );
         }
