@@ -23,7 +23,7 @@ use PhpUnitsOfMeasure\PhysicalQuantity\Mass;
 class User extends BaseUser implements GroupMemberInterface, UserInterface
 {
     protected $id;
-    private $has_profile;
+    private $has_profile = false;
     private $memberships;
     private $first_name;
     private $last_name;
