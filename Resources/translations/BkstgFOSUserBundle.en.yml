@@ -52,7 +52,7 @@ production_role:
         designation_choices:
             cast: 'Cast'
             crew: 'Crew'
-membershp:
+membership:
     created: '"%user%" added to "%production%".'
     updated: 'Membership for "%user%" edited.'
     deleted: 'Membership for "%user%" deleted.'

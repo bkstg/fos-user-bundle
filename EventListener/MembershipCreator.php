@@ -12,6 +12,7 @@ declare(strict_types=1);
 namespace Bkstg\FOSUserBundle\EventListener;
 
 use Bkstg\CoreBundle\Entity\Production;
+use Bkstg\FOSUserBundle\BkstgFOSUserBundle;
 use Bkstg\FOSUserBundle\Entity\ProductionMembership;
 use Bkstg\FOSUserBundle\Entity\User;
 use Doctrine\Common\Persistence\Event\LifecycleEventArgs;
@@ -79,7 +80,7 @@ class MembershipCreator
             'success',
             $this->translator->trans('membership.user_added', [
                 '%production%' => $object->getName(),
-            ])
+            ], BkstgFOSUserBundle::TRANSLATION_DOMAIN)
         );
     }
 }
