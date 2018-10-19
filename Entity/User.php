@@ -12,7 +12,7 @@ declare(strict_types=1);
 namespace Bkstg\FOSUserBundle\Entity;
 
 use Bkstg\CoreBundle\User\UserInterface;
-use Bkstg\MediaBundle\Entity\Media;
+use Bkstg\CoreBundle\Entity\Media;
 use Doctrine\Common\Collections\ArrayCollection;
 use FOS\UserBundle\Model\User as BaseUser;
 use MidnightLuke\GroupSecurityBundle\Model\GroupMemberInterface;
