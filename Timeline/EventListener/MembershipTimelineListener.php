@@ -28,7 +28,7 @@ class MembershipTimelineListener
      *
      * @param ActionManagerInterface $action_manager The action manager service.
      * @param UserProviderInterface  $user_provider  The user provider service.
-     * @param TokenStorageInterface  $token_storage
+     * @param TokenStorageInterface  $token_storage  The token storage service.
      */
     public function __construct(
         ActionManagerInterface $action_manager,
@@ -40,6 +40,13 @@ class MembershipTimelineListener
         $this->token_storage = $token_storage;
     }
 
+    /**
+     * Create a new timeline entry when a memberhip is persisted.
+     *
+     * @param LifecycleEventArgs $args The lifecycle even args.
+     *
+     * @return void
+     */
     public function postPersist(LifecycleEventArgs $args): void
     {
         // Get the membership, if not ours we leave.

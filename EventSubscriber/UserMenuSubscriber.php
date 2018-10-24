@@ -55,6 +55,8 @@ class UserMenuSubscriber implements EventSubscriberInterface
      * Add the show/create menu item.
      *
      * @param MenuCollectionEvent $event The menu collection event.
+     *
+     * @return void
      */
     public function addProfileMenuItem(MenuCollectionEvent $event): void
     {

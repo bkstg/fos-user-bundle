@@ -23,6 +23,8 @@ class BkstgFOSUserExtension extends Extension
      *
      * @param array            $configs   The processed configuration.
      * @param ContainerBuilder $container The container.
+     *
+     * @return void
      */
     public function load(array $configs, ContainerBuilder $container): void
     {

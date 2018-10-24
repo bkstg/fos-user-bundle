@@ -19,11 +19,21 @@ class AddedMemberLinkSubscriber implements EventSubscriberInterface
 {
     private $url_generator;
 
+    /**
+     * Create a a new subscriber.
+     *
+     * @param UrlGeneratorInterface $url_generator The url generator service.
+     */
     public function __construct(UrlGeneratorInterface $url_generator)
     {
         $this->url_generator = $url_generator;
     }
 
+    /**
+     * Return the subscribed events.
+     *
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return [
@@ -33,6 +43,13 @@ class AddedMemberLinkSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * Create the link for the added member timeline entry.
+     *
+     * @param TimelineLinkEvent $event The timeline entry event.
+     *
+     * @return void
+     */
     public function setAddedMemberLink(TimelineLinkEvent $event): void
     {
         $action = $event->getAction();

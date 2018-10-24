@@ -18,8 +18,12 @@ class AddedMemberAdminSpread extends AdminSpread
 {
     /**
      * {@inheritdoc}
+     *
+     * @param ActionInterface $action The action for this spread.
+     *
+     * @return bool
      */
-    public function supports(ActionInterface $action)
+    public function supports(ActionInterface $action): bool
     {
         if ('added_member' != $action->getVerb()) {
             return false;

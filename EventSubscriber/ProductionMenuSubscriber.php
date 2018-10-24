@@ -55,6 +55,8 @@ class ProductionMenuSubscriber implements EventSubscriberInterface
      * Add the directory menu item.
      *
      * @param ProductionMenuCollectionEvent $event The menu collection event.
+     *
+     * @return void
      */
     public function addDirectoryMenuItem(ProductionMenuCollectionEvent $event): void
     {
@@ -76,6 +78,8 @@ class ProductionMenuSubscriber implements EventSubscriberInterface
      * Add the members menu item under settings for admins.
      *
      * @param ProductionMenuCollectionEvent $event The menu collection event.
+     *
+     * @return void
      */
     public function addMemberMenuItem(ProductionMenuCollectionEvent $event): void
     {

@@ -25,6 +25,8 @@ class AdminMenuSubscriber implements EventSubscriberInterface
      * Create a new admin menu subscriber.
      *
      * @param FactoryInterface $factory The menu factory service.
+     *
+     * @return void
      */
     public function __construct(FactoryInterface $factory)
     {
@@ -49,6 +51,8 @@ class AdminMenuSubscriber implements EventSubscriberInterface
      * Add user admin menu items.
      *
      * @param MenuCollectionEvent $event The admin menu collection event.
+     *
+     * @return void
      */
     public function addUserMenuItem(MenuCollectionEvent $event): void
     {

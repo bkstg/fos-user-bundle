@@ -47,6 +47,8 @@ class MembershipCreator
      * When a user creates a production make them an admin in the production.
      *
      * @param LifecycleEventArgs $args The event arguments.
+     *
+     * @return void
      */
     public function prePersist(LifecycleEventArgs $args): void
     {

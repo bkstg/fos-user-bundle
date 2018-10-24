@@ -21,6 +21,8 @@ class MembershipDeletion
      * Remove memberships when parent production is removed.
      *
      * @param LifecycleEventArgs $args The arguments for this event.
+     *
+     * @return void
      */
     public function preRemove(LifecycleEventArgs $args): void
     {

@@ -49,6 +49,8 @@ class ResettingSuccessSubscriber implements EventSubscriberInterface
      * Generate a redirect response to the correct destination.
      *
      * @param FormEvent $event The form event.
+     *
+     * @return void
      */
     public function generateResponse(FormEvent $event): void
     {

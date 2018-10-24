@@ -16,6 +16,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class FieldCollectionSubscriber implements EventSubscriberInterface
 {
+    /**
+     * Return the subscribed events.
+     *
+     * @return array
+     */
     public static function getSubscribedEvents()
     {
         return [
@@ -25,6 +30,13 @@ class FieldCollectionSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * Add the users fields to the search.
+     *
+     * @param FieldCollectionEvent $event The collection event.
+     *
+     * @return void
+     */
     public function addUserFields(FieldCollectionEvent $event): void
     {
         $event->addFields([

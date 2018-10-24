@@ -19,9 +19,9 @@ use Spy\Timeline\Spread\SpreadInterface;
 class AddedMemberSpread implements SpreadInterface
 {
     /**
-     * You spread class is support the action ?
+     * {@inheritdoc}
      *
-     * @param ActionInterface $action
+     * @param ActionInterface $action The action to support.
      *
      * @return bool
      */
@@ -35,9 +35,10 @@ class AddedMemberSpread implements SpreadInterface
     }
 
     /**
-     * @param ActionInterface $action     action we look for spreads
-     * @param EntryCollection $coll       Spreads defined on an EntryCollection
-     * @param EntryCollection $collection
+     * {@inheritdoc}
+     *
+     * @param ActionInterface $action     The action to spread.
+     * @param EntryCollection $collection Spreads defined on an EntryCollection
      *
      * @return void
      */

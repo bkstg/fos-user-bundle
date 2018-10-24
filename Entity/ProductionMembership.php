@@ -290,6 +290,11 @@ class ProductionMembership implements ProductionMembershipInterface, ActiveInter
         return $this->production_roles;
     }
 
+    /**
+     * Return a string representation of the membership.
+     *
+     * @return string
+     */
     public function __toString()
     {
         return $this->getMember()->__toString();

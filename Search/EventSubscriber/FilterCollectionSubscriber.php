@@ -34,6 +34,8 @@ class FilterCollectionSubscriber implements EventSubscriberInterface
      * Create a query that filters to only active users with a profile.
      *
      * @param FilterCollectionEvent $event The filter collection event.
+     *
+     * @return void
      */
     public function addUserFilter(FilterCollectionEvent $event): void
     {

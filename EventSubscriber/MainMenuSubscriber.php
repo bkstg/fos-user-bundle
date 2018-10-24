@@ -49,6 +49,8 @@ class MainMenuSubscriber implements EventSubscriberInterface
      * Create the main directory menu link.
      *
      * @param MenuCollectionEvent $event The menu collection event.
+     *
+     * @return void
      */
     public function addDirectoryMenuItem(MenuCollectionEvent $event): void
     {
