@@ -25,5 +25,8 @@
     },
     "autoload": {
         "psr-4": { "Bkstg\\FOSUserBundle\\": "" }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^7.4"
     }
 }
